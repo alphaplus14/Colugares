@@ -1,0 +1,69 @@
+# ========================
+# DEPENDENCIAS
+# ========================
+node_modules/
+
+# ========================
+# NEXT.JS — builds y caché (muy pesados)
+# ========================
+.next/
+out/
+build/
+.vercel/
+.turbo/
+.swc/
+
+# ========================
+# VARIABLES DE ENTORNO
+# ========================
+.env
+.env.*
+!.env.example
+
+# ========================
+# LOGS Y DEBUG
+# ========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ========================
+# TYPESCRIPT / LINT / TEST
+# ========================
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ========================
+# SISTEMA OPERATIVO
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# EDITORES
+# ========================
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# ========================
+# TEMPORALES
+# ========================
+.cache/
+tmp/
+temp/
+
+# ========================
+# CERTIFICADOS (OAuth, etc.)
+# ========================
+*.pem
+*.key

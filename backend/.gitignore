@@ -1,0 +1,84 @@
+# ========================
+# DEPENDENCIAS
+# ========================
+node_modules/
+
+# ========================
+# BUILD COMPILADO
+# ========================
+dist/
+build/
+*.tsbuildinfo
+
+# ========================
+# VARIABLES DE ENTORNO
+# ========================
+.env
+.env.*
+!.env.example
+
+# ========================
+# LOGS
+# ========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ========================
+# UPLOADS Y ARCHIVOS GENERADOS EN RUNTIME
+# ========================
+uploads/
+public/uploads/
+storage/
+
+# ========================
+# DUMPS DE BASE DE DATOS (pesados)
+# ========================
+*.dump
+*.bson
+dumps/
+
+# ========================
+# TEST Y COBERTURA
+# ========================
+coverage/
+.nyc_output/
+test-results/
+
+# ========================
+# TYPESCRIPT / LINT
+# ========================
+.eslintcache
+
+# ========================
+# SISTEMA OPERATIVO
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# EDITORES
+# ========================
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# ========================
+# TEMPORALES Y CACHÉ
+# ========================
+.cache/
+tmp/
+temp/
+
+# ========================
+# CERTIFICADOS Y SECRETOS
+# ========================
+*.pem
+*.key
+*.p12
+credentials.json
+secrets.json

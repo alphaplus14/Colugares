@@ -1,39 +1,22 @@
 # ========================
-# DEPENDENCIAS
+# DEPENDENCIAS (monorepo)
 # ========================
 node_modules/
+**/node_modules/
 .pnp
 .pnp.js
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
 
 # ========================
-# NEXT.JS (frontend)
-# ========================
-frontend/.next/
-frontend/out/
-frontend/build/
-frontend/.vercel
-
-# ========================
-# BUILD (backend)
-# ========================
-backend/dist/
-backend/build/
-
-# ========================
-# VARIABLES DE ENTORNO
+# VARIABLES DE ENTORNO (secretos)
 # ========================
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.production
-frontend/.env
-frontend/.env.local
-frontend/.env.production
-backend/.env
-backend/.env.local
-backend/.env.production
+.env.*
+!.env.example
 
 # ========================
 # LOGS
@@ -62,6 +45,8 @@ desktop.ini
 # EDITORES E IDEs
 # ========================
 .vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
 .idea/
 *.swp
 *.swo
@@ -69,30 +54,56 @@ desktop.ini
 .cursor/
 
 # ========================
-# TYPESCRIPT
+# TYPESCRIPT / LINT / TEST
 # ========================
 *.tsbuildinfo
-
-# ========================
-# TESTING
-# ========================
+.eslintcache
+.stylelintcache
 coverage/
 .nyc_output/
+test-results/
+playwright-report/
+playwright/.cache/
 
 # ========================
-# MONGODB / BASE DE DATOS
+# BASE DE DATOS LOCAL
 # ========================
 *.sqlite
 *.sqlite3
 
 # ========================
-# ARCHIVOS DE REFERENCIA (instructor)
+# REFERENCIAS DEL INSTRUCTOR
 # ========================
 referencias/
 
 # ========================
-# MISC
+# TEMPORALES Y CACHÉ
 # ========================
 .cache/
 tmp/
 temp/
+*.tmp
+*.temp
+
+# ========================
+# CERTIFICADOS Y CLAVES
+# ========================
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# ========================
+# SUBPROYECTOS (delegado a cada carpeta)
+# Ver también: frontend/.gitignore y backend/.gitignore
+# ========================
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.vercel/
+frontend/.turbo/
+backend/dist/
+backend/build/
+backend/uploads/

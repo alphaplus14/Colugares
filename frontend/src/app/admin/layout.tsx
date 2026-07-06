@@ -30,9 +30,9 @@ export default async function AdminLayout({
           </Link>
           <Link
             href="/admin/lugares"
-            className="block rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100"
+            className="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
           >
-            Lugares (Fase 2)
+            Lugares
           </Link>
           <Link
             href="/admin/usuarios"

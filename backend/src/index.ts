@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDb } from "./config/mongodb";
+import placeRoutes from "./places/place.routes";
 import healthRoutes from "./routes/health.routes";
 import { errorHandler } from "./middleware/errorMiddleware";
 
@@ -25,6 +26,7 @@ async function startServer(): Promise<void> {
   app.use(express.urlencoded({ extended: true }));
 
   app.use("/api/health", healthRoutes);
+  app.use("/api/places", placeRoutes);
 
   app.use(errorHandler);
 

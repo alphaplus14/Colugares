@@ -3,7 +3,36 @@ import { pingDb } from "../config/mongodb";
 
 const router = Router();
 
-/** GET /api/health — verifica servidor y conexión a MongoDB */
+/**
+ * @swagger
+ * /api/health:
+ *   get:
+ *     summary: Verifica que el servidor y la conexión a MongoDB estén activos
+ *     tags: [Health]
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Servidor y base de datos operando correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: ok
+ *                 server:
+ *                   type: string
+ *                   example: running
+ *                 db:
+ *                   type: string
+ *                   example: connected
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *       503:
+ *         description: Base de datos desconectada (servidor degradado)
+ */
 router.get("/", async (_req: Request, res: Response) => {
   const dbConnected = await pingDb();
 

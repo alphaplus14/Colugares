@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Dela_Gothic_One, DM_Sans } from "next/font/google";
 import { SessionProvider } from "@/components/providers/SessionProvider";
-import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const display = Dela_Gothic_One({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const body = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+});
 
 export const metadata: Metadata = {
   title: "Colugares — Portal Turístico de Colombia",
@@ -19,11 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={inter.className}>
-        <SessionProvider>
-          <Navbar />
-          <main>{children}</main>
-        </SessionProvider>
+      <body className={`${display.variable} ${body.variable} font-body antialiased`}>
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

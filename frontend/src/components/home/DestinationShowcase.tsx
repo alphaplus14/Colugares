@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import Link from "next/link";
+import Image from "next/image";
 import { featuredDestinations } from "@/lib/home-content";
 import { ScrollReveal } from "./ScrollReveal";
+import { PillButton } from "@/components/ui/PillButton";
 
 export function DestinationShowcase() {
   const [current, setCurrent] = useState(0);
@@ -19,28 +20,36 @@ export function DestinationShowcase() {
   const destination = featuredDestinations[current];
 
   return (
-    <section className="bg-white py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="destinos" className="relative overflow-hidden bg-white py-24 md:py-32">
+      <p
+        aria-hidden
+        className="section-watermark absolute left-6 top-16 hidden max-w-xl lg:block"
+      >
+        Explora el paraíso
+      </p>
+
+      <div className="relative mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
+          <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-colombia-green">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-brand-orange-deep">
                 Destinos destacados
               </p>
-              <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
-                Explora el paraíso
+              <h2 className="text-display-md text-brand-navy">
+                Lugares que inspiran
               </h2>
             </div>
-            <div className="flex items-center gap-2">
+
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 aria-label="Destino anterior"
                 onClick={() => goTo(current - 1)}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition hover:bg-gray-100"
+                className="flex h-10 w-14 items-center justify-center rounded-full border border-brand-navy/20 text-brand-navy transition hover:border-brand-navy hover:bg-brand-cream"
               >
                 ←
               </button>
-              <span className="min-w-[3rem] text-center text-sm text-gray-500">
+              <span className="min-w-[4rem] text-center font-display text-sm text-brand-navy/50">
                 {String(current + 1).padStart(2, "0")} /{" "}
                 {String(total).padStart(2, "0")}
               </span>
@@ -48,7 +57,7 @@ export function DestinationShowcase() {
                 type="button"
                 aria-label="Destino siguiente"
                 onClick={() => goTo(current + 1)}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition hover:bg-gray-100"
+                className="flex h-10 w-14 items-center justify-center rounded-full border border-brand-navy/20 text-brand-navy transition hover:border-brand-navy hover:bg-brand-cream"
               >
                 →
               </button>
@@ -57,51 +66,58 @@ export function DestinationShowcase() {
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
-          <div className="grid overflow-hidden rounded-2xl bg-gray-100 lg:grid-cols-2">
+          <div className="grid overflow-hidden rounded-3xl bg-brand-cream lg:grid-cols-2">
             <div
               key={destination.id}
-              className="relative min-h-[320px] animate-fade-in bg-cover bg-center lg:min-h-[480px]"
-              style={{ backgroundImage: `url(${destination.image})` }}
+              className="relative min-h-[320px] animate-fade-in lg:min-h-[520px]"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent lg:bg-gradient-to-r" />
+              <Image
+                src={destination.image}
+                alt={destination.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/50 to-transparent lg:bg-gradient-to-r" />
             </div>
 
             <div
               key={`${destination.id}-info`}
-              className="flex flex-col justify-center p-8 lg:p-12"
+              className="flex flex-col justify-center p-8 lg:p-14"
             >
-              <span className="mb-2 text-sm font-medium text-colombia-red">
-                {destination.region} · {destination.category}
-              </span>
-              <h3 className="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
+              <div className="mb-4 flex flex-wrap gap-2">
+                <span className="rounded-full bg-brand-orange/20 px-3 py-1 text-xs font-semibold text-brand-orange-deep">
+                  {destination.region}
+                </span>
+                <span className="rounded-full border border-brand-navy/10 px-3 py-1 text-xs font-medium text-brand-navy/70">
+                  {destination.category}
+                </span>
+              </div>
+
+              <h3 className="text-display-md mb-4 text-brand-navy">
                 {destination.name}
               </h3>
-              <p className="mb-8 text-gray-600">{destination.description}</p>
+              <p className="mb-8 text-brand-navy/70">{destination.description}</p>
 
-              {/* Indicadores de carrusel */}
-              <div className="mb-8 flex gap-2">
+              <div className="mb-10 flex gap-2">
                 {featuredDestinations.map((dest, index) => (
                   <button
                     key={dest.id}
                     type="button"
                     aria-label={`Ver ${dest.name}`}
                     onClick={() => setCurrent(index)}
-                    className={`h-1.5 rounded-full transition-all ${
+                    className={`h-1 rounded-full transition-all duration-300 ${
                       index === current
-                        ? "w-8 bg-colombia-green"
-                        : "w-4 bg-gray-300 hover:bg-gray-400"
+                        ? "w-10 bg-brand-orange"
+                        : "w-4 bg-brand-navy/20 hover:bg-brand-navy/40"
                     }`}
                   />
                 ))}
               </div>
 
-              <Link
-                href="/planner"
-                className="inline-flex w-fit items-center gap-2 rounded-full border-2 border-colombia-green px-6 py-3 text-sm font-semibold text-colombia-green transition hover:bg-colombia-green hover:text-white"
-              >
+              <PillButton href="/planner" variant="dark" className="w-fit">
                 Explorar destino
-                <span aria-hidden>→</span>
-              </Link>
+              </PillButton>
             </div>
           </div>
         </ScrollReveal>

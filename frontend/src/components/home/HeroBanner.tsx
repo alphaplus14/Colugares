@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { heroPosterUrl, heroVideoUrl } from "@/lib/home-content";
+import { PillButton } from "@/components/ui/PillButton";
 
 export function HeroBanner() {
   const [loaded, setLoaded] = useState(false);
@@ -12,8 +13,7 @@ export function HeroBanner() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[calc(100vh-4rem)] items-end overflow-hidden">
-      {/* Video de fondo con fallback a imagen */}
+    <section className="relative flex min-h-screen items-end overflow-hidden bg-brand-navy">
       <div className="absolute inset-0">
         <video
           autoPlay
@@ -25,75 +25,70 @@ export function HeroBanner() {
         >
           <source src={heroVideoUrl} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/50 to-black/30" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-16 pt-32">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-6 pb-28 pt-32 text-center">
         <p
-          className={`mb-4 text-sm font-medium uppercase tracking-[0.3em] text-colombia-gold transition-all duration-1000 ${
+          className={`mb-6 font-body text-sm font-medium uppercase tracking-[0.35em] text-brand-orange transition-all duration-1000 ease-godo ${
             loaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
           }`}
         >
-          Tu aventura por Colombia
+          Tu próxima aventura
         </p>
 
         <h1
-          className={`mb-6 max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl lg:text-7xl transition-all duration-1000 delay-150 ${
+          className={`text-display-xl mb-6 max-w-4xl text-white transition-all duration-1000 delay-150 ease-godo ${
             loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          Descubre un país donde{" "}
-          <span className="text-colombia-gold">cada rincón</span> tiene una
-          historia
+          <span className="block">Descubre un país</span>
+          <span className="block text-brand-orange">donde cada rincón</span>
+          <span className="block">tiene una historia</span>
         </h1>
 
         <p
-          className={`mb-10 max-w-xl text-lg text-white/85 transition-all duration-1000 delay-300 ${
+          className={`mb-10 max-w-xl text-base text-white/80 md:text-lg transition-all duration-1000 delay-300 ease-godo ${
             loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          Colugares te guía con inteligencia artificial por destinos curados y
-          verificados. Planifica tu viaje ideal en minutos.
+          Colugares te guía con inteligencia artificial por destinos curados.
+          Planifica tu viaje ideal en minutos.
         </p>
 
         <div
-          className={`flex flex-wrap gap-4 transition-all duration-1000 delay-500 ${
+          className={`flex flex-wrap items-center justify-center gap-4 transition-all duration-1000 delay-500 ease-godo ${
             loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          <Link
-            href="/planner"
-            className="group relative overflow-hidden rounded-full bg-colombia-red px-8 py-3.5 text-base font-semibold text-white transition hover:bg-colombia-red/90"
-          >
-            <span className="relative z-10">Iniciar Aventura</span>
-            <span className="absolute inset-0 -translate-x-full bg-white/20 transition-transform duration-300 group-hover:translate-x-0" />
-          </Link>
+          <PillButton href="/planner" size="lg">
+            Iniciar Aventura
+          </PillButton>
           <a
             href="#regiones"
-            className="rounded-full border border-white/60 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
+            className="inline-flex h-12 items-center rounded-full border border-white/40 px-8 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition hover:bg-white/10"
           >
             Explorar regiones
           </a>
         </div>
       </div>
 
-      {/* Indicador de scroll */}
-      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-bounce">
-        <div className="flex flex-col items-center gap-2 text-white/60">
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+      <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 md:block">
+        <div className="flex flex-col items-center gap-2 text-white/50">
+          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <div className="h-8 w-px animate-pulse bg-white/40" />
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 z-10 hidden border-t border-white/10 bg-black/20 backdrop-blur-sm lg:block">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-xs text-white/60">
+          <span>Colombia · Portal turístico inteligente</span>
+          <Link
+            href="/planner"
+            className="font-semibold uppercase tracking-wider text-white transition hover:text-brand-orange"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+            Planifica con Colu →
+          </Link>
         </div>
       </div>
     </section>

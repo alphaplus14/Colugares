@@ -4,8 +4,8 @@ import { RegionExplorer } from "./RegionExplorer";
 import { PassionCategories } from "./PassionCategories";
 import { DestinationShowcase } from "./DestinationShowcase";
 import { EventsTeaser } from "./EventsTeaser";
-import { FinalCta } from "./FinalCta";
 
+/** Home pública — estructura inspirada en GoDominican, adaptada a Colugares */
 export function HomePage() {
   return (
     <>
@@ -15,7 +15,6 @@ export function HomePage() {
       <PassionCategories />
       <DestinationShowcase />
       <EventsTeaser />
-      <FinalCta />
     </>
   );
 }

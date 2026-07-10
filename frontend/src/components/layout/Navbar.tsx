@@ -18,6 +18,22 @@ export function Navbar() {
             <span className="text-sm text-gray-400">Cargando...</span>
           ) : session ? (
             <>
+              {session.user.role === "viajero" && (
+                <>
+                  <Link
+                    href="/planner"
+                    className="text-sm font-medium text-gray-700 hover:text-colombia-green"
+                  >
+                    Planner
+                  </Link>
+                  <Link
+                    href="/mi-perfil/itinerarios"
+                    className="text-sm font-medium text-gray-700 hover:text-colombia-green"
+                  >
+                    Mis viajes
+                  </Link>
+                </>
+              )}
               {(session.user.role === "admin" ||
                 session.user.role === "empleado") && (
                 <Link

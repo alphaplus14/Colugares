@@ -102,11 +102,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id ?? token.sub ?? "";
-        token.role = user.role;
+        if (user.role) {
+          token.role = user.role;
+        }
       }
 
-      // Para Google OAuth, el rol viene de la BD
-      if (account?.provider === "google" && token.email) {
+      // Google OAuth no trae role — siempre resolver desde MongoDB
+      if (token.email && (!token.role || account?.provider === "google")) {
         const db = await getDb();
         const dbUser = await db
           .collection<UserDocument>("users")

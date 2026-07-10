@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import { connectDb, getDb } from "../config/mongodb";
-import { caribeSeedPlaces } from "../data/caribe-seed";
+import { allPlacesSeed, placesSeedStats } from "../data/all-places-seed";
 import { scheduleEmbeddingJob } from "../services/embeddingJob";
 import type { UserDocument } from "../types/user.types";
 
@@ -36,17 +36,18 @@ async function seedAdmin(db: Awaited<ReturnType<typeof getDb>>): Promise<void> {
 
 async function seedPlaces(db: Awaited<ReturnType<typeof getDb>>): Promise<void> {
   const collection = db.collection("places");
-  const existingCount = await collection.countDocuments({ region: "caribe" });
+  const existingCount = await collection.countDocuments();
 
-  if (existingCount >= caribeSeedPlaces.length) {
-    console.log(`=> Lugares Caribe ya existen (${existingCount}). Saltando seed.`);
+  if (existingCount >= placesSeedStats.total) {
+    const readyCount = await collection.countDocuments({ embedding_status: "ready" });
+    console.log(
+      `=> Lugares ya existen (${existingCount}, ${readyCount} indexados). Usa npm run reseed-places para reemplazar.`,
+    );
     return;
   }
 
-  await collection.deleteMany({ region: "caribe" });
-
   const now = new Date();
-  const docs = caribeSeedPlaces.map((place) => ({
+  const docs = allPlacesSeed.map((place) => ({
     ...place,
     contact: {
       phone: place.contact.phone || undefined,
@@ -61,14 +62,14 @@ async function seedPlaces(db: Awaited<ReturnType<typeof getDb>>): Promise<void> 
   const result = await collection.insertMany(docs);
   const ids = Object.values(result.insertedIds);
 
-  console.log(`=> ${ids.length} lugares del Caribe insertados`);
+  console.log(`=> ${ids.length} lugares insertados (6 regiones)`);
 
   if (process.env.GEMINI_API_KEY) {
     console.log("=> Encolando embeddings (requiere GEMINI_API_KEY)...");
     for (const id of ids) {
       scheduleEmbeddingJob(id);
     }
-    console.log("=> Jobs de embedding iniciados en background");
+    console.log("=> Jobs de embedding iniciados — ejecuta npm run reindex para completar");
   } else {
     console.log("=> GEMINI_API_KEY no definida — embeddings quedan en pending");
   }
@@ -81,30 +82,9 @@ async function main(): Promise<void> {
   await seedAdmin(db);
   await seedPlaces(db);
 
-  console.log("\n=== Índice vectorial en Atlas (ejecutar manualmente en M10+) ===");
-  console.log(`
-db.places.createSearchIndex({
-  name: "places_vector_idx",
-  type: "vectorSearch",
-  definition: {
-    fields: [{
-      type: "vector",
-      path: "vector_embedding",
-      numDimensions: 768,
-      similarity: "cosine"
-    }, {
-      type: "filter",
-      path: "region"
-    }, {
-      type: "filter",
-      path: "is_subscriber"
-    }, {
-      type: "filter",
-      path: "active"
-    }]
-  }
-});
-  `);
+  console.log("\n=== Catálogo seed ===");
+  console.log(`   Total lugares definidos: ${placesSeedStats.total}`);
+  console.log("   Regiones: caribe, andina, eje_cafetero, pacifico, amazonia, llanos");
 
   process.exit(0);
 }

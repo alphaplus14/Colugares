@@ -5,8 +5,13 @@ import { PassionCategories } from "./PassionCategories";
 import { DestinationShowcase } from "./DestinationShowcase";
 import { EventsTeaser } from "./EventsTeaser";
 import { FinalCta } from "./FinalCta";
+import type { EventListItem } from "@/types/event.types";
 
-export function HomePage() {
+interface HomePageProps {
+  events: EventListItem[];
+}
+
+export function HomePage({ events }: HomePageProps) {
   return (
     <>
       <HeroBanner />
@@ -14,7 +19,7 @@ export function HomePage() {
       <RegionExplorer />
       <PassionCategories />
       <DestinationShowcase />
-      <EventsTeaser />
+      <EventsTeaser events={events} />
       <FinalCta />
     </>
   );

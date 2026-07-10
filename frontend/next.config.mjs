@@ -9,6 +9,13 @@ const nextConfig = {
       },
     ],
   },
+  // Evita corrupción de vendor-chunks en Windows cuando hay varias instancias de `next dev`
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

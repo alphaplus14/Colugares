@@ -1,5 +1,3 @@
-import type { ItineraryDay } from "../types/itinerary.types";
-
 export interface ItinerarySeedTemplate {
   title: string;
   user_email: string;

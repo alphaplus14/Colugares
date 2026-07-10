@@ -3,8 +3,14 @@ import bcrypt from "bcryptjs";
 import { ObjectId } from "mongodb";
 import { connectDb, getDb } from "../config/mongodb";
 import { allPlacesSeed, placesSeedStats } from "../data/all-places-seed";
+import { eventsSeed } from "../data/events-seed";
+import { itinerariesSeed } from "../data/itineraries-seed";
 import { scheduleEmbeddingJob } from "../services/embeddingJob";
-import type { ItineraryDay, ItinerarySlot } from "../types/itinerary.types";
+import type {
+  ItineraryDay,
+  ItinerarySlot,
+  ItinerarySlotPeriod,
+} from "../types/itinerary.types";
 import type { PlaceDocument } from "../types/place.types";
 import type { UserDocument } from "../types/user.types";
 
@@ -57,8 +63,8 @@ async function seedViajero(db: Awaited<ReturnType<typeof getDb>>): Promise<Objec
     password_hash,
     role: "viajero",
     travel_profile: {
-      primary_interests: ["caribe", "gastronomia", "playa"],
-      secondary_interests: ["historia", "naturaleza"],
+      primary_interests: ["caribe"],
+      secondary_interests: ["andina"],
       budget_range: "medio",
       travel_pace: "relajado",
       group_type: "pareja",
@@ -126,30 +132,44 @@ async function seedEvents(db: Awaited<ReturnType<typeof getDb>>): Promise<void> 
   }
 
   await collection.deleteMany({ name: { $in: seedNames } });
-  const result = await collection.insertMany(eventsSeed);
+  await collection.insertMany(eventsSeed.map((event) => ({ ...event })));
 
-  console.log(`=> ${result.insertedCount} eventos insertados`);
+  console.log(`=> ${eventsSeed.length} eventos insertados`);
+}
+
+interface SlotTemplate {
+  place_name?: string;
+  activity: string;
+  price?: number;
+  price_type: "real" | "estimado";
+  notes?: string;
+}
+
+function formatPriceLabel(price: number, priceType: "real" | "estimado"): string {
+  const formatted = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(price);
+  return priceType === "estimado" ? `${formatted} (estimado)` : formatted;
 }
 
 function buildSlot(
-  template: {
-    place_name?: string;
-    activity: string;
-    price?: number;
-    price_type: "real" | "estimado";
-    notes?: string;
-  },
+  period: ItinerarySlotPeriod,
+  template: SlotTemplate,
   placesByName: Map<string, PlaceDocument>,
 ): ItinerarySlot {
   const slot: ItinerarySlot = {
-    activity: template.activity,
-    price_type: template.price_type,
-    notes: template.notes,
+    period,
+    place_name: template.place_name ?? template.activity,
+    activity: template.notes
+      ? `${template.activity} — ${template.notes}`
+      : template.activity,
+    price_label:
+      template.price !== undefined && template.price > 0
+        ? formatPriceLabel(template.price, template.price_type)
+        : undefined,
   };
-
-  if (template.price !== undefined) {
-    slot.price = template.price;
-  }
 
   if (template.place_name) {
     const place = placesByName.get(template.place_name);
@@ -157,31 +177,26 @@ function buildSlot(
       throw new Error(`Lugar no encontrado para itinerario: ${template.place_name}`);
     }
     slot.place_id = place._id;
+    slot.place_name = place.name;
     slot.coordinates = place.coordinates;
   }
 
   return slot;
 }
 
-function calculateBudgets(days: ItineraryDay[]): {
-  total_budget_real: number;
-  total_budget_estimated: number;
-} {
-  let total_budget_real = 0;
-  let total_budget_estimated = 0;
-
-  for (const day of days) {
-    for (const slot of [day.morning, day.afternoon, day.night]) {
-      if (slot.price === undefined) continue;
-      if (slot.price_type === "real") {
-        total_budget_real += slot.price;
-      } else {
-        total_budget_estimated += slot.price;
-      }
-    }
-  }
-
-  return { total_budget_real, total_budget_estimated };
+function buildDaySlots(
+  day: {
+    morning: SlotTemplate;
+    afternoon: SlotTemplate;
+    night: SlotTemplate;
+  },
+  placesByName: Map<string, PlaceDocument>,
+): ItinerarySlot[] {
+  return [
+    buildSlot("mañana", day.morning, placesByName),
+    buildSlot("tarde", day.afternoon, placesByName),
+    buildSlot("noche", day.night, placesByName),
+  ];
 }
 
 async function seedItineraries(db: Awaited<ReturnType<typeof getDb>>): Promise<void> {
@@ -216,16 +231,13 @@ async function seedItineraries(db: Awaited<ReturnType<typeof getDb>>): Promise<v
     const days: ItineraryDay[] = template.days.map((day) => ({
       day_number: day.day_number,
       title: day.title,
-      morning: buildSlot(day.morning, placesByName),
-      afternoon: buildSlot(day.afternoon, placesByName),
-      night: buildSlot(day.night, placesByName),
+      slots: buildDaySlots(day, placesByName),
     }));
 
-    const budgets = calculateBudgets(days);
     const places_used = [
       ...new Set(
         days
-          .flatMap((day) => [day.morning, day.afternoon, day.night])
+          .flatMap((day) => day.slots)
           .map((slot) => slot.place_id)
           .filter((id): id is ObjectId => id !== undefined),
       ),
@@ -234,10 +246,13 @@ async function seedItineraries(db: Awaited<ReturnType<typeof getDb>>): Promise<v
     const result = await collection.insertOne({
       user_id: viajero._id,
       title: template.title,
+      region: "caribe",
       days,
-      ...budgets,
-      generated_at: now,
       places_used,
+      geography_warnings: [],
+      raw_content: `Itinerario seed: ${template.title}`,
+      created_at: now,
+      updated_at: now,
     });
 
     itineraryIds.push(result.insertedId);

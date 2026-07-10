@@ -13,7 +13,7 @@ async function setupIndexes(db: Awaited<ReturnType<typeof getDb>>): Promise<void
   await db.collection("places").createIndex({ embedding_status: 1 });
   await db.collection("places").createIndex({ city: 1 });
 
-  await db.collection("itineraries").createIndex({ user_id: 1, generated_at: -1 });
+  await db.collection("itineraries").createIndex({ user_id: 1, created_at: -1 });
 
   await db.collection("events").createIndex({ region: 1, active: 1 });
   await db.collection("events").createIndex({ start_date: 1, end_date: 1 });

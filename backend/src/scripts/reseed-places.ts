@@ -31,7 +31,7 @@ async function main(): Promise<void> {
 
   await connectDb();
   const db = await getDb();
-  const collection = db.collection<PlaceDocument>("places");
+  const collection = db.collection("places");
 
   const deleted = await collection.deleteMany({});
   console.log(`=> ${deleted.deletedCount} lugares anteriores eliminados`);
@@ -54,7 +54,7 @@ async function main(): Promise<void> {
   let ok = 0;
   let failed = 0;
 
-  const inserted = await collection.find({ _id: { $in: insertedIds } }).toArray();
+  const inserted = await collection.find({ _id: { $in: insertedIds } }).toArray() as PlaceDocument[];
 
   for (const place of inserted) {
     try {

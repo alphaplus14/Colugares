@@ -23,10 +23,10 @@ function normalizeContact(contact: PlaceDocument["contact"]): PlaceDocument["con
   };
 }
 
-/** GET /api/places — listado CMS con filtros opcionales */
+/** GET /api/places — listado CMS con filtros y paginación */
 export async function getPlaces(req: Request, res: Response): Promise<void> {
   const db = await getDb();
-  const { region, type, active } = req.query;
+  const { region, type, active, page: pageRaw, limit: limitRaw } = req.query;
 
   const filter: Record<string, unknown> = {};
 
@@ -43,16 +43,40 @@ export async function getPlaces(req: Request, res: Response): Promise<void> {
     filter.active = false;
   }
 
-  const places = await db
-    .collection<PlaceDocument>("places")
+  const pageNum = Number(pageRaw);
+  const limitNum = Number(limitRaw);
+  const page =
+    Number.isFinite(pageNum) && pageNum > 0 ? Math.floor(pageNum) : 1;
+  const limit =
+    Number.isFinite(limitNum) && limitNum > 0
+      ? Math.min(Math.floor(limitNum), 48)
+      : 12;
+  const skip = (page - 1) * limit;
+
+  const collection = db.collection<PlaceDocument>("places");
+  const total = await collection.countDocuments(filter);
+
+  const places = await collection
     .find(filter)
     .sort({ created_at: -1 })
+    .skip(skip)
+    .limit(limit)
     .toArray();
+
+  const totalPages = Math.max(1, Math.ceil(total / limit));
 
   res.json({
     status: "ok",
     count: places.length,
     data: places.map(serializePlace),
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages,
+      hasNext: page < totalPages,
+      hasPrev: page > 1,
+    },
   });
 }
 

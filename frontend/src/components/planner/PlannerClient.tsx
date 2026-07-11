@@ -3,10 +3,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Message } from "ai";
 import ChatWindow from "@/components/planner/ChatWindow";
+import ColuAvatar from "@/components/planner/ColuAvatar";
 import ItineraryMapPanel from "@/components/planner/ItineraryMapPanel";
 import SaveItineraryButton from "@/components/planner/SaveItineraryButton";
 import { detectGeographyWarnings } from "@/lib/itinerary/geography";
 import { previewItineraryFromContent } from "@/lib/itinerary/parser";
+import {
+  plannerPosterUrl,
+  plannerVideoUrl,
+} from "@/lib/planner-content";
 import type {
   ItineraryMapMarker,
   PlaceCatalogEntry,
@@ -89,51 +94,69 @@ export default function PlannerClient({
   const hasPlan = useMemo(() => markers.length > 0, [markers]);
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col bg-gray-50">
-      <header className="border-b border-gray-200 bg-white px-4 py-4 sm:px-6">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="relative flex min-h-screen flex-col pt-20">
+      {/* Fondo cinematográfico */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={plannerPosterUrl}
+          className="h-full w-full object-cover"
+        >
+          <source src={plannerVideoUrl} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/95 via-brand-navy/80 to-brand-navy/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(250,171,85,0.12),_transparent_55%)]" />
+      </div>
+
+      {/* Toolbar */}
+      <div className="relative z-10 border-b border-white/10 bg-brand-navy/40 px-4 py-3 backdrop-blur-md sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-colombia-green text-lg font-bold text-white">
-              C
-            </div>
+            <ColuAvatar size="md" />
             <div>
-              <h1 className="text-lg font-bold text-gray-900">
+              <p className="font-display text-lg text-white">
                 Colu — Tu guía de Colombia
-              </h1>
-              <p className="text-sm text-gray-500">
-                Chat + mapa en tiempo real con lugares verificados
+              </p>
+              <p className="text-xs text-white/55">
+                Chat y mapa en tiempo real · lugares verificados
               </p>
             </div>
           </div>
-
           <SaveItineraryButton
             rawContent={lastAssistantContent}
             disabled={!hasPlan}
           />
         </div>
         {catalogError && (
-          <p className="mx-auto mt-3 max-w-7xl text-sm text-red-600">
+          <p className="mx-auto mt-2 max-w-7xl text-sm text-red-300">
             {catalogError}
           </p>
         )}
-      </header>
+      </div>
 
-      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 lg:flex-row lg:items-stretch lg:min-h-[calc(100vh-10rem)]">
-        <section className="flex min-h-[480px] flex-1 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm lg:max-w-[55%]">
+      {/* Paneles glass */}
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 lg:flex-row lg:items-stretch lg:min-h-[calc(100vh-9rem)]">
+        <section className="planner-glass flex min-h-[480px] flex-1 flex-col overflow-hidden rounded-2xl animate-fade-up lg:max-w-[55%]">
           <ChatWindow
             userName={userName}
             onMessagesChange={handleMessagesChange}
           />
         </section>
 
-        <section className="flex min-h-[420px] flex-1 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <section
+          className="planner-glass flex min-h-[420px] flex-1 flex-col overflow-hidden rounded-2xl animate-fade-up"
+          style={{ animationDelay: "120ms" }}
+        >
           <ItineraryMapPanel
             markers={markers}
             catalog={catalog}
             warnings={warnings}
           />
         </section>
-      </main>
+      </div>
     </div>
   );
 }

@@ -1,53 +1,8 @@
-import Link from "next/link";
-import { auth } from "@/lib/auth";
-import { AdminHeader } from "@/components/layout/AdminHeader";
-
-export default async function AdminLayout({
+/** Layout raíz de /admin — sin chrome; el panel vive en (console) */
+export default function AdminRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <AdminHeader userName={session?.user?.name ?? session?.user?.email} />
-      <div className="flex min-h-[calc(100vh-3.5rem)]">
-        <aside className="hidden w-56 shrink-0 border-r border-gray-200 bg-white p-6 md:block">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
-            Panel Admin
-          </p>
-          <p className="mb-6 text-sm text-gray-600">
-            {session?.user?.name ?? "Usuario"}
-            <span className="mt-0.5 block text-xs capitalize text-colombia-green">
-              {session?.user?.role}
-            </span>
-          </p>
-
-          <nav className="space-y-1">
-            <Link
-              href="/admin/dashboard"
-              className="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/admin/lugares"
-              className="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
-            >
-              Lugares
-            </Link>
-            <Link
-              href="/admin/usuarios"
-              className="block rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100"
-            >
-              Usuarios (Fase 2)
-            </Link>
-          </nav>
-        </aside>
-
-        <div className="flex-1 p-6 md:p-8">{children}</div>
-      </div>
-    </div>
-  );
+  return children;
 }

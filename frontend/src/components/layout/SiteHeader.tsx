@@ -1,37 +1,56 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { PillButton } from "@/components/ui/PillButton";
 
-const navLinks = [
-  { href: "#historias", label: "Historias" },
-  { href: "#regiones", label: "Regiones" },
-  { href: "#destinos", label: "Destinos" },
-  { href: "#festividades", label: "Festividades" },
+const homeNavLinks = [
+  { hash: "historias", label: "Historias" },
+  { hash: "regiones", label: "Regiones" },
+  { hash: "destinos", label: "Destinos" },
+  { hash: "festividades", label: "Festividades" },
 ] as const;
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const { data: session, status } = useSession();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const isHome = pathname === "/";
+  // En páginas internas (planner, perfil…) siempre fondo sólido para legibilidad
+  const solid = !isHome || scrolled;
+
   useEffect(() => {
+    if (!isHome) {
+      setScrolled(true);
+      return;
+    }
+
     const onScroll = () => setScrolled(window.scrollY > 48);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   const isStaff =
     session?.user?.role === "admin" || session?.user?.role === "empleado";
   const isViajero = session?.user?.role === "viajero";
 
+  function sectionHref(hash: string): string {
+    return isHome ? `#${hash}` : `/#${hash}`;
+  }
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-godo ${
-        scrolled
+        solid
           ? "border-b border-white/10 bg-brand-navy/95 py-3 shadow-lg backdrop-blur-md"
           : "bg-gradient-to-b from-black/50 to-transparent py-5"
       }`}
@@ -45,14 +64,14 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+          {homeNavLinks.map((link) => (
+            <Link
+              key={link.hash}
+              href={sectionHref(link.hash)}
               className="text-sm font-medium text-white/85 transition hover:text-brand-orange"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -65,13 +84,21 @@ export function SiteHeader() {
                 <>
                   <Link
                     href="/planner"
-                    className="text-sm font-medium text-white/80 hover:text-brand-orange"
+                    className={`text-sm font-medium transition ${
+                      pathname.startsWith("/planner")
+                        ? "text-brand-orange"
+                        : "text-white/80 hover:text-brand-orange"
+                    }`}
                   >
                     Planner
                   </Link>
                   <Link
                     href="/mi-perfil/itinerarios"
-                    className="text-sm font-medium text-white/80 hover:text-brand-orange"
+                    className={`text-sm font-medium transition ${
+                      pathname.startsWith("/mi-perfil")
+                        ? "text-brand-orange"
+                        : "text-white/80 hover:text-brand-orange"
+                    }`}
                   >
                     Mis viajes
                   </Link>
@@ -116,6 +143,7 @@ export function SiteHeader() {
           onClick={() => setMenuOpen((open) => !open)}
         >
           {menuOpen ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src="/icons/close.svg" alt="" className="h-4 w-4 invert" />
           ) : (
             <span className="text-lg leading-none">☰</span>
@@ -126,15 +154,15 @@ export function SiteHeader() {
       {menuOpen && (
         <div className="border-t border-white/10 bg-brand-navy/98 px-6 py-6 lg:hidden">
           <nav className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+            {homeNavLinks.map((link) => (
+              <Link
+                key={link.hash}
+                href={sectionHref(link.hash)}
                 className="text-base font-medium text-white"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <hr className="border-white/10" />
             {session ? (

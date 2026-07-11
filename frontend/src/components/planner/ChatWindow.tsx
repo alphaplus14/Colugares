@@ -3,6 +3,10 @@
 import { useChat } from "ai/react";
 import { FormEvent, useEffect, useRef } from "react";
 import type { Message } from "ai";
+import ColuAvatar from "@/components/planner/ColuAvatar";
+import QuickPrompts from "@/components/planner/QuickPrompts";
+import TypingIndicator from "@/components/planner/TypingIndicator";
+import { quickPrompts } from "@/lib/planner-content";
 
 interface ChatWindowProps {
   userName: string;
@@ -14,7 +18,11 @@ function renderMarkdown(text: string) {
 
   return parts.map((part, index) => {
     if (part.startsWith("**") && part.endsWith("**")) {
-      return <strong key={index}>{part.slice(2, -2)}</strong>;
+      return (
+        <strong key={index} className="font-semibold text-brand-navy">
+          {part.slice(2, -2)}
+        </strong>
+      );
     }
     return <span key={index}>{part}</span>;
   });
@@ -43,10 +51,17 @@ export default function ChatWindow({
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasTriggeredRef = useRef(false);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, append, error } =
-    useChat({
-      api: "/api/planner/chat",
-    });
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    append,
+    error,
+  } = useChat({
+    api: "/api/planner/chat",
+  });
 
   useEffect(() => {
     if (messages.length === 0 && !hasTriggeredRef.current) {
@@ -76,26 +91,55 @@ export default function ChatWindow({
     handleSubmit(event);
   }
 
+  function handleQuickPrompt(message: string) {
+    if (isLoading) {
+      return;
+    }
+    void append({ role: "user", content: message });
+  }
+
+  const showTyping =
+    isLoading && messages[messages.length - 1]?.role === "user";
+
   return (
     <div className="flex h-full flex-col">
+      {/* Cabecera del chat */}
+      <div className="flex items-center gap-3 border-b border-brand-navy/10 bg-gradient-to-r from-brand-cream/80 to-white px-4 py-3">
+        <ColuAvatar size="md" pulse={isLoading} />
+        <div className="min-w-0">
+          <p className="font-display text-base text-brand-navy">Colu</p>
+          <p className="truncate text-xs text-brand-navy/50">
+            {isLoading
+              ? "Planificando tu aventura..."
+              : "Tu guía de Colombia · lugares verificados"}
+          </p>
+        </div>
+      </div>
+
       <div
         ref={scrollRef}
-        className="flex-1 space-y-4 overflow-y-auto px-4 py-6"
+        className="scrollbar-planner flex-1 space-y-4 overflow-y-auto bg-gradient-to-b from-brand-cream/40 to-white px-4 py-5"
       >
-        {messages.map((message) => (
+        {messages.map((message, index) => (
           <div
             key={message.id}
-            className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+            className={`flex animate-fade-in gap-2 ${
+              message.role === "user" ? "justify-end" : "justify-start"
+            }`}
+            style={{ animationDelay: `${Math.min(index, 6) * 40}ms` }}
           >
+            {message.role === "assistant" && (
+              <ColuAvatar size="sm" className="mt-1" />
+            )}
             <div
-              className={`max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
                 message.role === "user"
-                  ? "bg-colombia-green text-white"
-                  : "border border-gray-200 bg-white text-gray-800 shadow-sm"
+                  ? "rounded-br-md bg-brand-navy text-white"
+                  : "rounded-bl-md border border-brand-navy/10 bg-white text-brand-navy/90 shadow-sm"
               }`}
             >
               {message.role === "assistant" && (
-                <p className="mb-1 text-xs font-semibold text-colombia-green">
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-brand-orange-deep">
                   Colu
                 </p>
               )}
@@ -104,42 +148,51 @@ export default function ChatWindow({
           </div>
         ))}
 
-        {isLoading && messages[messages.length - 1]?.role === "user" && (
-          <div className="flex justify-start">
-            <div className="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-400 shadow-sm">
-              Colu está planificando tu aventura...
+        {showTyping && (
+          <div className="flex animate-fade-in items-start gap-2">
+            <ColuAvatar size="sm" pulse />
+            <div className="rounded-2xl rounded-bl-md border border-brand-navy/10 bg-white px-4 py-3 shadow-sm">
+              <TypingIndicator />
             </div>
           </div>
         )}
 
         {error && (
-          <div className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
-            {parseChatError(error.message ?? "Ocurrió un error. Intenta de nuevo.")}
+          <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            {parseChatError(
+              error.message ?? "Ocurrió un error. Intenta de nuevo.",
+            )}
           </div>
         )}
       </div>
 
-      <form
-        onSubmit={onSubmit}
-        className="border-t border-gray-200 bg-white p-4"
-      >
-        <div className="flex gap-2">
-          <input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Ej: Quiero 3 días en Cartagena..."
-            disabled={isLoading}
-            className="flex-1 rounded-full border border-gray-300 px-4 py-2.5 text-sm focus:border-colombia-green focus:outline-none focus:ring-1 focus:ring-colombia-green disabled:opacity-50"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            className="rounded-full bg-colombia-green px-5 py-2.5 text-sm font-semibold text-white hover:bg-colombia-green/90 disabled:opacity-50"
-          >
-            Enviar
-          </button>
-        </div>
-      </form>
+      <div className="border-t border-brand-navy/10 bg-white/95 p-3 sm:p-4">
+        <QuickPrompts
+          prompts={quickPrompts}
+          onSelect={handleQuickPrompt}
+          disabled={isLoading}
+          className="mb-3"
+        />
+
+        <form onSubmit={onSubmit}>
+          <div className="flex gap-2">
+            <input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Ej: Quiero 3 días en Cartagena..."
+              disabled={isLoading}
+              className="flex-1 rounded-full border border-brand-navy/15 bg-brand-cream/50 px-4 py-2.5 text-sm text-brand-navy placeholder:text-brand-navy/40 focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20 disabled:opacity-50"
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              className="rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-brand-navy transition hover:bg-brand-orange/90 hover:shadow-lg hover:shadow-brand-orange/25 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

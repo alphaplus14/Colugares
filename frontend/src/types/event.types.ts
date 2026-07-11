@@ -27,6 +27,11 @@ export interface EventListItem {
   month_label: string;
 }
 
+/** Evento para el CMS admin (incluye active) */
+export interface AdminEventItem extends EventListItem {
+  active: boolean;
+}
+
 /** Rango de fechas inferido del mensaje del usuario */
 export interface TripDateRange {
   start: Date;

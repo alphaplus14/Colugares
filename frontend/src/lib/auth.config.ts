@@ -1,12 +1,17 @@
 import type { NextAuthConfig } from "next-auth";
 import type { UserRole } from "@/types/user.types";
 
+function isStaffRole(role: UserRole | undefined): boolean {
+  return role === "admin" || role === "empleado";
+}
+
 export const authConfig = {
   trustHost: true,
   session: {
     strategy: "jwt",
   },
   pages: {
+    // Default para rutas de viajero; /admin/* redirige a /admin/login en authorized
     signIn: "/login",
   },
   providers: [],
@@ -21,14 +26,27 @@ export const authConfig = {
     },
     authorized({ auth, request }) {
       const { pathname } = request.nextUrl;
+      const role = auth?.user?.role as UserRole | undefined;
 
-      // Panel admin: solo staff interno
-      if (pathname.startsWith("/admin")) {
-        const role = auth?.user?.role as UserRole | undefined;
-        return role === "admin" || role === "empleado";
+      // Login staff: público; si ya es staff → dashboard
+      if (pathname === "/admin/login") {
+        if (isStaffRole(role)) {
+          return Response.redirect(
+            new URL("/admin/dashboard", request.nextUrl),
+          );
+        }
+        return true;
       }
 
-      // Rutas del viajero: planner, onboarding y perfil
+      // Resto del panel admin: solo staff
+      if (pathname.startsWith("/admin")) {
+        if (isStaffRole(role)) {
+          return true;
+        }
+        return Response.redirect(new URL("/admin/login", request.nextUrl));
+      }
+
+      // Rutas del viajero
       if (
         pathname.startsWith("/planner") ||
         pathname.startsWith("/onboarding") ||
@@ -38,14 +56,11 @@ export const authConfig = {
           return false;
         }
 
-        const role = auth.user.role as UserRole | undefined;
-
-        // JWT legacy sin role: dejar pasar; auth.ts lo resuelve en servidor
         if (!role) {
           return true;
         }
 
-        if (role === "admin" || role === "empleado") {
+        if (isStaffRole(role)) {
           return Response.redirect(
             new URL("/admin/dashboard", request.nextUrl),
           );

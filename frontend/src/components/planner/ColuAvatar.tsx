@@ -9,7 +9,7 @@ interface ColuAvatarProps {
 const sizeClasses = {
   sm: "h-8 w-8 text-sm",
   md: "h-10 w-10 text-base",
-  lg: "h-14 w-14 text-xl",
+  lg: "h-12 w-12 text-lg",
 };
 
 /** Avatar de Colu — guía turística IA */
@@ -21,7 +21,7 @@ export default function ColuAvatar({
   return (
     <div
       className={cn(
-        "relative flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-colombia-green to-colombia-green-dark font-bold text-white shadow-glow-green",
+        "relative flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-navy to-brand-navy/80 font-display font-normal text-brand-orange shadow-lg shadow-brand-navy/30",
         sizeClasses[size],
         pulse && "animate-pulse-soft",
         className,
@@ -29,7 +29,7 @@ export default function ColuAvatar({
       aria-hidden
     >
       <span>C</span>
-      <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-colombia-gold" />
+      <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-brand-orange" />
     </div>
   );
 }

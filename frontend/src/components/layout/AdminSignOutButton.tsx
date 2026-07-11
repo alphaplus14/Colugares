@@ -6,10 +6,10 @@ export function AdminSignOutButton() {
   return (
     <button
       type="button"
-      onClick={() => signOut({ callbackUrl: "/" })}
-      className="rounded-full border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
+      onClick={() => signOut({ callbackUrl: "/admin/login" })}
+      className="rounded-full bg-brand-orange px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-brand-navy transition hover:bg-brand-orange/90"
     >
-      Cerrar sesión
+      Salir
     </button>
   );
 }

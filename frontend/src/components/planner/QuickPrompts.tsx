@@ -25,9 +25,9 @@ export default function QuickPrompts({
           type="button"
           disabled={disabled}
           onClick={() => onSelect(prompt.message)}
-          className="group flex items-center gap-1.5 rounded-full border border-colombia-green/20 bg-colombia-green/5 px-3 py-1.5 text-xs font-medium text-colombia-green-dark transition-all hover:border-colombia-green/40 hover:bg-colombia-green/10 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-50"
+          className="group flex items-center gap-1.5 rounded-full border border-brand-navy/10 bg-brand-cream px-3 py-1.5 text-xs font-medium text-brand-navy transition-all duration-300 ease-godo hover:border-brand-orange/50 hover:bg-brand-orange/15 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <span className="transition-transform group-hover:scale-110">
+          <span className="transition-transform duration-300 group-hover:scale-110">
             {prompt.emoji}
           </span>
           {prompt.label}

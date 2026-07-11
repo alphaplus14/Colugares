@@ -133,27 +133,53 @@ cd frontend && npm run build
 
 ---
 
-## 7. Siguiente paso — Rediseño visual del Planner
+## 7. Plan auth + CMS (decisiones cerradas — jul 2026)
 
-La **home** ya tiene la plantilla GoDominican de Frank. El **planner** (`/planner`) sigue con UI funcional pero sobria.
+### Recomendación profesional (punto 1)
+- **Sin link público** al panel (ni footer ni header).
+- Login staff solo en **`/admin/login`** (URL que conoce el equipo).
+- Viajeros usan **`/login`** (visible: “Iniciar sesión”).
 
-**Prioridad:** aplicar la misma estética inmersiva al planner:
-1. Fondo video/cinematográfico + glass panels (chat + mapa)
-2. Integrar `ColuAvatar`, `QuickPrompts`, `TypingIndicator`
-3. Layout propio del planner sin footer (o header oscuro dedicado)
-4. Animaciones de entrada y chips de sugerencias rápidas
+### Roles
+| Rol | Acceso |
+|-----|--------|
+| `admin` (super-admin) | Todo + crear/gestionar empleados |
+| `empleado` | CRUD de contenido (lugares, eventos, itinerarios); **sin** gestionar staff |
+| `viajero` | Google o email/password → onboarding (datos) → planner |
 
-**Después:** deploy producción según `DEPLOY.md` (Atlas M10 + Vercel).
+### Viajero — cuenta
+- Google **o** registro manual (nombre, email, password + confirmar).
+- Tras Google: onboarding pide datos básicos importantes.
+- Tras email: mismo onboarding.
+
+### Orden de implementación
+1. ✅ Fase A — Logins separados + middleware
+2. ✅ Fase B — Registro/login viajero
+3. ✅ Fase C — Dashboard + CRUD eventos, itinerarios, usuarios
+
+### Fase C — CMS admin (hecho)
+| Módulo | Rutas UI | API |
+|--------|----------|-----|
+| Dashboard | `/admin/dashboard` | `GET /api/admin/stats` |
+| Festividades | `/admin/eventos` (+ nuevo/editar) | `/api/admin/events` |
+| Itinerarios | `/admin/itinerarios` (+ detalle) | `/api/admin/itineraries` |
+| Usuarios | `/admin/usuarios` | `/api/admin/users` (crear empleado solo admin) |
+| Lugares | `/admin/lugares` | ya existía |
+
+**Permisos:** empleado = CRUD contenido; admin = + eliminar permanente eventos, crear/desactivar/eliminar empleados y viajeros.
+
+### Siguiente paso
+Deploy producción (`DEPLOY.md`) + pruebas de flujo completo.
 
 ---
 
 ## 8. Estado del merge Git
 
-El merge `origin/frank` → `cris` está **resuelto y verificado** (`type-check` + `build` OK).
+El merge `origin/frank` → `cris` está **resuelto y verificado**.
 
-Para cerrar el merge en Git:
 ```powershell
-git commit -m "Merge branch 'frank' — plantilla visual frontend"
+git add -A
+git commit -m "feat: logins separados viajero/admin + registro viajero"
 ```
 
 ---

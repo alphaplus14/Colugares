@@ -54,7 +54,7 @@ export default function SaveItineraryButton({
         type="button"
         onClick={handleSave}
         disabled={!canSave || loading}
-        className="rounded-full bg-colombia-gold px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-colombia-gold/90 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-full bg-brand-orange px-5 py-2 text-xs font-semibold uppercase tracking-wide text-brand-navy transition hover:bg-brand-orange/90 hover:shadow-lg hover:shadow-brand-orange/25 disabled:cursor-not-allowed disabled:opacity-45"
       >
         {loading ? "Guardando..." : "Guardar itinerario"}
       </button>
@@ -62,7 +62,7 @@ export default function SaveItineraryButton({
       {savedId && (
         <Link
           href={`/mi-perfil/itinerarios/${savedId}`}
-          className="text-sm font-medium text-colombia-green hover:underline"
+          className="text-sm font-medium text-brand-orange hover:underline"
         >
           Ver en mi perfil →
         </Link>
@@ -70,7 +70,7 @@ export default function SaveItineraryButton({
 
       {message && (
         <span
-          className={`text-sm ${savedId ? "text-colombia-green" : "text-red-600"}`}
+          className={`text-sm ${savedId ? "text-brand-orange" : "text-red-400"}`}
         >
           {message}
         </span>

@@ -7,6 +7,12 @@ import type { UserDocument } from "@/types/user.types";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "AI Trip Planner",
+  description:
+    "Chatea con Colu y genera itinerarios personalizados solo con lugares verificados en Colombia.",
+};
+
 export default async function PlannerPage() {
   const session = await auth();
 

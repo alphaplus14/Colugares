@@ -66,13 +66,21 @@ export function StorySections() {
           className="relative flex min-h-screen items-center"
         >
           <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-[2.5s] ease-godo"
+            className={`absolute inset-0 bg-cover transition-transform duration-[2.5s] ease-godo ${
+              index === 0 ? "bg-top" : "bg-center"
+            }`}
             style={{
               backgroundImage: `url(${slide.image})`,
               transform: activeIndex === index ? "scale(1.08)" : "scale(1)",
             }}
           />
-          <div className="absolute inset-0 bg-brand-navy/60" />
+          <div
+            className={`absolute inset-0 ${
+              index === 0
+                ? "bg-gradient-to-t from-brand-navy/80 via-brand-navy/35 to-brand-navy/20"
+                : "bg-brand-navy/60"
+            }`}
+          />
 
           <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-28">
             <ScrollReveal delay={index * 80}>

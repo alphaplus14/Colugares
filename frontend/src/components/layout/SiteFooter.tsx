@@ -26,7 +26,7 @@ export function SiteFooter() {
               <a href="#regiones" className="hover:text-white">
                 Regiones
               </a>
-              <a href="#destinos" className="hover:text-white">
+              <a href="/destinos" className="hover:text-white">
                 Destinos
               </a>
               <a href="#festividades" className="hover:text-white">

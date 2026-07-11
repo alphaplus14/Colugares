@@ -55,8 +55,10 @@ export default function ItineraryDetailClient({
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{itinerary.title}</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="font-display text-2xl text-brand-navy">
+            {itinerary.title}
+          </h1>
+          <p className="text-sm text-brand-navy/55">
             {itinerary.region} · Guardado el{" "}
             {new Date(itinerary.created_at).toLocaleDateString("es-CO")}
           </p>
@@ -65,13 +67,13 @@ export default function ItineraryDetailClient({
           type="button"
           onClick={handleDelete}
           disabled={deleting}
-          className="rounded-md border border-red-200 px-4 py-2 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+          className="rounded-full border border-red-200 px-4 py-2 text-sm text-red-600 transition hover:bg-red-50 disabled:opacity-50"
         >
           {deleting ? "Eliminando..." : "Eliminar"}
         </button>
       </div>
 
-      <div className="h-[360px] overflow-hidden rounded-xl border border-gray-200 lg:h-[420px]">
+      <div className="h-[360px] overflow-hidden rounded-2xl border border-brand-navy/10 lg:h-[420px]">
         <ItineraryMapPanel
           markers={itinerary.markers}
           catalog={catalog}
@@ -83,18 +85,21 @@ export default function ItineraryDetailClient({
         {itinerary.days.map((day) => (
           <article
             key={day.day_number}
-            className="rounded-xl border border-gray-200 bg-white p-4"
+            className="rounded-2xl border border-brand-navy/10 bg-white p-4"
           >
-            <h2 className="font-semibold text-colombia-green">
+            <h2 className="font-display text-base text-brand-orange-deep">
               Día {day.day_number} — {day.title}
             </h2>
-            <ul className="mt-3 space-y-2 text-sm text-gray-700">
+            <ul className="mt-3 space-y-2 text-sm text-brand-navy/80">
               {day.slots.map((slot, index) => (
                 <li key={`${day.day_number}-${slot.period}-${index}`}>
                   <span className="font-medium capitalize">{slot.period}:</span>{" "}
                   {slot.place_name}
                   {slot.price_label && (
-                    <span className="text-gray-500"> — {slot.price_label}</span>
+                    <span className="text-brand-navy/50">
+                      {" "}
+                      — {slot.price_label}
+                    </span>
                   )}
                 </li>
               ))}

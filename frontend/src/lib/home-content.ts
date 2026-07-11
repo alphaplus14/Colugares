@@ -56,8 +56,7 @@ export const storySlides: StorySlide[] = [
     highlight: "corazón de Colombia",
     description:
       "Desde playas del Caribe hasta picos andinos, cada amanecer te invita a descubrir un país de contrastes infinitos.",
-    image:
-      "https://images.unsplash.com/photo-1580976010575-92a8068a12a8?w=1600&q=80",
+    image: "/images/stories/despierta-colombia.jpg",
   },
   {
     number: "02",
@@ -284,9 +283,10 @@ export const upcomingEvents: UpcomingEvent[] = [
   },
 ];
 
-/** Video de fondo hero — paisajes naturales (Pexels, uso libre) */
-export const heroVideoUrl =
-  "https://videos.pexels.com/video-files/4434242/4434242-uhd_2560_1440_25fps.mp4";
+/** Videos de fondo hero — clips locales comprimidos (H.264, sin audio) */
+export const heroVideoUrls = [
+  "/videos/hero-1.mp4",
+  "/videos/hero-2.mp4",
+] as const;
 
-export const heroPosterUrl =
-  "https://images.unsplash.com/photo-1580976010575-92a8068a12a8?w=1920&q=80";
+export const heroPosterUrl = "/videos/hero-poster.jpg";

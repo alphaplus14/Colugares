@@ -1,30 +1,131 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { heroPosterUrl, heroVideoUrl } from "@/lib/home-content";
+import { useEffect, useRef, useState } from "react";
+import { heroPosterUrl, heroVideoUrls } from "@/lib/home-content";
 import { PillButton } from "@/components/ui/PillButton";
 
+/**
+ * Fondo hero con dos clips cortos que se alternan al terminar.
+ * Usa dos capas con crossfade suave y pausa fuera de viewport / pestaña oculta.
+ */
 export function HeroBanner() {
   const [loaded, setLoaded] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canPlayVideo, setCanPlayVideo] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([null, null]);
+  const inViewRef = useRef(true);
 
   useEffect(() => {
     setLoaded(true);
+
+    // Respeta usuarios que prefieren menos movimiento
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motionQuery.matches) {
+      return;
+    }
+    setCanPlayVideo(true);
   }, []);
 
+  useEffect(() => {
+    if (!canPlayVideo) {
+      return;
+    }
+
+    const section = sectionRef.current;
+    if (!section) {
+      return;
+    }
+
+    const syncPlayback = () => {
+      const visible = inViewRef.current && document.visibilityState === "visible";
+      videoRefs.current.forEach((video, index) => {
+        if (!video) {
+          return;
+        }
+        if (!visible) {
+          video.pause();
+          return;
+        }
+        if (index === activeIndex) {
+          void video.play().catch(() => {
+            /* autoplay bloqueado: el poster sigue visible */
+          });
+        } else {
+          video.pause();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+        syncPlayback();
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(section);
+
+    const onVisibility = () => syncPlayback();
+    document.addEventListener("visibilitychange", onVisibility);
+    syncPlayback();
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [activeIndex, canPlayVideo]);
+
+  function handleEnded(index: number) {
+    if (index !== activeIndex) {
+      return;
+    }
+    const next = (index + 1) % heroVideoUrls.length;
+    const nextVideo = videoRefs.current[next];
+    if (nextVideo) {
+      nextVideo.currentTime = 0;
+      void nextVideo.play().catch(() => undefined);
+    }
+    setActiveIndex(next);
+  }
+
   return (
-    <section className="relative flex min-h-screen items-end overflow-hidden bg-brand-navy">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-screen items-end overflow-hidden bg-brand-navy"
+    >
       <div className="absolute inset-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={heroPosterUrl}
-          className="h-full w-full object-cover"
-        >
-          <source src={heroVideoUrl} type="video/mp4" />
-        </video>
+        {/* Poster estático como fallback / reduced-motion */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={heroPosterUrl}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+
+        {canPlayVideo &&
+          heroVideoUrls.map((src, index) => (
+            <video
+              key={src}
+              ref={(el) => {
+                videoRefs.current[index] = el;
+              }}
+              muted
+              playsInline
+              preload={index === 0 ? "auto" : "metadata"}
+              poster={heroPosterUrl}
+              onEnded={() => handleEnded(index)}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-godo ${
+                activeIndex === index ? "opacity-100" : "opacity-0"
+              }`}
+              aria-hidden
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          ))}
+
         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/50 to-black/30" />
       </div>
 

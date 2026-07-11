@@ -12,6 +12,13 @@ import type {
 
 const TOTAL_STEPS = 5;
 
+const selectedPrimary =
+  "border-brand-orange bg-brand-orange/10 ring-1 ring-brand-orange/40";
+const selectedSecondary =
+  "border-brand-orange-deep/50 bg-brand-sand ring-1 ring-brand-orange-deep/30";
+const idleCard =
+  "border-brand-navy/10 bg-white hover:border-brand-navy/25";
+
 export default function OnboardingQuiz() {
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -76,7 +83,6 @@ export default function OnboardingQuiz() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    // Guard: solo enviar en el último paso
     if (step !== TOTAL_STEPS) {
       goNext();
       return;
@@ -113,19 +119,19 @@ export default function OnboardingQuiz() {
   return (
     <div className="mx-auto w-full max-w-2xl">
       <div className="mb-8">
-        <p className="text-sm font-medium text-colombia-green">
+        <p className="text-sm font-semibold uppercase tracking-wide text-brand-orange-deep">
           Paso {step} de {TOTAL_STEPS}
         </p>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-gray-200">
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-brand-navy/10">
           <div
-            className="h-full rounded-full bg-colombia-green transition-all"
+            className="h-full rounded-full bg-brand-orange transition-all duration-500 ease-godo"
             style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
           />
         </div>
       </div>
 
       {error && (
-        <div className="mb-6 rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </div>
       )}
@@ -133,20 +139,20 @@ export default function OnboardingQuiz() {
       <form onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
         {step === 1 && (
           <section>
-            <h2 className="mb-2 text-xl font-bold text-gray-900">
+            <h2 className="mb-2 font-display text-2xl text-brand-navy">
               ¿Qué regiones te interesan más?
             </h2>
-            <p className="mb-6 text-sm text-gray-500">
+            <p className="mb-6 text-sm text-brand-navy/60">
               Colu priorizará destinos de estas regiones en tus itinerarios.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               {COLOMBIA_REGIONS.map((region) => (
                 <label
                   key={`primary-${region.value}`}
-                  className={`cursor-pointer rounded-lg border p-4 transition ${
+                  className={`cursor-pointer rounded-2xl border p-4 transition ${
                     primaryInterests.includes(region.value)
-                      ? "border-colombia-green bg-colombia-green/5"
-                      : "border-gray-200 hover:border-gray-300"
+                      ? selectedPrimary
+                      : idleCard
                   }`}
                 >
                   <input
@@ -155,10 +161,10 @@ export default function OnboardingQuiz() {
                     checked={primaryInterests.includes(region.value)}
                     onChange={() => toggleRegion(region.value, "primary")}
                   />
-                  <span className="block font-semibold text-gray-900">
+                  <span className="block font-semibold text-brand-navy">
                     {region.label}
                   </span>
-                  <span className="mt-1 block text-xs text-gray-500">
+                  <span className="mt-1 block text-xs text-brand-navy/55">
                     {region.description}
                   </span>
                 </label>
@@ -169,20 +175,20 @@ export default function OnboardingQuiz() {
 
         {step === 2 && (
           <section>
-            <h2 className="mb-2 text-xl font-bold text-gray-900">
+            <h2 className="mb-2 font-display text-2xl text-brand-navy">
               ¿Alguna región secundaria?
             </h2>
-            <p className="mb-6 text-sm text-gray-500">
+            <p className="mb-6 text-sm text-brand-navy/60">
               Opcional. Colu las sugerirá al final como alternativa.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               {COLOMBIA_REGIONS.map((region) => (
                 <label
                   key={`secondary-${region.value}`}
-                  className={`cursor-pointer rounded-lg border p-4 transition ${
+                  className={`cursor-pointer rounded-2xl border p-4 transition ${
                     secondaryInterests.includes(region.value)
-                      ? "border-colombia-gold bg-colombia-gold/10"
-                      : "border-gray-200 hover:border-gray-300"
+                      ? selectedSecondary
+                      : idleCard
                   }`}
                 >
                   <input
@@ -191,10 +197,10 @@ export default function OnboardingQuiz() {
                     checked={secondaryInterests.includes(region.value)}
                     onChange={() => toggleRegion(region.value, "secondary")}
                   />
-                  <span className="block font-semibold text-gray-900">
+                  <span className="block font-semibold text-brand-navy">
                     {region.label}
                   </span>
-                  <span className="mt-1 block text-xs text-gray-500">
+                  <span className="mt-1 block text-xs text-brand-navy/55">
                     {region.description}
                   </span>
                 </label>
@@ -205,10 +211,10 @@ export default function OnboardingQuiz() {
 
         {step === 3 && (
           <section>
-            <h2 className="mb-2 text-xl font-bold text-gray-900">
+            <h2 className="mb-2 font-display text-2xl text-brand-navy">
               ¿Cuál es tu presupuesto aproximado?
             </h2>
-            <p className="mb-6 text-sm text-gray-500">
+            <p className="mb-6 text-sm text-brand-navy/60">
               Colu alertará si un plan supera tu rango.
             </p>
             <div className="grid gap-3">
@@ -221,10 +227,8 @@ export default function OnboardingQuiz() {
               ).map((option) => (
                 <label
                   key={option.value}
-                  className={`cursor-pointer rounded-lg border p-4 transition ${
-                    budgetRange === option.value
-                      ? "border-colombia-green bg-colombia-green/5"
-                      : "border-gray-200 hover:border-gray-300"
+                  className={`cursor-pointer rounded-2xl border p-4 transition ${
+                    budgetRange === option.value ? selectedPrimary : idleCard
                   }`}
                 >
                   <input
@@ -234,8 +238,10 @@ export default function OnboardingQuiz() {
                     checked={budgetRange === option.value}
                     onChange={() => setBudgetRange(option.value)}
                   />
-                  <span className="block font-semibold">{option.label}</span>
-                  <span className="text-sm text-gray-500">{option.desc}</span>
+                  <span className="block font-semibold text-brand-navy">
+                    {option.label}
+                  </span>
+                  <span className="text-sm text-brand-navy/55">{option.desc}</span>
                 </label>
               ))}
             </div>
@@ -244,10 +250,10 @@ export default function OnboardingQuiz() {
 
         {step === 4 && (
           <section>
-            <h2 className="mb-2 text-xl font-bold text-gray-900">
+            <h2 className="mb-2 font-display text-2xl text-brand-navy">
               ¿Con quién viajas?
             </h2>
-            <p className="mb-6 text-sm text-gray-500">
+            <p className="mb-6 text-sm text-brand-navy/60">
               Esto ayuda a Colu a ajustar el tipo de actividades.
             </p>
             <div className="grid grid-cols-2 gap-3">
@@ -261,10 +267,10 @@ export default function OnboardingQuiz() {
               ).map((option) => (
                 <label
                   key={option.value}
-                  className={`cursor-pointer rounded-lg border p-4 text-center transition ${
+                  className={`cursor-pointer rounded-2xl border p-4 text-center transition ${
                     groupType === option.value
-                      ? "border-colombia-green bg-colombia-green/5 font-semibold"
-                      : "border-gray-200 hover:border-gray-300"
+                      ? `${selectedPrimary} font-semibold`
+                      : idleCard
                   }`}
                 >
                   <input
@@ -274,7 +280,7 @@ export default function OnboardingQuiz() {
                     checked={groupType === option.value}
                     onChange={() => setGroupType(option.value)}
                   />
-                  {option.label}
+                  <span className="text-brand-navy">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -283,10 +289,10 @@ export default function OnboardingQuiz() {
 
         {step === 5 && (
           <section>
-            <h2 className="mb-2 text-xl font-bold text-gray-900">
+            <h2 className="mb-2 font-display text-2xl text-brand-navy">
               ¿Qué ritmo prefieres?
             </h2>
-            <p className="mb-6 text-sm text-gray-500">
+            <p className="mb-6 text-sm text-brand-navy/60">
               Último paso — después conocerás a Colu.
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -298,10 +304,8 @@ export default function OnboardingQuiz() {
               ).map((option) => (
                 <label
                   key={option.value}
-                  className={`cursor-pointer rounded-lg border p-4 transition ${
-                    travelPace === option.value
-                      ? "border-colombia-green bg-colombia-green/5"
-                      : "border-gray-200 hover:border-gray-300"
+                  className={`cursor-pointer rounded-2xl border p-4 transition ${
+                    travelPace === option.value ? selectedPrimary : idleCard
                   }`}
                 >
                   <input
@@ -311,8 +315,10 @@ export default function OnboardingQuiz() {
                     checked={travelPace === option.value}
                     onChange={() => setTravelPace(option.value)}
                   />
-                  <span className="block font-semibold">{option.label}</span>
-                  <span className="text-sm text-gray-500">{option.desc}</span>
+                  <span className="block font-semibold text-brand-navy">
+                    {option.label}
+                  </span>
+                  <span className="text-sm text-brand-navy/55">{option.desc}</span>
                 </label>
               ))}
             </div>
@@ -324,7 +330,7 @@ export default function OnboardingQuiz() {
             <button
               type="button"
               onClick={goBack}
-              className="rounded-md border border-gray-300 px-5 py-2.5 text-sm font-medium hover:bg-gray-50"
+              className="rounded-full border border-brand-navy/20 px-5 py-2.5 text-sm font-medium text-brand-navy transition hover:bg-brand-cream"
             >
               Atrás
             </button>
@@ -337,7 +343,7 @@ export default function OnboardingQuiz() {
               type="button"
               disabled={step === 1 && primaryInterests.length === 0}
               onClick={goNext}
-              className="rounded-md bg-colombia-green px-5 py-2.5 text-sm font-semibold text-white hover:bg-colombia-green/90 disabled:opacity-50"
+              className="rounded-full bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-navy/90 disabled:opacity-50"
             >
               Continuar
             </button>
@@ -345,7 +351,7 @@ export default function OnboardingQuiz() {
             <button
               type="submit"
               disabled={loading || primaryInterests.length === 0}
-              className="rounded-md bg-colombia-green px-5 py-2.5 text-sm font-semibold text-white hover:bg-colombia-green/90 disabled:opacity-50"
+              className="rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-brand-navy transition hover:bg-brand-orange/90 disabled:opacity-50"
             >
               {loading ? "Guardando..." : "Comenzar aventura"}
             </button>

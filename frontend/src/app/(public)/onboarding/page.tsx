@@ -30,7 +30,7 @@ export default async function OnboardingPage() {
   return (
     <div className="min-h-screen bg-brand-cream px-6 pb-12 pt-28">
       <div className="mx-auto mb-8 max-w-2xl text-center">
-        <h1 className="text-3xl font-bold text-brand-navy">
+        <h1 className="font-display text-3xl text-brand-navy">
           Cuéntanos sobre tu viaje
         </h1>
         <p className="mt-2 text-brand-navy/60">

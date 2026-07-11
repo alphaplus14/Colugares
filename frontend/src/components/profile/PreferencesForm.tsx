@@ -11,6 +11,12 @@ import type {
   TravelProfile,
 } from "@/types/user.types";
 
+const selectedPrimary =
+  "border-brand-orange bg-brand-orange/10 ring-1 ring-brand-orange/40";
+const selectedSecondary =
+  "border-brand-orange-deep/50 bg-brand-sand";
+const idleCard = "border-brand-navy/10 bg-white";
+
 export default function PreferencesForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -96,37 +102,41 @@ export default function PreferencesForm() {
       return;
     }
 
-    setSuccess("Preferencias actualizadas — Colu las usará en tu próximo mensaje");
+    setSuccess(
+      "Preferencias actualizadas — Colu las usará en tu próximo mensaje",
+    );
     router.refresh();
   }
 
   if (loading) {
-    return <p className="text-sm text-gray-400">Cargando preferencias...</p>;
+    return <p className="text-sm text-brand-navy/40">Cargando preferencias...</p>;
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {error && (
-        <div className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </div>
       )}
       {success && (
-        <div className="rounded-md bg-green-50 px-4 py-3 text-sm text-green-700">
+        <div className="rounded-xl bg-brand-orange/15 px-4 py-3 text-sm text-brand-orange-deep">
           {success}
         </div>
       )}
 
       <section>
-        <h2 className="mb-3 text-lg font-semibold">Regiones principales</h2>
+        <h2 className="mb-3 font-display text-lg text-brand-navy">
+          Regiones principales
+        </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {COLOMBIA_REGIONS.map((region) => (
             <label
               key={`pref-primary-${region.value}`}
-              className={`cursor-pointer rounded-lg border p-3 ${
+              className={`cursor-pointer rounded-xl border p-3 transition ${
                 primaryInterests.includes(region.value)
-                  ? "border-colombia-green bg-colombia-green/5"
-                  : "border-gray-200"
+                  ? selectedPrimary
+                  : idleCard
               }`}
             >
               <input
@@ -135,22 +145,26 @@ export default function PreferencesForm() {
                 checked={primaryInterests.includes(region.value)}
                 onChange={() => toggleRegion(region.value, "primary")}
               />
-              {region.label}
+              <span className="text-sm font-medium text-brand-navy">
+                {region.label}
+              </span>
             </label>
           ))}
         </div>
       </section>
 
       <section>
-        <h2 className="mb-3 text-lg font-semibold">Regiones secundarias</h2>
+        <h2 className="mb-3 font-display text-lg text-brand-navy">
+          Regiones secundarias
+        </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {COLOMBIA_REGIONS.map((region) => (
             <label
               key={`pref-secondary-${region.value}`}
-              className={`cursor-pointer rounded-lg border p-3 ${
+              className={`cursor-pointer rounded-xl border p-3 transition ${
                 secondaryInterests.includes(region.value)
-                  ? "border-colombia-gold bg-colombia-gold/10"
-                  : "border-gray-200"
+                  ? selectedSecondary
+                  : idleCard
               }`}
             >
               <input
@@ -159,7 +173,9 @@ export default function PreferencesForm() {
                 checked={secondaryInterests.includes(region.value)}
                 onChange={() => toggleRegion(region.value, "secondary")}
               />
-              {region.label}
+              <span className="text-sm font-medium text-brand-navy">
+                {region.label}
+              </span>
             </label>
           ))}
         </div>
@@ -167,11 +183,13 @@ export default function PreferencesForm() {
 
       <section className="grid gap-6 sm:grid-cols-3">
         <div>
-          <label className="mb-2 block text-sm font-medium">Presupuesto</label>
+          <label className="mb-2 block text-sm font-medium text-brand-navy">
+            Presupuesto
+          </label>
           <select
             value={budgetRange}
             onChange={(e) => setBudgetRange(e.target.value as BudgetRange)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-brand-navy/15 bg-white px-3 py-2 text-sm focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
           >
             <option value="bajo">Económico</option>
             <option value="medio">Medio</option>
@@ -179,11 +197,13 @@ export default function PreferencesForm() {
           </select>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium">Grupo</label>
+          <label className="mb-2 block text-sm font-medium text-brand-navy">
+            Grupo
+          </label>
           <select
             value={groupType}
             onChange={(e) => setGroupType(e.target.value as GroupType)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-brand-navy/15 bg-white px-3 py-2 text-sm focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
           >
             <option value="solo">Solo/a</option>
             <option value="pareja">Pareja</option>
@@ -192,11 +212,13 @@ export default function PreferencesForm() {
           </select>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium">Ritmo</label>
+          <label className="mb-2 block text-sm font-medium text-brand-navy">
+            Ritmo
+          </label>
           <select
             value={travelPace}
             onChange={(e) => setTravelPace(e.target.value as TravelPace)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-brand-navy/15 bg-white px-3 py-2 text-sm focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
           >
             <option value="intenso">Intenso</option>
             <option value="relajado">Relajado</option>
@@ -207,7 +229,7 @@ export default function PreferencesForm() {
       <button
         type="submit"
         disabled={saving || primaryInterests.length === 0}
-        className="rounded-md bg-colombia-green px-6 py-2.5 text-sm font-semibold text-white hover:bg-colombia-green/90 disabled:opacity-50"
+        className="rounded-full bg-brand-navy px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-navy/90 disabled:opacity-50"
       >
         {saving ? "Guardando..." : "Guardar preferencias"}
       </button>

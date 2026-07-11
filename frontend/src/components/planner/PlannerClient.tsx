@@ -22,6 +22,8 @@ interface PlannerClientProps {
   defaultRegion?: string;
 }
 
+type MobilePanel = "chat" | "map";
+
 /** Extrae texto plano del mensaje (compatible con streaming del AI SDK) */
 function getAssistantText(message: Message | undefined): string | null {
   if (!message || message.role !== "assistant") {
@@ -46,6 +48,7 @@ export default function PlannerClient({
     null,
   );
   const [catalogError, setCatalogError] = useState<string | null>(null);
+  const [mobilePanel, setMobilePanel] = useState<MobilePanel>("chat");
 
   useEffect(() => {
     async function loadCatalog() {
@@ -89,13 +92,17 @@ export default function PlannerClient({
 
     setMarkers(preview.markers);
     setWarnings(detectGeographyWarnings(preview.days));
+
+    // En móvil, si hay plan nuevo, sugerir ver el mapa
+    if (preview.markers.length > 0) {
+      setMobilePanel((current) => current);
+    }
   }, [lastAssistantContent, catalog, defaultRegion]);
 
   const hasPlan = useMemo(() => markers.length > 0, [markers]);
 
   return (
     <div className="relative flex min-h-screen flex-col pt-20">
-      {/* Fondo cinematográfico */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <video
           autoPlay
@@ -111,7 +118,6 @@ export default function PlannerClient({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(250,171,85,0.12),_transparent_55%)]" />
       </div>
 
-      {/* Toolbar */}
       <div className="relative z-10 border-b border-white/10 bg-brand-navy/40 px-4 py-3 backdrop-blur-md sm:px-6">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -135,11 +141,40 @@ export default function PlannerClient({
             {catalogError}
           </p>
         )}
+
+        {/* Tabs móviles: chat | mapa */}
+        <div className="mx-auto mt-3 flex max-w-7xl gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={() => setMobilePanel("chat")}
+            className={`flex-1 rounded-full py-2 text-xs font-semibold uppercase tracking-wide transition ${
+              mobilePanel === "chat"
+                ? "bg-brand-orange text-brand-navy"
+                : "border border-white/25 text-white/80"
+            }`}
+          >
+            Chat
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobilePanel("map")}
+            className={`flex-1 rounded-full py-2 text-xs font-semibold uppercase tracking-wide transition ${
+              mobilePanel === "map"
+                ? "bg-brand-orange text-brand-navy"
+                : "border border-white/25 text-white/80"
+            }`}
+          >
+            Mapa{hasPlan ? ` (${markers.length})` : ""}
+          </button>
+        </div>
       </div>
 
-      {/* Paneles glass */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 lg:flex-row lg:items-stretch lg:min-h-[calc(100vh-9rem)]">
-        <section className="planner-glass flex min-h-[480px] flex-1 flex-col overflow-hidden rounded-2xl animate-fade-up lg:max-w-[55%]">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 lg:flex-row lg:min-h-[calc(100vh-9rem)] lg:items-stretch">
+        <section
+          className={`planner-glass min-h-[70vh] flex-1 flex-col overflow-hidden rounded-2xl animate-fade-up lg:flex lg:min-h-[480px] lg:max-w-[55%] ${
+            mobilePanel === "chat" ? "flex" : "hidden lg:flex"
+          }`}
+        >
           <ChatWindow
             userName={userName}
             onMessagesChange={handleMessagesChange}
@@ -147,7 +182,9 @@ export default function PlannerClient({
         </section>
 
         <section
-          className="planner-glass flex min-h-[420px] flex-1 flex-col overflow-hidden rounded-2xl animate-fade-up"
+          className={`planner-glass min-h-[70vh] flex-1 flex-col overflow-hidden rounded-2xl animate-fade-up lg:flex lg:min-h-[420px] ${
+            mobilePanel === "map" ? "flex" : "hidden lg:flex"
+          }`}
           style={{ animationDelay: "120ms" }}
         >
           <ItineraryMapPanel

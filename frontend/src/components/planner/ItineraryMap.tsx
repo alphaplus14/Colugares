@@ -159,8 +159,8 @@ export default function ItineraryMap({
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-xs font-bold text-white shadow-lg transition-transform ${
                   activeMarker?.order === marker.order
-                    ? "scale-110 bg-colombia-gold"
-                    : "bg-colombia-green hover:scale-105"
+                    ? "scale-110 bg-brand-orange"
+                    : "bg-brand-navy hover:scale-105"
                 }`}
               >
                 {marker.order}

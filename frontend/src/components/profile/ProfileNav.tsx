@@ -1,22 +1,21 @@
 import Link from "next/link";
 
 const links = [
-  { href: "/mi-perfil/preferencias", label: "Preferencias" },
-  { href: "/mi-perfil/itinerarios", label: "Mis itinerarios" },
-  { href: "/planner", label: "Volver a Colu" },
-];
+  { href: "/mi-perfil/preferencias", label: "Preferencias", key: "preferencias" },
+  { href: "/mi-perfil/visitados", label: "Visitados", key: "visitados" },
+  { href: "/mi-perfil/itinerarios", label: "Mis itinerarios", key: "itinerarios" },
+  { href: "/planner", label: "Volver a Colu", key: "planner" },
+] as const;
 
 interface ProfileNavProps {
-  current: "preferencias" | "itinerarios";
+  current: "preferencias" | "itinerarios" | "visitados";
 }
 
 export default function ProfileNav({ current }: ProfileNavProps) {
   return (
-    <nav className="mb-8 flex flex-wrap gap-2 border-b border-gray-200 pb-4">
+    <nav className="mb-8 flex flex-wrap gap-2 border-b border-brand-navy/10 pb-4">
       {links.map((link) => {
-        const isActive =
-          (current === "preferencias" && link.href.includes("preferencias")) ||
-          (current === "itinerarios" && link.href.includes("itinerarios"));
+        const isActive = link.key === current;
 
         return (
           <Link
@@ -24,8 +23,8 @@ export default function ProfileNav({ current }: ProfileNavProps) {
             href={link.href}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               isActive
-                ? "bg-colombia-green text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-brand-navy text-white"
+                : "bg-white text-brand-navy/70 hover:bg-brand-sand"
             }`}
           >
             {link.label}

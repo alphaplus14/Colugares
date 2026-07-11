@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { regions, type RegionData } from "@/lib/home-content";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -8,6 +8,18 @@ import { PillButton } from "@/components/ui/PillButton";
 
 export function RegionExplorer() {
   const [selected, setSelected] = useState<RegionData>(regions[0]);
+  const [selectedHighlight, setSelectedHighlight] = useState<string | null>(
+    null,
+  );
+
+  // Al cambiar de región, limpia el highlight elegido
+  useEffect(() => {
+    setSelectedHighlight(null);
+  }, [selected.id]);
+
+  const ctaLabel = selectedHighlight
+    ? `Planificar viaje a ${selectedHighlight}`
+    : `Planificar viaje a ${selected.name}`;
 
   return (
     <section id="regiones" className="bg-brand-cream py-24 md:py-32">
@@ -77,10 +89,6 @@ export function RegionExplorer() {
           <ScrollReveal delay={200}>
             <div className="flex flex-col justify-center">
               <div key={selected.id} className="animate-fade-in">
-                <div
-                  className="mb-8 h-56 rounded-2xl bg-cover bg-center shadow-xl transition-all duration-500 md:h-64"
-                  style={{ backgroundImage: `url(${selected.image})` }}
-                />
                 <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange-deep">
                   {selected.tagline}
                 </p>
@@ -90,18 +98,32 @@ export function RegionExplorer() {
                 <p className="mb-8 text-brand-navy/70">{selected.description}</p>
 
                 <div className="mb-10 flex flex-wrap gap-2">
-                  {selected.highlights.map((place) => (
-                    <span
-                      key={place}
-                      className="rounded-full border border-brand-navy/10 bg-white px-4 py-1.5 text-sm font-medium text-brand-navy"
-                    >
-                      {place}
-                    </span>
-                  ))}
+                  {selected.highlights.map((place) => {
+                    const isActive = selectedHighlight === place;
+                    return (
+                      <button
+                        key={place}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() =>
+                          setSelectedHighlight((current) =>
+                            current === place ? null : place,
+                          )
+                        }
+                        className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
+                          isActive
+                            ? "border-brand-orange bg-brand-orange text-brand-navy"
+                            : "border-brand-navy/10 bg-white text-brand-navy hover:border-brand-orange/50"
+                        }`}
+                      >
+                        {place}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 <PillButton href="/planner" variant="dark">
-                  Planificar viaje a {selected.name}
+                  {ctaLabel}
                 </PillButton>
               </div>
             </div>

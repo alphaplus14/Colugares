@@ -115,7 +115,7 @@ export function DestinationShowcase() {
                 ))}
               </div>
 
-              <PillButton href="/planner" variant="dark" className="w-fit">
+              <PillButton href="/destinos" variant="dark" className="w-fit">
                 Explorar destino
               </PillButton>
             </div>

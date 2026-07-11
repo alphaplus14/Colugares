@@ -50,7 +50,21 @@ export const createPlaceSchema = z.object({
   budget_tier: budgetTierEnum,
   price_real: placePriceSchema.optional(),
   coordinates: placeCoordinatesSchema,
-  photos: z.array(z.string().url()).default([]),
+  // URL remota o ruta local del frontend (/images/...)
+  photos: z
+    .array(
+      z
+        .string()
+        .min(1)
+        .refine(
+          (value) =>
+            value.startsWith("/") ||
+            value.startsWith("http://") ||
+            value.startsWith("https://"),
+          "Foto inválida: usa URL o ruta local /images/...",
+        ),
+    )
+    .default([]),
   contact: placeContactSchema.default({}),
   recommended_transport: z
     .array(z.string().min(1).max(60))

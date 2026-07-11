@@ -4,13 +4,13 @@ import { RegionExplorer } from "./RegionExplorer";
 import { PassionCategories } from "./PassionCategories";
 import { DestinationShowcase } from "./DestinationShowcase";
 import { EventsTeaser } from "./EventsTeaser";
-import { FinalCta } from "./FinalCta";
 import type { EventListItem } from "@/types/event.types";
 
 interface HomePageProps {
   events: EventListItem[];
 }
 
+/** Home pública — estructura inspirada en GoDominican, adaptada a Colugares */
 export function HomePage({ events }: HomePageProps) {
   return (
     <>
@@ -20,7 +20,6 @@ export function HomePage({ events }: HomePageProps) {
       <PassionCategories />
       <DestinationShowcase />
       <EventsTeaser events={events} />
-      <FinalCta />
     </>
   );
 }

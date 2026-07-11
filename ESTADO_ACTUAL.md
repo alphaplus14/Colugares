@@ -9,10 +9,11 @@
 | Fase | Estado | Entregables |
 |------|--------|-------------|
 | **Fase 1 — Base** | ✅ | Auth.js, RBAC, Express, MongoDB driver nativo |
-| **Fase 2 — CMS y datos** | ✅ | CRUD lugares, embeddings 768 dims, 25 places Caribe |
+| **Fase 2 — CMS y datos** | ✅ | CRUD lugares, embeddings 768 dims |
 | **Fase 3 — AI Trip Planner** | ✅ | Chat RAG Colu, onboarding, streaming SSE, `gemini-2.5-flash` |
 | **Fase 4 — UI + itinerario** | ✅ | Split chat/mapa, parser, guardar itinerarios, hover con fotos |
 | **Fase 5 — Eventos + deploy** | ✅ | RAG eventos, date extractor, home con calendario real, `DEPLOY.md` |
+| **Fase 6 — Plantilla visual** | ✅ | Merge rama `frank` — home GoDominican-style |
 | **Deploy producción** | ⏳ Manual | Atlas M10 + Vercel — ver `DEPLOY.md` |
 
 ### Datos en MongoDB local (`colugares`)
@@ -22,29 +23,79 @@
 | `users` | admin + viajeros | `travel_profile` vía onboarding |
 | `places` | **84** (6 regiones) | `embedding_status: "ready"` en todos |
 | `itineraries` | Por usuario | CRUD completo |
-| `events` | 6 festividades | Seed Fase 5 — **ejecutar `npm run reseed-events` si tenías 4 eventos viejos** |
+| `events` | 6 festividades | `npm run reseed-events` si faltan datos |
 
 ---
 
-## 2. Fase 5 — Qué se implementó
+## 2. Merge rama `frank` (julio 2026)
 
-### RAG con eventos
-- `lib/rag/date-extractor.ts` — detecta fechas en español (*"en febrero"*, *"14 al 17 de agosto"*)
-- `lib/rag/event-retriever.ts` — consulta `events` por región del viajero + solapamiento de fechas
-- `lib/rag/chain.ts` — PASO 5 del pipeline: inyecta eventos en contexto
-- `lib/prompts/system-prompt.ts` — regla de eventos: solo mencionar los de la BD
+**Commit:** `df9be19` — *cambios en el frontend con una plantilla*
 
-### Home y API pública
-- `GET /api/events` — calendario de festividades (sin auth)
-- `EventsTeaser` — datos reales desde MongoDB (ya no estático)
+### Qué trajo Frank
+- **Paleta GoDominican:** `brand-navy`, `brand-orange`, `brand-cream`, `brand-sand`
+- **Tipografías:** Dela Gothic One (display) + DM Sans (body)
+- **Layouts por zona:** `(public)/layout`, `(auth)/layout`, admin rediseñado
+- **Componentes UI:** `SiteHeader`, `SiteFooter`, `PillButton`, `SectionHeading`, `AdminHeader`
+- **Home renovada:** hero, historias fullscreen, regiones, pasiones, destinos con carrusel
+- **Íconos:** `public/icons/close.svg`, `filter.svg`
+- **Imágenes remotas:** Pexels + Unsplash en `next.config.mjs`
 
-### Deploy
-- `DEPLOY.md` — Atlas M10, índice `places_vector_idx`, variables Vercel
-- `backend npm run reseed-events` — actualizar eventos sin borrar toda la BD
+### Qué conservamos de `cris` en el merge
+- **Eventos reales** desde MongoDB en `EventsTeaser` (no estático)
+- **`LoginPageClient`** con validación de Google OAuth (`auth-env.ts`)
+- **Enlaces viajero** en header: Planner, Mis viajes, Cerrar sesión
+- **Fix webpack cache** en dev (Windows — una sola instancia de `next dev`)
+- **RAG, planner, mapa, itinerarios** — sin cambios funcionales
+
+### Conflictos resueltos
+| Archivo | Resolución |
+|---------|------------|
+| `next.config.mjs` | Pexels + Unsplash + webpack cache |
+| `login/page.tsx` | Server component → `LoginPageClient` |
+| `EventsTeaser.tsx` | Diseño Frank + datos MongoDB |
+| `HomePage.tsx` | Props `events` desde servidor |
+| `Navbar.tsx` | Eliminado → reemplazado por `SiteHeader` |
+
+### Archivos WIP del rediseño planner (sin integrar aún)
+Quedaron en el repo como base para la siguiente fase visual del planner:
+- `ColuAvatar.tsx`, `QuickPrompts.tsx`, `TypingIndicator.tsx`
+- `lib/planner-content.ts`, `lib/utils.ts`
 
 ---
 
-## 3. APIs disponibles
+## 3. Cómo correr en local
+
+```powershell
+# Terminal 1 — Backend
+cd backend
+npm run dev          # :4000
+
+# Terminal 2 — Frontend (SOLO una instancia)
+cd frontend
+npm run dev          # :3000
+```
+
+**Si el puerto 3000 está ocupado:**
+```powershell
+Get-NetTCPConnection -LocalPort 3000 | Select OwningProcess -Unique | % { Stop-Process -Id $_.OwningProcess -Force }
+Remove-Item -Recurse -Force frontend\.next
+cd frontend; npm run dev
+```
+
+### Credenciales demo
+| Rol | Email | Contraseña |
+|-----|-------|------------|
+| Admin | `admin@colugares.com` | `Admin123!` |
+| Viajero | `viajero@colugares.com` | `Viajero123!` |
+
+### Verificación rápida
+- `http://localhost:3000` → Home con video hero y secciones Frank
+- `http://localhost:3000/api/events` → JSON con festividades
+- `http://localhost:3000/planner` → Chat + mapa (requiere login viajero + onboarding)
+
+---
+
+## 4. APIs disponibles
 
 | Endpoint | Función |
 |----------|---------|
@@ -53,16 +104,6 @@
 | `GET /api/places/catalog` | Catálogo enriquecido para mapa |
 | `GET/POST /api/itineraries` | Itinerarios guardados |
 | `GET/PUT /api/user/profile` | Perfil viajero |
-
----
-
-## 4. Cómo probar eventos en Colu
-
-1. Actualizar eventos: `cd backend && npm run reseed-events`
-2. Ir a `/planner` y escribir por ejemplo:
-   - *"Quiero viajar a Medellín en agosto"* → Feria de las Flores
-   - *"Plan para Cartagena en noviembre"* → Festival de Música del Caribe
-   - *"Viaje a Barranquilla en febrero"* → Carnaval 2027
 
 ---
 
@@ -78,27 +119,42 @@
 | Llanos | 10 |
 | **Total** | **84** |
 
+---
+
 ## 6. Comandos útiles
 
 ```powershell
-cd backend && npm run dev
-cd backend && npm run reseed-places   # Reemplaza todos los lugares + embeddings
+cd backend && npm run reseed-places   # 84 lugares + embeddings
 cd backend && npm run reseed-events   # Solo festividades
-cd backend && npm run setup-db      # BD completa desde cero
-cd frontend && npm run dev
+cd backend && npm run setup-db        # BD completa desde cero
 cd frontend && npm run type-check
+cd frontend && npm run build
 ```
 
 ---
 
-## 7. Siguiente paso — Deploy producción
+## 7. Siguiente paso — Rediseño visual del Planner
 
-Seguir **`DEPLOY.md`**:
+La **home** ya tiene la plantilla GoDominican de Frank. El **planner** (`/planner`) sigue con UI funcional pero sobria.
 
-1. Crear cluster Atlas M10
-2. Crear índice vectorial `places_vector_idx`
-3. Migrar datos (`setup-db` + `reseed-events` contra Atlas URI)
-4. Desplegar frontend en Vercel con `USE_ATLAS_VECTOR_SEARCH=true`
+**Prioridad:** aplicar la misma estética inmersiva al planner:
+1. Fondo video/cinematográfico + glass panels (chat + mapa)
+2. Integrar `ColuAvatar`, `QuickPrompts`, `TypingIndicator`
+3. Layout propio del planner sin footer (o header oscuro dedicado)
+4. Animaciones de entrada y chips de sugerencias rápidas
+
+**Después:** deploy producción según `DEPLOY.md` (Atlas M10 + Vercel).
+
+---
+
+## 8. Estado del merge Git
+
+El merge `origin/frank` → `cris` está **resuelto y verificado** (`type-check` + `build` OK).
+
+Para cerrar el merge en Git:
+```powershell
+git commit -m "Merge branch 'frank' — plantilla visual frontend"
+```
 
 ---
 

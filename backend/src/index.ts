@@ -1,10 +1,12 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
 import { connectDb } from "./config/mongodb";
 import placeRoutes from "./places/place.routes";
 import healthRoutes from "./routes/health.routes";
 import { errorHandler } from "./middleware/errorMiddleware";
+import { swaggerSpec } from "./config/swagger";
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ async function startServer(): Promise<void> {
 
   app.use("/api/health", healthRoutes);
   app.use("/api/places", placeRoutes);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   app.use(errorHandler);
 

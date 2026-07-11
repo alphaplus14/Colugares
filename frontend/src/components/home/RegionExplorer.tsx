@@ -1,10 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { regions, type RegionData } from "@/lib/home-content";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PillButton } from "@/components/ui/PillButton";
+
+/** Relación real de las fotos en /public/images/regions (752×1024) */
+const REGION_IMAGE_WIDTH = 752;
+const REGION_IMAGE_HEIGHT = 1024;
 
 export function RegionExplorer() {
   const [selected, setSelected] = useState<RegionData>(regions[0]);
@@ -32,25 +37,23 @@ export function RegionExplorer() {
           />
         </ScrollReveal>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <ScrollReveal delay={100}>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-brand-navy lg:aspect-square">
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-60 transition-all duration-700 ease-godo"
-                style={{ backgroundImage: `url(${selected.image})` }}
+            {/*
+              El cuadro sigue el tamaño de la foto (3:4), sin forzar square/cover
+              que desalinea los botones respecto al mapa dibujado en la imagen.
+            */}
+            <div className="relative mx-auto w-full max-w-[420px] overflow-hidden rounded-3xl bg-brand-navy shadow-xl lg:max-w-none">
+              <Image
+                key={selected.id}
+                src={selected.image}
+                alt={`Mapa de Colombia — región ${selected.name}`}
+                width={REGION_IMAGE_WIDTH}
+                height={REGION_IMAGE_HEIGHT}
+                className="block h-auto w-full"
+                sizes="(max-width: 1024px) 420px, 50vw"
+                priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/30 to-transparent" />
-
-              <svg
-                viewBox="0 0 200 280"
-                className="absolute inset-0 h-full w-full p-10 opacity-10"
-                fill="currentColor"
-              >
-                <path
-                  className="text-brand-orange"
-                  d="M100 20 C130 25 155 45 160 75 C165 100 175 120 170 145 C165 170 155 195 140 220 C125 245 105 260 85 255 C65 250 50 235 45 210 C40 185 35 160 40 135 C45 110 55 85 70 65 C80 50 90 30 100 20 Z"
-                />
-              </svg>
 
               {regions.map((region) => (
                 <button

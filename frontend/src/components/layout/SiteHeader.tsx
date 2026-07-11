@@ -155,22 +155,38 @@ export function SiteHeader() {
                 <>
                   <Link
                     href="/planner"
-                    className={`text-sm font-medium transition ${
+                    className={`inline-flex items-center gap-1.5 text-sm font-medium transition ${
                       pathname.startsWith("/planner")
                         ? "text-brand-orange"
                         : "text-white/80 hover:text-brand-orange"
                     }`}
                   >
+                    <Image
+                      src="/brand/colu.png"
+                      alt=""
+                      width={267}
+                      height={237}
+                      className="h-5 w-auto object-contain"
+                      aria-hidden
+                    />
                     Planner
                   </Link>
                   <Link
                     href="/mi-perfil/itinerarios"
-                    className={`text-sm font-medium transition ${
+                    className={`inline-flex items-center gap-1.5 text-sm font-medium transition ${
                       pathname.startsWith("/mi-perfil")
                         ? "text-brand-orange"
                         : "text-white/80 hover:text-brand-orange"
                     }`}
                   >
+                    <Image
+                      src="/brand/map.png"
+                      alt=""
+                      width={224}
+                      height={218}
+                      className="h-5 w-auto object-contain"
+                      aria-hidden
+                    />
                     Mis viajes
                   </Link>
                 </>
@@ -283,16 +299,32 @@ export function SiteHeader() {
                   <>
                     <Link
                       href="/planner"
-                      className="py-2 text-sm text-white/80"
+                      className="inline-flex items-center gap-2 py-2 text-sm text-white/80"
                       onClick={() => setMenuOpen(false)}
                     >
+                      <Image
+                        src="/brand/colu.png"
+                        alt=""
+                        width={267}
+                        height={237}
+                        className="h-6 w-auto object-contain"
+                        aria-hidden
+                      />
                       Planner
                     </Link>
                     <Link
                       href="/mi-perfil/itinerarios"
-                      className="py-2 text-sm text-white/80"
+                      className="inline-flex items-center gap-2 py-2 text-sm text-white/80"
                       onClick={() => setMenuOpen(false)}
                     >
+                      <Image
+                        src="/brand/map.png"
+                        alt=""
+                        width={224}
+                        height={218}
+                        className="h-6 w-auto object-contain"
+                        aria-hidden
+                      />
                       Mis viajes
                     </Link>
                   </>
@@ -309,8 +341,16 @@ export function SiteHeader() {
                 <button
                   type="button"
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="py-2 text-left text-sm text-white/80"
+                  className="inline-flex items-center gap-2 py-2 text-left text-sm text-white/80"
                 >
+                  <Image
+                    src="/brand/logout.png"
+                    alt=""
+                    width={224}
+                    height={235}
+                    className="h-6 w-auto object-contain"
+                    aria-hidden
+                  />
                   Cerrar sesión
                 </button>
               </>

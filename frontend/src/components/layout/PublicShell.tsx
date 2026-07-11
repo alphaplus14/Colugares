@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { ColuChatBubble } from "@/components/layout/ColuChatBubble";
 
 /**
  * Layout público: navbar fija siempre visible.
@@ -18,6 +19,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
       <SiteHeader />
       <main>{children}</main>
       {!hideFooter && <SiteFooter />}
+      <ColuChatBubble />
     </>
   );
 }

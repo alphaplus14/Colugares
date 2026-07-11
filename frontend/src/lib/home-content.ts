@@ -104,9 +104,9 @@ export const regions: RegionData[] = [
     description:
       "Cartagena, Santa Marta y San Andrés: historia, playas de arena blanca y la magia del Caribe colombiano.",
     highlights: ["Cartagena", "Tayrona", "San Andrés"],
-    image:
-      "https://images.unsplash.com/photo-1555881400-74d7aca8b915?w=1200&q=80",
-    position: { top: "18%", left: "72%" },
+    image: "/images/regions/caribe.png",
+    // Anclajes sobre la silueta de Colombia en las fotos 752×1024
+    position: { top: "14%", left: "62%" },
   },
   {
     id: "andina",
@@ -115,9 +115,8 @@ export const regions: RegionData[] = [
     description:
       "Bogotá, Medellín y Boyacá: arte urbano, museos de clase mundial y paisajes de montaña.",
     highlights: ["Bogotá", "Medellín", "Villa de Leyva"],
-    image:
-      "https://images.unsplash.com/photo-1569163138750-85260835f72c?w=1200&q=80",
-    position: { top: "42%", left: "48%" },
+    image: "/images/regions/andina.png",
+    position: { top: "40%", left: "48%" },
   },
   {
     id: "pacifico",
@@ -126,9 +125,8 @@ export const regions: RegionData[] = [
     description:
       "Nuquí, Bahía Solano y Cali: biodiversidad extrema, avistamiento de ballenas y cocina afrocolombiana.",
     highlights: ["Nuquí", "Cali", "Bahía Solano"],
-    image:
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=80",
-    position: { top: "55%", left: "28%" },
+    image: "/images/regions/pacifico.png",
+    position: { top: "52%", left: "27%" },
   },
   {
     id: "amazonia",
@@ -137,9 +135,8 @@ export const regions: RegionData[] = [
     description:
       "Leticia y la triple frontera: ríos infinitos, comunidades indígenas y naturaleza en estado puro.",
     highlights: ["Leticia", "Río Amazonas", "Parque Amacayacu"],
-    image:
-      "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200&q=80",
-    position: { top: "68%", left: "58%" },
+    image: "/images/regions/amazonia.png",
+    position: { top: "68%", left: "54%" },
   },
   {
     id: "llanos",
@@ -148,9 +145,8 @@ export const regions: RegionData[] = [
     description:
       "Yopal y Casanare: safaris llaneros, atardeceres dorados y la auténtica cultura del joropo.",
     highlights: ["Yopal", "Casanare", "Arauca"],
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
-    position: { top: "38%", left: "62%" },
+    image: "/images/regions/llanos.png",
+    position: { top: "34%", left: "64%" },
   },
   {
     id: "eje_cafetero",
@@ -159,9 +155,8 @@ export const regions: RegionData[] = [
     description:
       "Salento, Filandia y Manizales: fincas cafeteras, cocora y el paisaje patrimonio de la humanidad.",
     highlights: ["Salento", "Filandia", "Manizales"],
-    image:
-      "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&q=80",
-    position: { top: "52%", left: "42%" },
+    image: "/images/regions/eje_cafetero.png",
+    position: { top: "48%", left: "38%" },
   },
 ];
 

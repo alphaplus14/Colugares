@@ -1,0 +1,1767 @@
+{
+  "places": [
+    {
+      "name": "Hotel Boutique Casa San Agustín",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "hotel-boutique-casa-san-agustin",
+      "description": "Hotel de lujo en el centro histórico amurallado. Patios coloniales, piscina y servicio concierge. Ideal para parejas y viajeros que buscan autenticidad caribeña con confort premium.",
+      "tags": [
+        "lujo",
+        "historia",
+        "pareja",
+        "colonial"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/hotel-boutique-casa-san-agustin"
+    },
+    {
+      "name": "Restaurante La Cevichería",
+      "type": "restaurante",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "restaurante-la-cevicheria",
+      "description": "Ceviches frescos y coctelería caribeña en Getsemaní. Ambiente bohemio, carta creativa con pescado del día y mariscos locales. Reserva recomendada en fines de semana.",
+      "tags": [
+        "gastronomia",
+        "mariscos",
+        "nocturno",
+        "getsemani"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/caribe/restaurante-la-cevicheria"
+    },
+    {
+      "name": "Tour Islas del Rosario",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "tour-islas-del-rosario",
+      "description": "Excursión en lancha rápida al archipiélago del Rosario. Snorkel en arrecifes de coral, almuerzo en isla y tiempo de playa. Incluye guía bilingüe y equipo de snorkel.",
+      "tags": [
+        "buceo",
+        "playa",
+        "familia",
+        "snorkel"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/tour-islas-del-rosario"
+    },
+    {
+      "name": "Castillo de San Felipe de Barajas",
+      "type": "atractivo",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "castillo-de-san-felipe-de-barajas",
+      "description": "Fortaleza colonial más grande de América. Laberinto de túneles, vistas panorámicas de la ciudad y recorrido histórico sobre la defensa contra piratas. Patrimonio UNESCO.",
+      "tags": [
+        "historia",
+        "cultura",
+        "familia",
+        "patrimonio"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/caribe/castillo-de-san-felipe-de-barajas"
+    },
+    {
+      "name": "Hotel Irotama Resort",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "Santa Marta",
+      "department": "Magdalena",
+      "slug": "hotel-irotama-resort",
+      "description": "Resort frente al mar con múltiples piscinas, toboganes y actividades para familias. Ubicado en la zona de El Rodadero, cerca del aeropuerto Simón Bolívar.",
+      "tags": [
+        "familia",
+        "playa",
+        "resort",
+        "piscina"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/hotel-irotama-resort"
+    },
+    {
+      "name": "Parque Nacional Natural Tayrona",
+      "type": "atractivo",
+      "region": "caribe",
+      "city": "Santa Marta",
+      "department": "Magdalena",
+      "slug": "parque-nacional-natural-tayrona",
+      "description": "Reserva natural donde la selva tropical se encuentra con el Caribe. Senderos a Cabo San Juan, avistamiento de fauna y playas vírgenes. Reserva con antelación en temporada alta.",
+      "tags": [
+        "naturaleza",
+        "senderismo",
+        "playa",
+        "aventura"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/caribe/parque-nacional-natural-tayrona"
+    },
+    {
+      "name": "Ciudad Perdida Trek",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "Santa Marta",
+      "department": "Magdalena",
+      "slug": "ciudad-perdida-trek",
+      "description": "Trekking de 4 días por la Sierra Nevada hasta la Ciudad Perdida, ruinas arqueológicas de la cultura Tayrona. Incluye guía indígena, acampada y comidas. Nivel de dificultad alto.",
+      "tags": [
+        "aventura",
+        "trekking",
+        "arqueologia",
+        "sierra nevada"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/ciudad-perdida-trek"
+    },
+    {
+      "name": "Restaurante Donde Wippy",
+      "type": "restaurante",
+      "region": "caribe",
+      "city": "Santa Marta",
+      "department": "Magdalena",
+      "slug": "restaurante-donde-wippy",
+      "description": "Comida costeña auténtica: pescado frito, arroz con coco y patacones. Ambiente local sin pretensiones, favorito de samarios y viajeros que buscan sabor tradicional.",
+      "tags": [
+        "gastronomia",
+        "local",
+        "pescado",
+        "tradicional"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/caribe/restaurante-donde-wippy"
+    },
+    {
+      "name": "Decameron San Luis",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "San Andrés",
+      "department": "San Andrés y Providencia",
+      "slug": "decameron-san-luis",
+      "description": "Resort todo incluido en la isla de San Andrés. Acceso directo a playa, deportes acuáticos y entretenimiento nocturno. Mar de siete colores a pocos pasos.",
+      "tags": [
+        "todo incluido",
+        "playa",
+        "familia",
+        "snorkel"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/decameron-san-luis"
+    },
+    {
+      "name": "Johnny Cay Tour",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "San Andrés",
+      "department": "San Andrés y Providencia",
+      "slug": "johnny-cay-tour",
+      "description": "Excursión en lancha a Johnny Cay, isla de arena blanca con aguas cristalinas. Ideal para snorkel, relax y fotografía. Duración medio día con guía local.",
+      "tags": [
+        "playa",
+        "snorkel",
+        "isla",
+        "medio dia"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/johnny-cay-tour"
+    },
+    {
+      "name": "Hotel Las Américas Resort",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "Barranquilla",
+      "department": "Atlántico",
+      "slug": "hotel-las-americas-resort",
+      "description": "Resort de playa en Puerto Colombia con spa, campos de golf y convention center. Base ideal para combinar negocios y descanso cerca de Barranquilla.",
+      "tags": [
+        "resort",
+        "playa",
+        "spa",
+        "negocios"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/hotel-las-americas-resort"
+    },
+    {
+      "name": "Carnaval de Barranquilla Experience",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "Barranquilla",
+      "department": "Atlántico",
+      "slug": "carnaval-de-barranquilla-experience",
+      "description": "Tour guiado por el museo del Carnaval y recorrido por los preparativos de la fiesta más grande de Colombia. Incluye taller de disfraces y degustación de cocina costeña.",
+      "tags": [
+        "cultura",
+        "carnaval",
+        "musica",
+        "tradicion"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/carnaval-de-barranquilla-experience"
+    },
+    {
+      "name": "Restaurante El Cactus",
+      "type": "restaurante",
+      "region": "caribe",
+      "city": "Barranquilla",
+      "department": "Atlántico",
+      "slug": "restaurante-el-cactus",
+      "description": "Alta cocina caribeña con toques internacionales. Butifarra santandereana reinventada, ceviches y coctelería de autor en ambiente elegante del norte de la ciudad.",
+      "tags": [
+        "gastronomia",
+        "fine dining",
+        "nocturno"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/caribe/restaurante-el-cactus"
+    },
+    {
+      "name": "Playa Blanca Barú",
+      "type": "atractivo",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "playa-blanca-baru",
+      "description": "Playa de arena blanca y mar turquesa a 45 minutos en lancha desde Cartagena. Perfecta para día de sol, deportes acuáticos y relax. Evitar fines de semana muy concurridos.",
+      "tags": [
+        "playa",
+        "dia completo",
+        "snorkel",
+        "baru"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/caribe/playa-blanca-baru"
+    },
+    {
+      "name": "Agencia Caribe Tours",
+      "type": "agencia",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "agencia-caribe-tours",
+      "description": "Agencia local especializada en tours personalizados por el Caribe colombiano: Rosario, Barú, Mompox y combo Cartagena-Santa Marta. Atención en español e inglés.",
+      "tags": [
+        "agencia",
+        "tours",
+        "personalizado",
+        "multilingual"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/caribe/agencia-caribe-tours"
+    },
+    {
+      "name": "Hotel Zuana",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "Santa Marta",
+      "department": "Magdalena",
+      "slug": "hotel-zuana",
+      "description": "Hotel boutique en la Bahía de Santa Marta con vista a la Sierra Nevada. Piscina infinity, restaurante de autor y ambiente romántico para parejas.",
+      "tags": [
+        "boutique",
+        "pareja",
+        "vista",
+        "sierra nevada"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/hotel-zuana"
+    },
+    {
+      "name": "Minca Eco Lodge",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "Minca",
+      "department": "Magdalena",
+      "slug": "minca-eco-lodge",
+      "description": "Eco-lodge en la montaña a 30 min de Santa Marta. Avistamiento de aves, cascadas de Marinka y café de finca. Desconexión total en la selva tropical.",
+      "tags": [
+        "ecoturismo",
+        "aves",
+        "naturaleza",
+        "café"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/minca-eco-lodge"
+    },
+    {
+      "name": "Tour Manglar La Boquilla",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "tour-manglar-la-boquilla",
+      "description": "Recorrido en canoa por los manglares de La Boquilla con pescadores locales. Avistamiento de aves, cangrejos y aprendizaje sobre la cultura afrocolombiana costeña.",
+      "tags": [
+        "cultura",
+        "naturaleza",
+        "comunitario",
+        "aves"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/tour-manglar-la-boquilla"
+    },
+    {
+      "name": "Restaurante Mistura",
+      "type": "restaurante",
+      "region": "caribe",
+      "city": "San Andrés",
+      "department": "San Andrés y Providencia",
+      "slug": "restaurante-mistura",
+      "description": "Fusión caribeña-isleña con énfasis en langosta, pargo rojo y plátano. Terraza con vista al mar y ambiente relajado para cenas al atardecer.",
+      "tags": [
+        "gastronomia",
+        "mariscos",
+        "atardecer",
+        "isla"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/caribe/restaurante-mistura"
+    },
+    {
+      "name": "Providencia Island Dive Center",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "Providencia",
+      "department": "San Andrés y Providencia",
+      "slug": "providencia-island-dive-center",
+      "description": "Buceo y snorkel en el segundo arrecife de barrera más grande del Caribe. Visibilidad excepcional, tortugas marinas y formaciones de coral prístinas.",
+      "tags": [
+        "buceo",
+        "snorkel",
+        "arrecife",
+        "aventura"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/providencia-island-dive-center"
+    },
+    {
+      "name": "Hostal Casa en el Aire",
+      "type": "hotel",
+      "region": "caribe",
+      "city": "Mompox",
+      "department": "Bolívar",
+      "slug": "hostal-casa-en-el-aire",
+      "description": "Hostal con encanto colonial en el centro histórico de Mompox, patrimonio UNESCO. Patios interiores, hamacas y acceso a la Cienaga de Pijiño para avistamiento de aves.",
+      "tags": [
+        "historia",
+        "colonial",
+        "patrimonio",
+        "economico"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/caribe/hostal-casa-en-el-aire"
+    },
+    {
+      "name": "Kitesurf Cartagena",
+      "type": "actividad",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "kitesurf-cartagena",
+      "description": "Escuela de kitesurf en la Playa de Manzanillo con vientos constantes todo el año. Clases para principiantes y avanzados, equipo incluido y certificación IKO.",
+      "tags": [
+        "kitesurf",
+        "deportes",
+        "aventura",
+        "playa"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/caribe/kitesurf-cartagena"
+    },
+    {
+      "name": "Restaurante Carmen",
+      "type": "restaurante",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "restaurante-carmen",
+      "description": "Alta gastronomía colombiana en una casona del centro histórico. Menú degustación con ingredientes locales reinventados. Reservación obligatoria.",
+      "tags": [
+        "fine dining",
+        "gastronomia",
+        "lujo",
+        "centro historico"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/caribe/restaurante-carmen"
+    },
+    {
+      "name": "Aviatur Caribe",
+      "type": "agencia",
+      "region": "caribe",
+      "city": "Cartagena",
+      "department": "Bolívar",
+      "slug": "aviatur-caribe",
+      "description": "Paquetes integrales Caribe colombiano: vuelos, hoteles y experiencias en Cartagena, San Andrés y Santa Marta. Atención corporativa y vacacional con más de 40 años de experiencia.",
+      "tags": [
+        "agencia",
+        "paquetes",
+        "vuelos",
+        "corporativo"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/caribe/aviatur-caribe"
+    },
+    {
+      "name": "Volcán de Lodo El Totumo",
+      "type": "atractivo",
+      "region": "caribe",
+      "city": "Galapa",
+      "department": "Atlántico",
+      "slug": "volcan-de-lodo-el-totumo",
+      "description": "Experiencia única flotando en un volcán de lodo a 45 min de Cartagena. Propiedades terapéuticas del lodo y masaje incluido. Tour de medio día muy popular.",
+      "tags": [
+        "aventura",
+        "medio dia",
+        "unico",
+        "relax"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/caribe/volcan-de-lodo-el-totumo"
+    },
+    {
+      "name": "Hotel Casa Medina",
+      "type": "hotel",
+      "region": "andina",
+      "city": "Bogotá",
+      "department": "Cundinamarca",
+      "slug": "hotel-casa-medina",
+      "description": "Hotel boutique de lujo en la Zona G. Arquitectura colonial restaurada, restaurante gourmet y ubicación premium cerca de zonas rosa y financiera.",
+      "tags": [
+        "lujo",
+        "boutique",
+        "gastronomia",
+        "zona g"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/andina/hotel-casa-medina"
+    },
+    {
+      "name": "Cerro de Monserrate",
+      "type": "atractivo",
+      "region": "andina",
+      "city": "Bogotá",
+      "department": "Cundinamarca",
+      "slug": "cerro-de-monserrate",
+      "description": "Mirador icónico a 3.152 m.s.n.m. con vistas panorámicas de Bogotá. Santuario, restaurante y acceso en funicular o teleférico. Imperdible al atardecer.",
+      "tags": [
+        "mirador",
+        "cultura",
+        "familia",
+        "iconico"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/andina/cerro-de-monserrate"
+    },
+    {
+      "name": "Museo del Oro",
+      "type": "atractivo",
+      "region": "andina",
+      "city": "Bogotá",
+      "department": "Cundinamarca",
+      "slug": "museo-del-oro",
+      "description": "Colección más grande de orfebrería prehispánica del mundo. Sala de la Balsa Muisca y piezas de culturas indígenas colombianas. Entrada gratuita los domingos.",
+      "tags": [
+        "museo",
+        "cultura",
+        "historia",
+        "familia"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/andina/museo-del-oro"
+    },
+    {
+      "name": "Andrés Carne de Res",
+      "type": "restaurante",
+      "region": "andina",
+      "city": "Chía",
+      "department": "Cundinamarca",
+      "slug": "andres-carne-de-res",
+      "description": "Experiencia gastronómica y festiva con decoración ecléctica, música en vivo y carnes premium. Destino nocturno emblemático cerca de Bogotá desde hace décadas.",
+      "tags": [
+        "nocturno",
+        "gastronomia",
+        "musica",
+        "iconico"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/andina/andres-carne-de-res"
+    },
+    {
+      "name": "Hotel The Charlee",
+      "type": "hotel",
+      "region": "andina",
+      "city": "Medellín",
+      "department": "Antioquia",
+      "slug": "hotel-the-charlee",
+      "description": "Hotel de diseño en el Poblado con rooftop, piscina infinita y vistas a las montañas. Favorito de viajeros internacionales por su ubicación y estilo urbano.",
+      "tags": [
+        "lujo",
+        "diseno",
+        "poblado",
+        "rooftop"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/andina/hotel-the-charlee"
+    },
+    {
+      "name": "Tour Comuna 13",
+      "type": "actividad",
+      "region": "andina",
+      "city": "Medellín",
+      "department": "Antioquia",
+      "slug": "tour-comuna-13",
+      "description": "Recorrido guiado por la transformación urbana de la Comuna 13. Grafitis, escaleras eléctricas, hip hop y historia de resiliencia paisa. Guías locales certificados.",
+      "tags": [
+        "cultura",
+        "arte urbano",
+        "historia",
+        "guia local"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/andina/tour-comuna-13"
+    },
+    {
+      "name": "Parque Arví",
+      "type": "atractivo",
+      "region": "andina",
+      "city": "Medellín",
+      "department": "Antioquia",
+      "slug": "parque-arvi",
+      "description": "Reserva forestal accesible en metrocable. Senderos ecológicos, mercado campesino y clima fresco a minutos del centro. Ideal para familias y amantes de la naturaleza.",
+      "tags": [
+        "naturaleza",
+        "senderismo",
+        "familia",
+        "metrocable"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/andina/parque-arvi"
+    },
+    {
+      "name": "Restaurante Oci.Mde",
+      "type": "restaurante",
+      "region": "andina",
+      "city": "Medellín",
+      "department": "Antioquia",
+      "slug": "restaurante-oci-mde",
+      "description": "Alta cocina paisa contemporánea en El Poblado. Ingredientes locales con técnicas de autor. Carta de vinos colombianos y coctelería de autor.",
+      "tags": [
+        "fine dining",
+        "gastronomia",
+        "poblado",
+        "autor"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/andina/restaurante-oci-mde"
+    },
+    {
+      "name": "Plaza Mayor de Villa de Leyva",
+      "type": "atractivo",
+      "region": "andina",
+      "city": "Villa de Leyva",
+      "department": "Boyacá",
+      "slug": "plaza-mayor-de-villa-de-leyva",
+      "description": "La plaza de armas más grande de Colombia rodeada de arquitectura colonial blanca. Pueblo patrimonio ideal para escapada de fin de semana desde Bogotá.",
+      "tags": [
+        "colonial",
+        "patrimonio",
+        "pueblo",
+        "fin de semana"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/andina/plaza-mayor-de-villa-de-leyva"
+    },
+    {
+      "name": "Hotel Plazuela de San Agustín",
+      "type": "hotel",
+      "region": "andina",
+      "city": "Villa de Leyva",
+      "department": "Boyacá",
+      "slug": "hotel-plazuela-de-san-agustin",
+      "description": "Hotel colonial con chimenea, patio interior y habitaciones con detalles artesanales. A dos cuadras de la plaza principal. Desayuno boyacense incluido.",
+      "tags": [
+        "colonial",
+        "boutique",
+        "romantico",
+        "chimenea"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/andina/hotel-plazuela-de-san-agustin"
+    },
+    {
+      "name": "Caminata Real Barichara–Guane",
+      "type": "actividad",
+      "region": "andina",
+      "city": "Barichara",
+      "department": "Santander",
+      "slug": "caminata-real-barichara-guane",
+      "description": "Sendero histórico de 9 km entre dos pueblos patrimonio. Adoquines originales, paisaje de montaña y pueblo Guane con museo paleontológico al final.",
+      "tags": [
+        "senderismo",
+        "patrimonio",
+        "pueblo",
+        "naturaleza"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/andina/caminata-real-barichara-guane"
+    },
+    {
+      "name": "Hotel Serranía de Barichara",
+      "type": "hotel",
+      "region": "andina",
+      "city": "Barichara",
+      "department": "Santander",
+      "slug": "hotel-serrania-de-barichara",
+      "description": "Hotel campestre con vistas al cañón del Suárez. Piscina, restaurante de comida santandereana y habitaciones con balcón. Pueblo más bonito de Colombia.",
+      "tags": [
+        "campestre",
+        "vistas",
+        "pueblo",
+        "relax"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/andina/hotel-serrania-de-barichara"
+    },
+    {
+      "name": "Parque Nacional del Chicamocha",
+      "type": "atractivo",
+      "region": "andina",
+      "city": "Aratoca",
+      "department": "Santander",
+      "slug": "parque-nacional-del-chicamocha",
+      "description": "Cañón del Chicamocha con teleférico, mirador 360° y deportes de aventura. Uno de los paisajes más impresionantes de los Andes colombianos.",
+      "tags": [
+        "canon",
+        "aventura",
+        "teleferico",
+        "familia"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/andina/parque-nacional-del-chicamocha"
+    },
+    {
+      "name": "Laguna de Guatavita",
+      "type": "atractivo",
+      "region": "andina",
+      "city": "Sesquilé",
+      "department": "Cundinamarca",
+      "slug": "laguna-de-guatavita",
+      "description": "Laguna sagrada muisca origen de la leyenda de El Dorado. Sendero guiado por ecosistema de páramo. Ceremonias indígenas recreadas los fines de semana.",
+      "tags": [
+        "historia",
+        "muisca",
+        "naturaleza",
+        "leyenda"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/andina/laguna-de-guatavita"
+    },
+    {
+      "name": "Agencia Colombia Raíz",
+      "type": "agencia",
+      "region": "andina",
+      "city": "Bogotá",
+      "department": "Cundinamarca",
+      "slug": "agencia-colombia-raiz",
+      "description": "Tours por la región Andina: Villa de Leyva, Barichara, Medellín y Boyacá. Paquetes personalizados con guías bilingües y transporte privado.",
+      "tags": [
+        "agencia",
+        "tours",
+        "andina",
+        "paquetes"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/andina/agencia-colombia-raiz"
+    },
+    {
+      "name": "Valle del Cocora",
+      "type": "atractivo",
+      "region": "eje_cafetero",
+      "city": "Salento",
+      "department": "Quindío",
+      "slug": "valle-del-cocora",
+      "description": "Hogar de la palma de cera nacional, árbol más alto del mundo. Senderos entre niebla, caballos y vistas de montaña. Experiencia icónica del Eje Cafetero.",
+      "tags": [
+        "naturaleza",
+        "palmas",
+        "senderismo",
+        "iconico"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/valle-del-cocora"
+    },
+    {
+      "name": "Hacienda San Alberto",
+      "type": "hotel",
+      "region": "eje_cafetero",
+      "city": "Buenavista",
+      "department": "Quindío",
+      "slug": "hacienda-san-alberto",
+      "description": "Hacienda cafetera de lujo con tour de café premium, cata profesional y suites con vista a los cafetales. Experiencia de café de especialidad reconocida internacionalmente.",
+      "tags": [
+        "cafe",
+        "lujo",
+        "hacienda",
+        "cata"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/hacienda-san-alberto"
+    },
+    {
+      "name": "Mirador de Filandia",
+      "type": "atractivo",
+      "region": "eje_cafetero",
+      "city": "Filandia",
+      "department": "Quindío",
+      "slug": "mirador-de-filandia",
+      "description": "Pueblo colorido con mirador en la torre de la iglesia y vistas al valle del Cauca. Artesanías, café y arquitectura tradicional cafetera conservada.",
+      "tags": [
+        "pueblo",
+        "mirador",
+        "artesanias",
+        "cafe"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/mirador-de-filandia"
+    },
+    {
+      "name": "Tour Finca Cafetera El Ocaso",
+      "type": "actividad",
+      "region": "eje_cafetero",
+      "city": "Salento",
+      "department": "Quindío",
+      "slug": "tour-finca-cafetera-el-ocaso",
+      "description": "Recorrido por finca cafetera tradicional: siembra, beneficio y tostión. Degustación de café de origen con guía experto. Duración 3 horas en español e inglés.",
+      "tags": [
+        "cafe",
+        "tour",
+        "cultura",
+        "degustacion"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/tour-finca-cafetera-el-ocaso"
+    },
+    {
+      "name": "Hotel Bioxury",
+      "type": "hotel",
+      "region": "eje_cafetero",
+      "city": "Armenia",
+      "department": "Quindío",
+      "slug": "hotel-bioxury",
+      "description": "Hotel sostenible rodeado de naturaleza con spa, piscina y restaurante de cocina regional. Certificación ambiental y programas de turismo responsable.",
+      "tags": [
+        "sostenible",
+        "spa",
+        "naturaleza",
+        "relax"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/hotel-bioxury"
+    },
+    {
+      "name": "Termales de Santa Rosa",
+      "type": "atractivo",
+      "region": "eje_cafetero",
+      "city": "Santa Rosa de Cabal",
+      "department": "Caldas",
+      "slug": "termales-de-santa-rosa",
+      "description": "Cascada termal de aguas calientes en medio del bosque andino. Pozos naturales y piscinas con vista a la catarata. Experiencia de bienestar en la montaña.",
+      "tags": [
+        "termales",
+        "cascada",
+        "relax",
+        "naturaleza"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/termales-de-santa-rosa"
+    },
+    {
+      "name": "Restaurante Brasa Parrilla Bar",
+      "type": "restaurante",
+      "region": "eje_cafetero",
+      "city": "Pereira",
+      "department": "Risaralda",
+      "slug": "restaurante-brasa-parrilla-bar",
+      "description": "Parrilla de carnes premium y cocina risaraldense en el centro de Pereira. Ambiente elegante, cava de vinos y postres de autor con café local.",
+      "tags": [
+        "gastronomia",
+        "parrilla",
+        "nocturno",
+        "cafe"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/restaurante-brasa-parrilla-bar"
+    },
+    {
+      "name": "Parque Nacional del Café",
+      "type": "atractivo",
+      "region": "eje_cafetero",
+      "city": "Montenegro",
+      "department": "Quindío",
+      "slug": "parque-nacional-del-cafe",
+      "description": "Parque temático del café con shows folclóricos, teleférico, museo del café y montaña rusa. Diversión familiar con identidad cafetera en cada rincón.",
+      "tags": [
+        "familia",
+        "cafe",
+        "parque",
+        "folclor"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/parque-nacional-del-cafe"
+    },
+    {
+      "name": "Hotel Mocawa",
+      "type": "hotel",
+      "region": "eje_cafetero",
+      "city": "Pereira",
+      "department": "Risaralda",
+      "slug": "hotel-mocawa",
+      "description": "Hotel de negocios y ocio en el eje cafetero con piscina, gimnasio y salones de eventos. Ubicación céntrica ideal para combinar Pereira y pueblos cercanos.",
+      "tags": [
+        "negocios",
+        "piscina",
+        "centrico",
+        "confort"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/hotel-mocawa"
+    },
+    {
+      "name": "Trekking Los Nevados",
+      "type": "actividad",
+      "region": "eje_cafetero",
+      "city": "Manizales",
+      "department": "Caldas",
+      "slug": "trekking-los-nevados",
+      "description": "Expedición al Parque Nacional Natural Los Nevados con nevado Santa Isabel o Tolima. Guía de montaña certificado, equipo incluido. Nivel intermedio-alto.",
+      "tags": [
+        "montana",
+        "aventura",
+        "nevado",
+        "trekking"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/trekking-los-nevados"
+    },
+    {
+      "name": "Salento Pueblo Patrimonio",
+      "type": "atractivo",
+      "region": "eje_cafetero",
+      "city": "Salento",
+      "department": "Quindío",
+      "slug": "salento-pueblo-patrimonio",
+      "description": "Calle Real con casas coloridas, artesanías en guadua y gastronomía local. Punto de partida al Cocora. Ambiente bohemio y cafetero auténtico.",
+      "tags": [
+        "pueblo",
+        "patrimonio",
+        "artesanias",
+        "cafe"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/salento-pueblo-patrimonio"
+    },
+    {
+      "name": "Agencia Viajes del Eje",
+      "type": "agencia",
+      "region": "eje_cafetero",
+      "city": "Armenia",
+      "department": "Quindío",
+      "slug": "agencia-viajes-del-eje",
+      "description": "Paquetes por el Paisaje Cultural Cafetero: Salento, Filandia, fincas y termales. Transporte privado, guías locales y tarifas para parejas y grupos.",
+      "tags": [
+        "agencia",
+        "cafe",
+        "paquetes",
+        "eje cafetero"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/eje_cafetero/agencia-viajes-del-eje"
+    },
+    {
+      "name": "Hotel Punta Faro",
+      "type": "hotel",
+      "region": "pacifico",
+      "city": "Nuquí",
+      "department": "Chocó",
+      "slug": "hotel-punta-faro",
+      "description": "Lodge ecológico frente al Pacífico con cabañas sobre el mar. Desconexión total, ballenas en temporada y gastronomía de mariscos frescos. Solo acceso por avioneta o bote.",
+      "tags": [
+        "ecologico",
+        "playa",
+        "ballenas",
+        "desconexion"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/pacifico/hotel-punta-faro"
+    },
+    {
+      "name": "Avistamiento de Ballenas Nuquí",
+      "type": "actividad",
+      "region": "pacifico",
+      "city": "Nuquí",
+      "department": "Chocó",
+      "slug": "avistamiento-de-ballenas-nuqui",
+      "description": "Tour en bote para ver ballenas jorobadas julio–octubre. Guías locales expertos, avistamiento de delfines y snorkel en aguas cálidas del Pacífico colombiano.",
+      "tags": [
+        "ballenas",
+        "bote",
+        "naturaleza",
+        "temporada"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/pacifico/avistamiento-de-ballenas-nuqui"
+    },
+    {
+      "name": "Termales y Cascada San Cipriano",
+      "type": "atractivo",
+      "region": "pacifico",
+      "city": "Buenaventura",
+      "department": "Valle del Cauca",
+      "slug": "termales-y-cascada-san-cipriano",
+      "description": "Río cristalino en la selva del Pacífico accesible en brujitas (motocarro sobre rieles). Pozos naturales, cascadas y biodiversidad del Chocó biogeográfico.",
+      "tags": [
+        "rio",
+        "selva",
+        "aventura",
+        "naturaleza"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/pacifico/termales-y-cascada-san-cipriano"
+    },
+    {
+      "name": "Restaurante El Darién",
+      "type": "restaurante",
+      "region": "pacifico",
+      "city": "Cali",
+      "department": "Valle del Cauca",
+      "slug": "restaurante-el-darien",
+      "description": "Cocina del Pacífico en Cali: pescado encocado, arroz atollado y aborrajados. Ambiente familiar con música del Pacífico en vivo los fines de semana.",
+      "tags": [
+        "gastronomia",
+        "pacifico",
+        "musica",
+        "tradicional"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/pacifico/restaurante-el-darien"
+    },
+    {
+      "name": "Hotel Intercontinental Cali",
+      "type": "hotel",
+      "region": "pacifico",
+      "city": "Cali",
+      "department": "Valle del Cauca",
+      "slug": "hotel-intercontinental-cali",
+      "description": "Hotel de lujo en el sur de Cali, puerta de entrada al Pacífico. Piscina, spa y conexión con tours a Buenaventura, Juanchaco y San Cipriano.",
+      "tags": [
+        "lujo",
+        "ciudad",
+        "spa",
+        "gateway"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/pacifico/hotel-intercontinental-cali"
+    },
+    {
+      "name": "Tour Parque Nacional Isla Gorgona",
+      "type": "actividad",
+      "region": "pacifico",
+      "city": "Guapi",
+      "department": "Cauca",
+      "slug": "tour-parque-nacional-isla-gorgona",
+      "description": "Excursión a la ex isla penal convertida en parque nacional. Buceo con tiburones, ballenas y selva tropical. Permiso de entrada y guía parque incluidos.",
+      "tags": [
+        "buceo",
+        "parque nacional",
+        "aventura",
+        "ballenas"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/pacifico/tour-parque-nacional-isla-gorgona"
+    },
+    {
+      "name": "Cascada El Charco",
+      "type": "atractivo",
+      "region": "pacifico",
+      "city": "Bahía Solano",
+      "department": "Chocó",
+      "slug": "cascada-el-charco",
+      "description": "Cascada de 80 metros en la selva del Chocó con pozo para nadar. Sendero de 2 horas con guía local. Biodiversidad extrema y aves endémicas.",
+      "tags": [
+        "cascada",
+        "selva",
+        "senderismo",
+        "aves"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/pacifico/cascada-el-charco"
+    },
+    {
+      "name": "Lodge El Almejal",
+      "type": "hotel",
+      "region": "pacifico",
+      "city": "Bahía Solano",
+      "department": "Chocó",
+      "slug": "lodge-el-almejal",
+      "description": "Eco lodge en playa virgen del Pacífico con cabañas de madera. Tortugas marinas en temporada, kayak y pesca artesanal. Cocina con productos del mar.",
+      "tags": [
+        "eco lodge",
+        "playa",
+        "tortugas",
+        "kayak"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/pacifico/lodge-el-almejal"
+    },
+    {
+      "name": "Kayak Manglares Tumaco",
+      "type": "actividad",
+      "region": "pacifico",
+      "city": "Tumaco",
+      "department": "Nariño",
+      "slug": "kayak-manglares-tumaco",
+      "description": "Recorrido en kayak por manglares del Pacífico nariñense. Avistamiento de aves, pesca artesanal y comunidad afrodescendiente. Guía local y equipo incluido.",
+      "tags": [
+        "kayak",
+        "manglares",
+        "comunidad",
+        "aves"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/pacifico/kayak-manglares-tumaco"
+    },
+    {
+      "name": "Playa Guachalito",
+      "type": "atractivo",
+      "region": "pacifico",
+      "city": "El Charco",
+      "department": "Nariño",
+      "slug": "playa-guachalito",
+      "description": "Playa de arena negra volcánica rodeada de selva. Aguas cálidas, pocos turistas y hospedaje comunitario. Destino auténtico del Pacífico sur.",
+      "tags": [
+        "playa",
+        "virgen",
+        "comunitario",
+        "autentico"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/pacifico/playa-guachalito"
+    },
+    {
+      "name": "Agencia Pacífico Adventures",
+      "type": "agencia",
+      "region": "pacifico",
+      "city": "Cali",
+      "department": "Valle del Cauca",
+      "slug": "agencia-pacifico-adventures",
+      "description": "Especialistas en turismo del Pacífico colombiano: Nuquí, Bahía Solano, Gorgona y ballenas. Paquetes con vuelos, alojamiento y guías certificados.",
+      "tags": [
+        "agencia",
+        "pacifico",
+        "ballenas",
+        "paquetes"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/pacifico/agencia-pacifico-adventures"
+    },
+    {
+      "name": "Restaurante Mar del Sur",
+      "type": "restaurante",
+      "region": "pacifico",
+      "city": "Buenaventura",
+      "department": "Valle del Cauca",
+      "slug": "restaurante-mar-del-sur",
+      "description": "Mariscos frescos del puerto más importante del Pacífico. Cazuela de mariscos, pescado frito y jugos tropicales con vista al malecón portuario.",
+      "tags": [
+        "mariscos",
+        "puerto",
+        "gastronomia",
+        "pacifico"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/pacifico/restaurante-mar-del-sur"
+    },
+    {
+      "name": "Hotel Decameron Amazonia",
+      "type": "hotel",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "hotel-decameron-amazonia",
+      "description": "Resort todo incluido en la triple frontera Colombia-Perú-Brasil. Piscina, actividades en la selva y gastronomía amazónica. Base ideal para explorar la región.",
+      "tags": [
+        "resort",
+        "selva",
+        "todo incluido",
+        "familia"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/amazonia/hotel-decameron-amazonia"
+    },
+    {
+      "name": "Tour Río Amazonas",
+      "type": "actividad",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "tour-rio-amazonas",
+      "description": "Navegación por el río Amazonas al atardecer con avistamiento de delfines rosados y loros en la isla de los micos. Incluye guía indígena y refrigerio.",
+      "tags": [
+        "rio",
+        "delfines",
+        "atardecer",
+        "indigena"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/amazonia/tour-rio-amazonas"
+    },
+    {
+      "name": "Reserva Natural Tanimboca",
+      "type": "atractivo",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "reserva-natural-tanimboca",
+      "description": "Selva primaria con canopy en árboles gigantes, caminata nocturna y cabañas suspendidas. Experiencia inmersiva en la biodiversidad amazónica.",
+      "tags": [
+        "canopy",
+        "selva",
+        "nocturno",
+        "biodiversidad"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/amazonia/reserva-natural-tanimboca"
+    },
+    {
+      "name": "Lodge Puerto Nariño",
+      "type": "hotel",
+      "region": "amazonia",
+      "city": "Puerto Nariño",
+      "department": "Amazonas",
+      "slug": "lodge-puerto-narino",
+      "description": "Hotel ecológico en el pueblo más sostenible de Colombia. Sin motos, convivencia con comunidades indígenas y acceso al Lago Tarapoto con delfines.",
+      "tags": [
+        "ecologico",
+        "sostenible",
+        "indigena",
+        "lago"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/amazonia/lodge-puerto-narino"
+    },
+    {
+      "name": "Avistamiento Delfines Rosados",
+      "type": "actividad",
+      "region": "amazonia",
+      "city": "Puerto Nariño",
+      "department": "Amazonas",
+      "slug": "avistamiento-delfines-rosados",
+      "description": "Salida matutina al Lago Tarapoto para ver delfines rosados del Amazonas en su hábitat. Guía tikuna, lancha pequeña y respeto por la fauna silvestre.",
+      "tags": [
+        "delfines",
+        "lago",
+        "fauna",
+        "tikuna"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/amazonia/avistamiento-delfines-rosados"
+    },
+    {
+      "name": "Experiencia Comunidad Tikuna",
+      "type": "actividad",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "experiencia-comunidad-tikuna",
+      "description": "Visita a comunidad indígena tikuna: artesanías en chontaduro, danzas tradicionales y conocimiento de plantas medicinales. Turismo comunitario responsable.",
+      "tags": [
+        "indigena",
+        "cultura",
+        "artesanias",
+        "comunitario"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/amazonia/experiencia-comunidad-tikuna"
+    },
+    {
+      "name": "Museo Etnográfico Amazonas",
+      "type": "atractivo",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "museo-etnografico-amazonas",
+      "description": "Colección de artefactos de las 22 etnias del Amazonas colombiano. Máscaras, cerbatanas y exposición sobre la triple frontera. Visita esencial antes de la selva.",
+      "tags": [
+        "museo",
+        "etnias",
+        "cultura",
+        "historia"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/amazonia/museo-etnografico-amazonas"
+    },
+    {
+      "name": "Expedición Selva Mata-Matá",
+      "type": "actividad",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "expedicion-selva-mata-mata",
+      "description": "Caminata de varios días en selva primaria con guía experto. Identificación de fauna, pesca de pirañas y pernocta en hamacas. Nivel de aventura alto.",
+      "tags": [
+        "expedicion",
+        "selva",
+        "aventura",
+        "fauna"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/amazonia/expedicion-selva-mata-mata"
+    },
+    {
+      "name": "Restaurante Tierras Amazónicas",
+      "type": "restaurante",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "restaurante-tierras-amazonicas",
+      "description": "Gastronomía amazónica: mojojoy, pescado patarashca, fariña y jugos de frutas exóticas. Ingredientes de la selva preparados con técnicas tradicionales.",
+      "tags": [
+        "gastronomia",
+        "amazonica",
+        "exotico",
+        "tradicional"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/amazonia/restaurante-tierras-amazonicas"
+    },
+    {
+      "name": "Agencia Amazon Jungle Tours",
+      "type": "agencia",
+      "region": "amazonia",
+      "city": "Leticia",
+      "department": "Amazonas",
+      "slug": "agencia-amazon-jungle-tours",
+      "description": "Tours integrales por el Amazonas: delfines, comunidades indígenas, selva y triple frontera. Vuelos, alojamiento y guías certificados en español e inglés.",
+      "tags": [
+        "agencia",
+        "amazonas",
+        "selva",
+        "paquetes"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/amazonia/agencia-amazon-jungle-tours"
+    },
+    {
+      "name": "Hato La Aurora",
+      "type": "actividad",
+      "region": "llanos",
+      "city": "Paz de Ariporo",
+      "department": "Casanare",
+      "slug": "hato-la-aurora",
+      "description": "Safari llanero en hato ganadero de 16.000 hectáreas. Caimanes, capibaras, anacondas y más de 400 especies de aves. Experiencia auténtica de los llanos colombianos.",
+      "tags": [
+        "safari",
+        "fauna",
+        "aves",
+        "hato"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/llanos/hato-la-aurora"
+    },
+    {
+      "name": "Safari Llanero Yopal",
+      "type": "actividad",
+      "region": "llanos",
+      "city": "Yopal",
+      "department": "Casanare",
+      "slug": "safari-llanero-yopal",
+      "description": "Recorrido en camión safari por sabanas inundables. Avistamiento de venados, garzas y cóndores de los llanos. Incluye almuerzo llanero y show de joropo.",
+      "tags": [
+        "safari",
+        "joropo",
+        "sabana",
+        "fauna"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/llanos/safari-llanero-yopal"
+    },
+    {
+      "name": "Restaurante La Casona Llanera",
+      "type": "restaurante",
+      "region": "llanos",
+      "city": "Villavicencio",
+      "department": "Meta",
+      "slug": "restaurante-la-casona-llanera",
+      "description": "Mamona al palo, carne a la llanera y sopa de pescado del Meta. Ambiente rústico con música llanera en vivo. La auténtica parrilla de los llanos orientales.",
+      "tags": [
+        "gastronomia",
+        "llanera",
+        "mamona",
+        "musica"
+      ],
+      "files": [
+        "01-plato.jpg",
+        "02-local.jpg",
+        "03-ambiente.jpg"
+      ],
+      "folder": "images/places/llanos/restaurante-la-casona-llanera"
+    },
+    {
+      "name": "Hotel GHL Comfort Villavicencio",
+      "type": "hotel",
+      "region": "llanos",
+      "city": "Villavicencio",
+      "department": "Meta",
+      "slug": "hotel-ghl-comfort-villavicencio",
+      "description": "Hotel en la puerta de los llanos con piscina, restaurante y salones. Punto de partida para hatos, Caño Cristales y safari. Confort urbano antes de la aventura.",
+      "tags": [
+        "ciudad",
+        "confort",
+        "gateway",
+        "piscina"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/llanos/hotel-ghl-comfort-villavicencio"
+    },
+    {
+      "name": "Tour Caño Cristales",
+      "type": "actividad",
+      "region": "llanos",
+      "city": "La Macarena",
+      "department": "Meta",
+      "slug": "tour-cano-cristales",
+      "description": "El río más hermoso del mundo con colores rojo, verde, amarillo y negro. Temporada junio–noviembre. Incluye vuelo, guía, alimentación y permisos del parque.",
+      "tags": [
+        "rio",
+        "colores",
+        "unico",
+        "temporada"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/llanos/tour-cano-cristales"
+    },
+    {
+      "name": "Estrella de Agua",
+      "type": "atractivo",
+      "region": "llanos",
+      "city": "Villavicencio",
+      "department": "Meta",
+      "slug": "estrella-de-agua",
+      "description": "Balneario natural con pozos de agua cristalina al pie de la cordillera. Familias locales y ambiente campestre. Comida típica y sombrillas junto al agua.",
+      "tags": [
+        "balneario",
+        "familia",
+        "agua",
+        "campestre"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/llanos/estrella-de-agua"
+    },
+    {
+      "name": "Parque Las Malocas",
+      "type": "atractivo",
+      "region": "llanos",
+      "city": "Villavicencio",
+      "department": "Meta",
+      "slug": "parque-las-malocas",
+      "description": "Parque temático de la cultura llanera con réplicas de malocas indígenas, muestra de fauna y espectáculos de joropo. Ideal para familias antes del safari.",
+      "tags": [
+        "cultura",
+        "familia",
+        "joropo",
+        "indigena"
+      ],
+      "files": [
+        "01-vista.jpg",
+        "02-detalle.jpg",
+        "03-contexto.jpg"
+      ],
+      "folder": "images/places/llanos/parque-las-malocas"
+    },
+    {
+      "name": "Aviturismo Llanos Orientales",
+      "type": "actividad",
+      "region": "llanos",
+      "city": "Tauramena",
+      "department": "Casanare",
+      "slug": "aviturismo-llanos-orientales",
+      "description": "Observación de más de 300 especies de aves en sabanas y humedales. Guía ornitólogo certificado, telescopios y checklist incluido. Mejor temporada diciembre–marzo.",
+      "tags": [
+        "aves",
+        "ornitologia",
+        "sabana",
+        "naturaleza"
+      ],
+      "files": [
+        "01-accion.jpg",
+        "02-escenario.jpg",
+        "03-experiencia.jpg"
+      ],
+      "folder": "images/places/llanos/aviturismo-llanos-orientales"
+    },
+    {
+      "name": "Lodge Corocora Camp",
+      "type": "hotel",
+      "region": "llanos",
+      "city": "Hato Corocora",
+      "department": "Casanare",
+      "slug": "lodge-corocora-camp",
+      "description": "Campamento de lujo en plena sabana con tiendas safari premium. Chef privado, safari diario y jacuzzi con vista a los llanos. Máximo 12 huéspedes.",
+      "tags": [
+        "glamping",
+        "lujo",
+        "safari",
+        "exclusivo"
+      ],
+      "files": [
+        "01-fachada.jpg",
+        "02-ambiente.jpg",
+        "03-detalle.jpg"
+      ],
+      "folder": "images/places/llanos/lodge-corocora-camp"
+    },
+    {
+      "name": "Agencia Llanos Safari",
+      "type": "agencia",
+      "region": "llanos",
+      "city": "Villavicencio",
+      "department": "Meta",
+      "slug": "agencia-llanos-safari",
+      "description": "Paquetes por los llanos: hatos, Caño Cristales, aviturismo y joropo. Transporte 4x4, guías locales y alojamiento en hatos tradicionales y lodges.",
+      "tags": [
+        "agencia",
+        "safari",
+        "llanos",
+        "paquetes"
+      ],
+      "files": [
+        "01-marca.jpg",
+        "02-experiencia.jpg",
+        "03-destino.jpg"
+      ],
+      "folder": "images/places/llanos/agencia-llanos-safari"
+    }
+  ]
+}

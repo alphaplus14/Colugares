@@ -70,8 +70,7 @@ export default function MapMarkerHoverCard({
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-brand-orange-deep">
-                Parada {marker.order} · Día {marker.day_number} ·{" "}
-                {PERIOD_LABELS[marker.period]}
+                Día {marker.day_number} · {PERIOD_LABELS[marker.period]}
               </p>
               <h3 className="mt-0.5 text-sm font-bold text-brand-navy">
                 {marker.name}

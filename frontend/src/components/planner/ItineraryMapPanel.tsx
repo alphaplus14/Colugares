@@ -38,13 +38,13 @@ export default function ItineraryMapPanel({
           </h2>
           <p className="text-xs text-brand-navy/50">
             {markers.length > 0
-              ? `${markers.length} paradas · pasa el cursor para ver fotos`
+              ? `${markers.length} días en el mapa · el número del pin = Día N`
               : "Los marcadores aparecen cuando Colu arma tu plan"}
           </p>
         </div>
         {markers.length > 0 && (
           <span className="shrink-0 rounded-full bg-brand-orange/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-brand-orange-deep">
-            {markers.length} stops
+            {markers.length} días
           </span>
         )}
       </div>

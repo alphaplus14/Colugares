@@ -4,6 +4,7 @@ import { getDb } from "@/lib/mongodb";
 import { detectGeographyWarnings } from "@/lib/itinerary/geography";
 import { parseItineraryFromMarkdown } from "@/lib/itinerary/parser";
 import { serializeItinerary } from "@/lib/itinerary/serialize";
+import { resolvePlacePhotos } from "@/lib/places/local-photos";
 import { requireViajeroSession } from "@/lib/session-guards";
 import { saveItinerarySchema } from "@/lib/validators/itinerary.schema";
 import type {
@@ -43,7 +44,7 @@ async function loadCatalog(): Promise<PlaceCatalogEntry[]> {
     tags: place.tags,
     budget_tier: place.budget_tier,
     price_real: place.price_real,
-    photos: place.photos,
+    photos: resolvePlacePhotos(place.region, place.name, place.photos),
     coordinates: place.coordinates,
   }));
 }

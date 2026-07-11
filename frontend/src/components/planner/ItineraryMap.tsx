@@ -70,6 +70,24 @@ export default function ItineraryMap({
     return lookup;
   }, [catalog]);
 
+  const catalogByName = useMemo(() => {
+    const lookup: Record<string, PlaceCatalogEntry> = {};
+    for (const entry of catalog) {
+      lookup[entry.name.toLowerCase()] = entry;
+    }
+    return lookup;
+  }, [catalog]);
+
+  const resolvePlace = useCallback(
+    (marker: ItineraryMapMarker): PlaceCatalogEntry | undefined => {
+      if (marker.place_id && catalogById[marker.place_id]) {
+        return catalogById[marker.place_id];
+      }
+      return catalogByName[marker.name.toLowerCase()];
+    },
+    [catalogById, catalogByName],
+  );
+
   const activeMarker = pinned ?? hovered;
 
   const clearHideTimer = useCallback(() => {
@@ -131,7 +149,7 @@ export default function ItineraryMap({
 
         {markers.map((marker) => (
           <Marker
-            key={`${marker.order}-${marker.name}`}
+            key={`day-${marker.day_number}-${marker.place_id ?? marker.name}`}
             longitude={marker.lng}
             latitude={marker.lat}
             anchor="bottom"
@@ -154,16 +172,17 @@ export default function ItineraryMap({
               }}
               role="button"
               tabIndex={0}
-              aria-label={`Parada ${marker.order}: ${marker.name}`}
+              aria-label={`Día ${marker.day_number}: ${marker.name}`}
             >
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-xs font-bold text-white shadow-lg transition-transform ${
-                  activeMarker?.order === marker.order
+                  activeMarker?.order === marker.order &&
+                  activeMarker?.day_number === marker.day_number
                     ? "scale-110 bg-brand-orange"
                     : "bg-brand-navy hover:scale-105"
                 }`}
               >
-                {marker.order}
+                {marker.day_number}
               </div>
             </div>
           </Marker>
@@ -186,12 +205,11 @@ export default function ItineraryMap({
       {activeMarker && (
         <MapMarkerHoverCard
           marker={activeMarker}
-          place={
-            activeMarker.place_id
-              ? catalogById[activeMarker.place_id]
-              : undefined
+          place={resolvePlace(activeMarker)}
+          pinned={
+            pinned?.day_number === activeMarker.day_number &&
+            pinned?.name === activeMarker.name
           }
-          pinned={pinned?.order === activeMarker.order}
           onClose={() => {
             setPinned(null);
             setHovered(null);

@@ -169,18 +169,25 @@ cd frontend && npm run build
 **Permisos:** empleado = CRUD contenido; admin = + eliminar permanente eventos, crear/desactivar/eliminar empleados y viajeros.
 
 ### Siguiente paso
-Deploy producción (`DEPLOY.md`) + pruebas de flujo completo.
+1. Probar planner: **pin del mapa = Día N** (un marcador por día con lugar del catálogo).
+2. Deploy: **Render** (backend) + **Netlify** (front) — guía en `DEPLOY.md`.
+3. (Opcional) Reemplazar fotos Picsum por fotos reales de Colombia.
 
 ---
 
-## 8. Estado del merge Git
+## 8. Fix mapa itinerario (11 jul 2026)
+
+| Antes | Ahora |
+|-------|--------|
+| Pins 1…N = cada slot con coords (podían ser 6 con 4 días) | **1 pin por día** = número del día |
+| Pin 2 ≠ Día 2 | Pin 2 = actividad principal del Día 2 |
+| Foto Unsplash genérica / playa en Llanos | Catálogo prioriza `/images/places/...` locales |
+
+---
+
+## 9. Estado del merge Git
 
 El merge `origin/frank` → `cris` está **resuelto y verificado**.
-
-```powershell
-git add -A
-git commit -m "feat: logins separados viajero/admin + registro viajero"
-```
 
 ---
 

@@ -1,20 +1,167 @@
-# Colugares — Guía de despliegue en producción
+# Colugares — Guía de despliegue
 
-> MongoDB Atlas M10+ · Vercel · Fase 5
+> MongoDB Atlas · **Backend en Render** · **Frontend en Netlify**  
+> (Alternativa histórica: Vercel — sigue válida; esta guía prioriza Render + Netlify.)
 
 ---
 
-## 1. MongoDB Atlas
+## Arquitectura en producción
 
-### Cluster
+| Pieza | Dónde | Qué hace |
+|-------|-------|----------|
+| **MongoDB Atlas** | Atlas (M10+ si usas Vector Search) | `places`, `users`, `events`, `itineraries` |
+| **Backend Express** | **Render** (Web Service) | CMS lugares (`BACKEND_URL`), seed/scripts |
+| **Frontend Next.js** | **Netlify** | UI + Auth.js + `/api/planner`, catálogo, itinerarios |
 
-1. Crear cluster **M10** o superior en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
-2. Habilitar **Atlas Search** / **Vector Search** (requiere M10+).
-3. Obtener connection string: `mongodb+srv://user:pass@cluster.mongodb.net/colugares`
+El **AI Planner** vive en las API Routes de Next.js. Render no es obligatorio para el chat, pero sí para el CMS admin de lugares vía `backend-proxy`.
 
-### Índice vectorial (`places_vector_idx`)
+---
 
-En Atlas → Database → Browse Collections → `places` → Search Indexes → Create:
+## 1. MongoDB Atlas (primero)
+
+1. Crear cluster (M10+ recomendado para `$vectorSearch`; M0 sirve para demo con cosine fallback).
+2. Network Access → Allow `0.0.0.0/0` (o IPs de Render/Netlify).
+3. Database User + connection string:
+   `mongodb+srv://USER:PASS@cluster.mongodb.net/colugares`
+4. Desde tu PC (una vez):
+
+```powershell
+cd backend
+# .env con MONGODB_URI de Atlas
+npm run setup-db
+npm run reseed-events
+```
+
+Índice vectorial: ver sección al final / `places_vector_idx` (igual que antes).
+
+---
+
+## 2. Backend en Render
+
+### Crear servicio
+1. [render.com](https://render.com) → **New → Web Service**
+2. Conectar repo `alphaplus14/Colugares`
+3. Configuración:
+
+| Campo | Valor |
+|-------|--------|
+| **Root Directory** | `backend` |
+| **Runtime** | Node |
+| **Build Command** | `npm install && npm run build` |
+| **Start Command** | `npm start` |
+| **Instance** | Free o Starter |
+
+### Variables de entorno (Render → Environment)
+
+```env
+MONGODB_URI=mongodb+srv://...
+MONGODB_DB_NAME=colugares
+PORT=4000
+FRONTEND_URL=https://TU-SITIO.netlify.app
+INTERNAL_API_KEY=genera-una-clave-larga-compartida
+GEMINI_API_KEY=tu-key
+GEMINI_LLM_MODEL=gemini-2.5-flash
+GEMINI_EMBEDDING_MODEL=gemini-embedding-001
+USE_ATLAS_VECTOR_SEARCH=true
+NODE_ENV=production
+```
+
+### Verificar
+- `https://tu-backend.onrender.com/api/health`
+- Anotar la URL pública → será `BACKEND_URL` en Netlify
+
+> **Nota Free tier:** Render duerme el servicio tras inactividad (~15 min). El primer request puede tardar 30–60 s.
+
+---
+
+## 3. Frontend en Netlify
+
+### Crear sitio
+1. [app.netlify.com](https://app.netlify.com) → **Add new site → Import from Git**
+2. Repo Colugares
+3. Build settings:
+
+| Campo | Valor |
+|-------|--------|
+| **Base directory** | `frontend` |
+| **Build command** | `npm run build` |
+| **Publish directory** | `.next` (Netlify Next runtime lo gestiona) |
+| **Node version** | `20` (Environment `NODE_VERSION=20`) |
+
+Netlify detecta Next.js 14 con el runtime oficial. Si pide plugin: `@netlify/plugin-nextjs` (suele auto-instalarse).
+
+### Variables de entorno (Netlify → Site settings → Environment variables)
+
+```env
+MONGODB_URI=mongodb+srv://...   # misma Atlas
+MONGODB_DB_NAME=colugares
+AUTH_SECRET=openssl-rand-base64-32
+NEXTAUTH_URL=https://TU-SITIO.netlify.app
+AUTH_URL=https://TU-SITIO.netlify.app
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GEMINI_API_KEY=...
+GEMINI_LLM_MODEL=gemini-2.5-flash
+GEMINI_EMBEDDING_MODEL=gemini-embedding-001
+USE_ATLAS_VECTOR_SEARCH=true
+BACKEND_URL=https://tu-backend.onrender.com
+INTERNAL_API_KEY=la-misma-clave-que-en-render
+```
+
+### Google OAuth
+En Google Cloud Console → Credentials → Authorized redirect URIs:
+
+```
+https://TU-SITIO.netlify.app/api/auth/callback/google
+```
+
+Authorized JavaScript origins:
+
+```
+https://TU-SITIO.netlify.app
+```
+
+### CORS en backend
+`FRONTEND_URL` en Render debe ser exactamente la URL de Netlify (sin slash final inconsistente).
+
+---
+
+## 4. Orden recomendado de subida
+
+1. Atlas listo + `setup-db` / seed  
+2. Deploy **Render** (backend) → copiar URL  
+3. Deploy **Netlify** (frontend) con `BACKEND_URL`  
+4. Actualizar OAuth redirect  
+5. Probar checklist abajo  
+
+---
+
+## 5. Checklist post-deploy
+
+| Check | Cómo |
+|-------|------|
+| Home | `https://TU-SITIO.netlify.app` carga |
+| Login viajero | `/login` Google o email |
+| Planner | `/planner` → Colu responde + mapa con **pin = Día N** |
+| Admin | `/admin/login` → lugares (proxy a Render) |
+| Eventos | Home muestra festividades |
+| Auth callback | Google no da `redirect_uri_mismatch` |
+
+---
+
+## 6. Troubleshooting rápido
+
+| Problema | Qué revisar |
+|----------|-------------|
+| Netlify build falla | `NODE_VERSION=20`, base `frontend`, `npm run build` local primero |
+| Admin lugares 502 | `BACKEND_URL` + `INTERNAL_API_KEY` iguales en ambos lados; Render despierto |
+| Planner sin mapa | Usuario viajero + onboarding; catálogo `/api/places/catalog` |
+| Mongo timeout | Atlas Network Access `0.0.0.0/0` |
+| OAuth error | `NEXTAUTH_URL` = URL Netlify exacta + redirect URI |
+
+---
+
+## 7. Índice vectorial Atlas (referencia)
 
 ```json
 {
@@ -28,117 +175,26 @@ En Atlas → Database → Browse Collections → `places` → Search Indexes →
         "numDimensions": 768,
         "similarity": "cosine"
       },
-      {
-        "type": "filter",
-        "path": "region"
-      },
-      {
-        "type": "filter",
-        "path": "is_subscriber"
-      },
-      {
-        "type": "filter",
-        "path": "active"
-      },
-      {
-        "type": "filter",
-        "path": "embedding_status"
-      }
+      { "type": "filter", "path": "region" },
+      { "type": "filter", "path": "is_subscriber" },
+      { "type": "filter", "path": "active" },
+      { "type": "filter", "path": "embedding_status" }
     ]
   }
 }
 ```
 
-### Índices de eventos
-
-Se crean automáticamente con `npm run setup-db` en backend:
-
-- `{ region: 1, active: 1 }`
-- `{ start_date: 1, end_date: 1 }`
-
-### Migrar datos locales → Atlas
-
-```powershell
-# Exportar local (opcional)
-mongodump --uri="mongodb://127.0.0.1:27017" --db=colugares --out=./dump
-
-# Importar en Atlas
-mongorestore --uri="mongodb+srv://..." --db=colugares ./dump/colugares
-```
-
-O ejecutar en Atlas desde tu máquina apuntando al cluster:
-
-```powershell
-cd backend
-# Configurar MONGODB_URI en .env apuntando a Atlas
-npm run setup-db
-npm run reseed-events
-```
-
 ---
 
-## 2. Variables de entorno — Vercel (frontend)
-
-| Variable | Valor producción |
-|----------|------------------|
-| `MONGODB_URI` | `mongodb+srv://...` Atlas |
-| `MONGODB_DB_NAME` | `colugares` |
-| `AUTH_SECRET` | Generar con `openssl rand -base64 32` |
-| `NEXTAUTH_URL` | `https://tu-dominio.vercel.app` |
-| `GOOGLE_CLIENT_ID` | OAuth con redirect de producción |
-| `GOOGLE_CLIENT_SECRET` | — |
-| `GEMINI_API_KEY` | Google AI Studio |
-| `GEMINI_LLM_MODEL` | `gemini-2.5-flash` |
-| `GEMINI_EMBEDDING_MODEL` | `gemini-embedding-001` |
-| `USE_ATLAS_VECTOR_SEARCH` | `true` |
-| `BACKEND_URL` | URL del backend si se despliega aparte |
-| `INTERNAL_API_KEY` | Clave compartida con Express |
-
-### Google OAuth — redirect URIs
-
-Agregar en Google Cloud Console:
-
-```
-https://tu-dominio.vercel.app/api/auth/callback/google
-```
-
----
-
-## 3. Backend Express (opcional en Railway/Render)
-
-Si despliegas el CMS Express por separado:
-
-```env
-MONGODB_URI=mongodb+srv://...
-FRONTEND_URL=https://tu-dominio.vercel.app
-INTERNAL_API_KEY=...
-GEMINI_API_KEY=...
-```
-
-El AI Planner corre en **Next.js API Routes** (`/api/planner/chat`) — no requiere Express en producción para el chat.
-
----
-
-## 4. Verificación post-deploy
-
-| Check | Cómo verificar |
-|-------|----------------|
-| Auth Google | Login en `/login` |
-| Home eventos | `/` muestra festividades desde MongoDB |
-| RAG eventos | En `/planner`: *"Quiero viajar en agosto a Medellín"* → Colu menciona Feria de las Flores |
-| Vector search | Logs sin fallback cosine; `USE_ATLAS_VECTOR_SEARCH=true` |
-| CMS admin | `/admin/lugares` con credenciales admin |
-
----
-
-## 5. Desarrollo local vs producción
+## 8. Local vs producción
 
 | Feature | Local | Producción |
 |---------|-------|------------|
-| Vector search | Cosine en memoria | `$vectorSearch` Atlas |
-| Eventos RAG | Colección `events` local | Misma colección en Atlas |
-| Mapa | MapLibre + Carto (sin key) | Igual |
+| Vector search | Cosine en memoria | `$vectorSearch` si `USE_ATLAS_VECTOR_SEARCH=true` |
+| Front | `:3000` | Netlify |
+| Back | `:4000` | Render |
+| Mapa | MapLibre + Carto | Igual |
 
 ---
 
-*Ver también `ESTADO_ACTUAL.md` para el estado del MVP.*
+*Ver `ESTADO_ACTUAL.md` para el estado del MVP.*

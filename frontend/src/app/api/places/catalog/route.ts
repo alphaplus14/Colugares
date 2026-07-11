@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
+import { resolvePlacePhotos } from "@/lib/places/local-photos";
 import { requireViajeroSession } from "@/lib/session-guards";
 import type { PlaceCatalogEntry } from "@/types/itinerary.types";
 import type { PlaceDocument } from "@/types/place-document.types";
@@ -43,7 +44,8 @@ export async function GET() {
       tags: place.tags,
       budget_tier: place.budget_tier,
       price_real: place.price_real,
-      photos: place.photos,
+      // Prioriza fotos locales en public/images/places/...
+      photos: resolvePlacePhotos(place.region, place.name, place.photos),
       coordinates: place.coordinates,
     }));
 

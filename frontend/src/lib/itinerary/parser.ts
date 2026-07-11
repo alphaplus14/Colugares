@@ -12,6 +12,10 @@ const PERIODS: ItinerarySlotPeriod[] = ["mañana", "tarde", "noche"];
 const DAY_HEADER_REGEX =
   /(?:\*\*)?\s*D[ií]a\s+(\d+)\s*[—–:\-]\s*([^\n*]+?)(?:\*\*)?/gi;
 
+/** Actividades genéricas: no deben generar marcador ni match falso */
+const GENERIC_ACTIVITY_REGEX =
+  /\b(tiempo libre|explorar (la |el )?(ciudad|pueblo|zona)|relajarse|por definir|sin plan|desayuno en el hotel|noche libre|tarde libre|mañana libre|cena (en )?(un )?restaurante local|almuerzo libre)\b/i;
+
 function normalizeText(value: string): string {
   return value
     .replace(/\*\*/g, "")
@@ -22,11 +26,18 @@ function normalizeText(value: string): string {
     .trim();
 }
 
+/**
+ * Matching estricto: el nombre del lugar debe aparecer completo en la actividad.
+ * Evita falsos positivos por substrings cortos o genéricos.
+ */
 function matchPlace(
   activityText: string,
   catalog: PlaceCatalogEntry[],
 ): PlaceCatalogEntry | undefined {
   const normalizedActivity = normalizeText(activityText);
+  if (!normalizedActivity || GENERIC_ACTIVITY_REGEX.test(activityText)) {
+    return undefined;
+  }
 
   const sorted = [...catalog].sort(
     (a, b) => b.name.length - a.name.length,
@@ -34,7 +45,21 @@ function matchPlace(
 
   for (const place of sorted) {
     const normalizedName = normalizeText(place.name);
-    if (normalizedActivity.includes(normalizedName)) {
+    // Nombres muy cortos (< 5) son peligrosos (ej. "Agua", "Café")
+    if (normalizedName.length < 5) {
+      continue;
+    }
+    if (!normalizedActivity.includes(normalizedName)) {
+      continue;
+    }
+
+    // Exigir límite de palabra aproximado: no matchear fragmento dentro de otra palabra
+    const escaped = normalizedName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const boundary = new RegExp(
+      `(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`,
+      "i",
+    );
+    if (boundary.test(normalizedActivity)) {
       return place;
     }
   }
@@ -54,11 +79,15 @@ function buildSlot(
 ): ItinerarySlot {
   const matched = matchPlace(rawActivity, catalog);
   const priceLabel = extractPriceLabel(rawActivity);
+  const placeName =
+    matched?.name ??
+    rawActivity.split(/[—–-]/)[0]?.trim() ??
+    rawActivity;
 
   return {
     period,
     place_id: matched?._id,
-    place_name: matched?.name ?? rawActivity.split(/[—–-]/)[0]?.trim() ?? rawActivity,
+    place_name: placeName,
     activity: rawActivity.trim(),
     price_label: priceLabel,
     coordinates: matched?.coordinates,
@@ -120,7 +149,7 @@ function parseDayBlock(
   };
 }
 
-/** Fallback: busca nombres de places mencionados en el texto completo */
+/** Fallback: un marcador por lugar mencionado (solo si no hay días parseados) */
 function extractMarkersByMention(
   content: string,
   catalog: PlaceCatalogEntry[],
@@ -131,21 +160,26 @@ function extractMarkersByMention(
   const sorted = [...catalog].sort((a, b) => b.name.length - a.name.length);
 
   for (const place of sorted) {
-    if (normalizedContent.includes(normalizeText(place.name))) {
+    const normalizedName = normalizeText(place.name);
+    if (normalizedName.length < 5) {
+      continue;
+    }
+    if (normalizedContent.includes(normalizedName)) {
       if (!mentioned.some((item) => item._id === place._id)) {
         mentioned.push(place);
       }
     }
   }
 
-  return mentioned.map((place, index) => ({
+  // Limitar a 8 para no saturar el mapa en fallback
+  return mentioned.slice(0, 8).map((place, index) => ({
     order: index + 1,
     place_id: place._id,
     name: place.name,
     lat: place.coordinates.lat,
     lng: place.coordinates.lng,
-    day_number: 1,
-    period: "mañana",
+    day_number: index + 1,
+    period: "mañana" as const,
     activity: place.name,
   }));
 }
@@ -201,6 +235,11 @@ export function parseItineraryFromMarkdown(
   };
 }
 
+/**
+ * Un marcador por día = el número del pin coincide con "Día N".
+ * Usa el primer lugar del catálogo encontrado en mañana → tarde → noche.
+ * Así 4 días → máximo 4 pines; el pin 2 = actividad principal del Día 2.
+ */
 export function buildMapMarkers(days: ItineraryDay[]): ItineraryMapMarker[] {
   const periodOrder: Record<ItinerarySlotPeriod, number> = {
     mañana: 0,
@@ -209,8 +248,6 @@ export function buildMapMarkers(days: ItineraryDay[]): ItineraryMapMarker[] {
   };
 
   const markers: ItineraryMapMarker[] = [];
-  let order = 1;
-
   const sortedDays = [...days].sort((a, b) => a.day_number - b.day_number);
 
   for (const day of sortedDays) {
@@ -218,23 +255,28 @@ export function buildMapMarkers(days: ItineraryDay[]): ItineraryMapMarker[] {
       (a, b) => periodOrder[a.period] - periodOrder[b.period],
     );
 
-    for (const slot of sortedSlots) {
-      if (!slot.coordinates) {
-        continue;
-      }
+    const primary = sortedSlots.find(
+      (slot) =>
+        Boolean(slot.coordinates) &&
+        Boolean(slot.place_id) &&
+        !GENERIC_ACTIVITY_REGEX.test(slot.activity),
+    );
 
-      markers.push({
-        order,
-        place_id: slot.place_id,
-        name: slot.place_name,
-        lat: slot.coordinates.lat,
-        lng: slot.coordinates.lng,
-        day_number: day.day_number,
-        period: slot.period,
-        activity: slot.activity,
-      });
-      order += 1;
+    if (!primary?.coordinates) {
+      continue;
     }
+
+    markers.push({
+      // El número visible en el mapa = número del día del itinerario
+      order: day.day_number,
+      place_id: primary.place_id,
+      name: primary.place_name,
+      lat: primary.coordinates.lat,
+      lng: primary.coordinates.lng,
+      day_number: day.day_number,
+      period: primary.period,
+      activity: primary.activity,
+    });
   }
 
   return markers;

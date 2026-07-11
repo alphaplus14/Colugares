@@ -106,7 +106,7 @@ export const llanosSeedPlaces: SeedPlace[] = [
     budget_tier: "bajo",
     price_real: { amount: 18000, unit: "persona", currency: "COP" },
     coordinates: { lat: 4.0850, lng: -73.5820 },
-    photos: ["https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80"],
+    photos: ["/images/places/llanos/estrella-de-agua/01-vista.jpg"],
     contact: {},
     recommended_transport: ["Bus desde Villavicencio", "Carro privado"],
     is_subscriber: true,
@@ -124,7 +124,8 @@ export const llanosSeedPlaces: SeedPlace[] = [
     budget_tier: "bajo",
     price_real: { amount: 22000, unit: "persona", currency: "COP" },
     coordinates: { lat: 4.1285, lng: -73.6105 },
-    photos: ["https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800&q=80"],
+    // Foto local (carpeta pública) — evita Unsplash de playa/selva incorrecto
+    photos: ["/images/places/llanos/parque-las-malocas/01-vista.jpg"],
     contact: {},
     recommended_transport: ["Taxi", "Bus urbano"],
     is_subscriber: true,

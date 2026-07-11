@@ -1,0 +1,9 @@
+{
+  "filled_ok": 58,
+  "fail": 0,
+  "already_ok_skip": 223,
+  "place_jpg_total": 252,
+  "home_jpg_total": 30,
+  "expected_places": 252,
+  "note": "Gaps filled with picsum.photos deterministic seeds. Replace later with curated Pinterest/Cosmos downloads."
+}

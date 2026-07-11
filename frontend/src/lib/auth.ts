@@ -19,6 +19,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        intent: { label: "Intent", type: "text" },
       },
       async authorize(credentials) {
         const parsed = loginSchema.safeParse(credentials);
@@ -26,17 +27,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
+        const { email, password, intent } = parsed.data;
         const db = await getDb();
         const user = await db
           .collection<UserDocument>("users")
-          .findOne({ email: parsed.data.email });
+          .findOne({ email });
 
         if (!user?.password_hash) {
           return null;
         }
 
+        if (user.active === false) {
+          return null;
+        }
+
         const passwordMatch = await bcrypt.compare(
-          parsed.data.password,
+          password,
           user.password_hash,
         );
 
@@ -44,17 +50,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        // Solo admin y empleado acceden por credenciales al panel interno
-        if (user.role !== "admin" && user.role !== "empleado") {
+        // Staff solo entra con intent staff; viajero solo con intent viajero
+        if (intent === "staff") {
+          if (user.role !== "admin" && user.role !== "empleado") {
+            return null;
+          }
+        } else if (user.role !== "viajero") {
           return null;
         }
 
         await db
           .collection<UserDocument>("users")
-          .updateOne(
-            { _id: user._id },
-            { $set: { last_login: new Date() } },
-          );
+          .updateOne({ _id: user._id }, { $set: { last_login: new Date() } });
 
         return {
           id: user._id.toString(),
@@ -82,13 +89,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         await db.collection("users").insertOne({
           name: user.name ?? (profile?.name as string | undefined) ?? "Viajero",
           email: user.email,
-          role: "viajero",
+          role: "viajero" satisfies UserRole,
           visited_places: [],
           saved_itineraries: [],
           created_at: now,
           last_login: now,
         });
       } else {
+        // No permitir que un staff use Google para “mezclar” flujos públicos
+        // (sigue pudiendo autenticarse; el middleware lo manda al panel)
         await db
           .collection<UserDocument>("users")
           .updateOne(
@@ -102,11 +111,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id ?? token.sub ?? "";
-        token.role = user.role;
+        if (user.role) {
+          token.role = user.role;
+        }
       }
 
-      // Para Google OAuth, el rol viene de la BD
-      if (account?.provider === "google" && token.email) {
+      // Google OAuth no trae role — siempre resolver desde MongoDB
+      if (token.email && (!token.role || account?.provider === "google")) {
         const db = await getDb();
         const dbUser = await db
           .collection<UserDocument>("users")

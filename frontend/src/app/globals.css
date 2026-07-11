@@ -34,4 +34,127 @@ html {
   .section-watermark {
     @apply pointer-events-none select-none font-display text-[2.5rem] leading-[1.15] text-brand-orange/20 md:text-[4.5rem] lg:text-[5.5rem];
   }
+
+  /* Paneles glass del planner */
+  .planner-glass {
+    @apply border border-white/10 bg-white/90 shadow-xl shadow-brand-navy/20 backdrop-blur-xl;
+  }
+
+  .scrollbar-planner {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(16, 27, 37, 0.25) transparent;
+  }
+
+  .scrollbar-planner::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-planner::-webkit-scrollbar-thumb {
+    background-color: rgba(16, 27, 37, 0.25);
+    border-radius: 9999px;
+  }
+}
+
+/* ── Intro splash (estilo GoDominican) ── */
+@keyframes intro-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes intro-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes intro-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-image-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes intro-arc-draw {
+  from {
+    stroke-dashoffset: 420;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.intro-fade-left {
+  opacity: 0;
+  animation: intro-fade-left 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.15s forwards;
+}
+
+.intro-fade-right {
+  opacity: 0;
+  animation: intro-fade-right 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.35s forwards;
+}
+
+.intro-fade-up {
+  opacity: 0;
+  animation: intro-fade-up 0.7s ease-out 1.2s forwards;
+}
+
+.intro-image-scale {
+  opacity: 0;
+  animation: intro-image-scale 1s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
+}
+
+.intro-arc-draw {
+  stroke-dasharray: 2.5 5.5;
+  stroke-dashoffset: 420;
+  animation: intro-arc-draw 2.4s ease-out 0.4s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-fade-left,
+  .intro-fade-right,
+  .intro-fade-up,
+  .intro-image-scale,
+  .intro-arc-draw {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+@keyframes typing-dot {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
 }

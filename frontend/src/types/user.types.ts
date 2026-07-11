@@ -24,6 +24,8 @@ export interface User {
   travel_profile?: TravelProfile;
   visited_places: ObjectId[];
   saved_itineraries: ObjectId[];
+  /** false = cuenta desactivada (no puede iniciar sesión) */
+  active?: boolean;
   created_at: Date;
   last_login: Date;
 }

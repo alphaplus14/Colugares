@@ -33,7 +33,7 @@ export function SiteFooter() {
                 Festividades
               </a>
               <Link href="/login" className="hover:text-white">
-                Acceso staff
+                Iniciar sesión
               </Link>
             </nav>
           </div>

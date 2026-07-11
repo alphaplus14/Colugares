@@ -1,62 +1,69 @@
-import type { CreateEventInput } from "../types/event.types";
-
-type SeedEvent = CreateEventInput;
-
-/** Festividades nacionales para el seed inicial */
-export const eventsSeed: SeedEvent[] = [
-  {
-    name: "Carnaval de Barranquilla",
-    region: "caribe",
-    city: "Barranquilla",
-    start_date: new Date("2027-02-06T00:00:00.000Z"),
-    end_date: new Date("2027-02-09T23:59:59.000Z"),
-    description:
-      "Patrimonio UNESCO: cuatro días de música, danza y tradición costeña. Desfiles, concursos de litografía y la Batalla de Flores.",
-    tags: ["cultura", "musica", "danza", "patrimonio"],
-    active: true,
-  },
+/** Festividades colombianas — colección events (Fase 5) */
+export const eventsSeed = [
   {
     name: "Feria de las Flores",
     region: "andina",
     city: "Medellín",
-    start_date: new Date("2026-08-01T00:00:00.000Z"),
-    end_date: new Date("2026-08-10T23:59:59.000Z"),
+    start_date: new Date("2026-08-07T00:00:00.000Z"),
+    end_date: new Date("2026-08-17T23:59:59.000Z"),
     description:
-      "Desfile de silleteros, conciertos y la fiesta más colorida de Antioquia. Celebración de la floricultura paisa.",
-    tags: ["cultura", "flores", "familia", "musica"],
+      "Desfile de silleteros, exposiciones florales y eventos culturales en la ciudad de la eterna primavera.",
+    tags: ["flores", "cultura", "desfile", "agosto"],
     active: true,
   },
   {
-    name: "Festival Vallenato",
-    region: "caribe",
-    city: "Valledupar",
-    start_date: new Date("2026-04-27T00:00:00.000Z"),
-    end_date: new Date("2026-05-01T23:59:59.000Z"),
+    name: "Festival de Jazz al Parque",
+    region: "andina",
+    city: "Bogotá",
+    start_date: new Date("2026-09-12T00:00:00.000Z"),
+    end_date: new Date("2026-09-14T23:59:59.000Z"),
     description:
-      "La cuna del vallenato celebra sus leyendas en la tierra de Francisco el Hombre. Concurso de acordeoneros y piquerías.",
-    tags: ["musica", "vallenato", "cultura", "tradicion"],
+      "Tres días de jazz nacional e internacional en escenarios al aire libre del parque Simón Bolívar.",
+    tags: ["musica", "jazz", "cultura", "septiembre"],
     active: true,
   },
   {
-    name: "Festival Internacional de Cine de Cartagena",
+    name: "Festival de Música del Caribe",
     region: "caribe",
     city: "Cartagena",
-    start_date: new Date("2026-03-12T00:00:00.000Z"),
-    end_date: new Date("2026-03-17T23:59:59.000Z"),
+    start_date: new Date("2026-11-20T00:00:00.000Z"),
+    end_date: new Date("2026-11-23T23:59:59.000Z"),
     description:
-      "El festival de cine más importante de Colombia. Proyecciones al aire libre, premieres y eventos en el centro histórico.",
-    tags: ["cine", "cultura", "nocturno", "arte"],
+      "Conciertos de champeta, cumbia y música tropical en el centro histórico amurallado.",
+    tags: ["musica", "caribe", "cultura", "noviembre"],
     active: true,
   },
   {
-    name: "Carnaval de Negros y Blancos",
-    region: "andina",
-    city: "Pasto",
-    start_date: new Date("2027-01-02T00:00:00.000Z"),
-    end_date: new Date("2027-01-07T23:59:59.000Z"),
+    name: "Carnaval de Barranquilla",
+    region: "caribe",
+    city: "Barranquilla",
+    start_date: new Date("2027-02-13T00:00:00.000Z"),
+    end_date: new Date("2027-02-16T23:59:59.000Z"),
     description:
-      "Patrimonio inmaterial de la humanidad. Desfiles con pintura corporal, comparsas y celebración de la diversidad cultural.",
-    tags: ["cultura", "tradicion", "familia", "patrimonio"],
+      "Patrimonio Oral e Inmaterial de la Humanidad UNESCO. Desfiles, danzas folclóricas y fiesta en las calles del Caribe colombiano.",
+    tags: ["carnaval", "cultura", "musica", "febrero"],
     active: true,
   },
-];
+  {
+    name: "Festival Iberoamericano de Teatro",
+    region: "andina",
+    city: "Bogotá",
+    start_date: new Date("2027-03-27T00:00:00.000Z"),
+    end_date: new Date("2027-04-11T23:59:59.000Z"),
+    description:
+      "El festival de teatro más grande de América Latina. Obras en escenarios al aire libre y salas de toda la capital.",
+    tags: ["teatro", "cultura", "arte", "marzo"],
+    active: true,
+  },
+  {
+    name: "Festival de la Leyenda Vallenata",
+    region: "caribe",
+    city: "Valledupar",
+    start_date: new Date("2027-04-23T00:00:00.000Z"),
+    end_date: new Date("2027-04-26T23:59:59.000Z"),
+    description:
+      "Competencia de acordeoneros, piquerías y conciertos del género vallenato en la capital del Cesar.",
+    tags: ["musica", "vallenato", "cultura", "abril"],
+    active: true,
+  },
+] as const;

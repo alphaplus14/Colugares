@@ -1,0 +1,38 @@
+"use client";
+
+import type { QuickPrompt } from "@/lib/planner-content";
+import { cn } from "@/lib/utils";
+
+interface QuickPromptsProps {
+  prompts: QuickPrompt[];
+  onSelect: (message: string) => void;
+  disabled?: boolean;
+  className?: string;
+}
+
+/** Chips de sugerencias rápidas — acelera el inicio del viaje */
+export default function QuickPrompts({
+  prompts,
+  onSelect,
+  disabled,
+  className,
+}: QuickPromptsProps) {
+  return (
+    <div className={cn("flex flex-wrap gap-2", className)}>
+      {prompts.map((prompt) => (
+        <button
+          key={prompt.id}
+          type="button"
+          disabled={disabled}
+          onClick={() => onSelect(prompt.message)}
+          className="group flex items-center gap-1.5 rounded-full border border-brand-navy/10 bg-brand-cream px-3 py-1.5 text-xs font-medium text-brand-navy transition-all duration-300 ease-godo hover:border-brand-orange/50 hover:bg-brand-orange/15 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <span className="transition-transform duration-300 group-hover:scale-110">
+            {prompt.emoji}
+          </span>
+          {prompt.label}
+        </button>
+      ))}
+    </div>
+  );
+}

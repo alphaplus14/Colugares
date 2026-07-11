@@ -40,11 +40,21 @@ const config: Config = {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.65" },
+        },
+        "typing-dot": {
+          "0%, 60%, 100%": { transform: "translateY(0)" },
+          "30%": { transform: "translateY(-4px)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.5s ease-out forwards",
         "fade-up": "fade-up 0.8s ease-out forwards",
         marquee: "marquee 30s linear infinite",
+        "pulse-soft": "pulse-soft 2s ease-in-out infinite",
+        "typing-dot": "typing-dot 1.2s ease-in-out infinite",
       },
       transitionTimingFunction: {
         "godo": "cubic-bezier(0.77, 0, 0.175, 1)",

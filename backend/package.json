@@ -8,7 +8,10 @@
     "start": "node dist/index.js",
     "type-check": "tsc --noEmit",
     "seed": "tsx src/scripts/seed.ts",
-    "reindex": "tsx src/scripts/reindex-pending.ts"
+    "reindex": "tsx src/scripts/reindex-pending.ts",
+    "reseed-events": "tsx src/scripts/reseed-events.ts",
+    "reseed-places": "tsx src/scripts/reseed-places.ts",
+    "setup-db": "tsx src/scripts/seed.ts && tsx src/scripts/reindex-pending.ts && tsx src/scripts/setup-db.ts"
   },
   "dependencies": {
     "express": "^4.21.2",

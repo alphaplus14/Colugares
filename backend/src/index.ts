@@ -33,7 +33,7 @@ async function startServer(): Promise<void> {
 
   app.use(errorHandler);
 
-  app.listen(port, () => {
+  app.listen(port, "0.0.0.0", () => {
     console.log(`=> Server activo en el puerto ${port}`);
   });
 }

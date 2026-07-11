@@ -7,8 +7,7 @@ const INTRO_DURATION_MS = 3800;
 const EXIT_DURATION_MS = 700;
 
 /** Imagen central de la intro — Caribe colombiano */
-const INTRO_IMAGE =
-  "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&q=80";
+const INTRO_IMAGE = "/images/ui/splash.jpg";
 
 interface IntroSplashProps {
   onComplete: () => void;

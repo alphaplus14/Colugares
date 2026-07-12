@@ -40,7 +40,60 @@ function serializeAdminEvent(doc: EventDocument): AdminEventItem {
   };
 }
 
-/** GET /api/admin/events — listado CMS (incluye inactivos) */
+/**
+ * @swagger
+ * /api/admin/events:
+ *   get:
+ *     summary: Listado CMS de festividades (incluye inactivas)
+ *     tags: [Admin - Eventos]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: region
+ *         schema:
+ *           $ref: '#/components/schemas/ColombiaRegion'
+ *       - in: query
+ *         name: active
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 12
+ *     responses:
+ *       200:
+ *         description: Listado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/AdminEvent'
+ *                 pagination:
+ *                   $ref: '#/components/schemas/PaginationMeta'
+ *       403:
+ *         description: No autorizado (requiere sesión admin o empleado)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Error al cargar los eventos
+ */
 export async function GET(request: Request) {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;
@@ -80,7 +133,44 @@ export async function GET(request: Request) {
   }
 }
 
-/** POST /api/admin/events — crear festividad */
+/**
+ * @swagger
+ * /api/admin/events:
+ *   post:
+ *     summary: Crear una festividad/evento nuevo
+ *     tags: [Admin - Eventos]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/EventInput'
+ *     responses:
+ *       201:
+ *         description: Evento creado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   $ref: '#/components/schemas/AdminEvent'
+ *       400:
+ *         description: Datos inválidos (falló validación Zod, incluye fecha fin >= inicio)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error al crear el evento
+ */
 export async function POST(request: Request) {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;

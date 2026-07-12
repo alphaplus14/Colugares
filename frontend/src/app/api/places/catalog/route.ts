@@ -5,7 +5,34 @@ import { requireViajeroSession } from "@/lib/session-guards";
 import type { PlaceCatalogEntry } from "@/types/itinerary.types";
 import type { PlaceDocument } from "@/types/place-document.types";
 
-/** Catálogo público de places suscritos — para mapa y parser del planner */
+/**
+ * @swagger
+ * /api/places/catalog:
+ *   get:
+ *     summary: Catálogo de lugares suscritos y activos, para el mapa y el parser del AI planner
+ *     tags: [Places (Viajero)]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Catálogo obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PlaceSummary'
+ *       401:
+ *         description: Sesión requerida
+ *       403:
+ *         description: El planner es exclusivo para viajeros
+ *       500:
+ *         description: No pudimos cargar el catálogo de lugares
+ */
 export async function GET() {
   const authResult = await requireViajeroSession();
   if (authResult.error) {

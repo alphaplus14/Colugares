@@ -30,6 +30,94 @@ function serializeDetail(
   };
 }
 
+/**
+ * @swagger
+ * /api/admin/itineraries/{id}:
+ *   get:
+ *     summary: Obtener el detalle completo de un itinerario guardado (CMS)
+ *     tags: [Admin - Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Itinerario encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   allOf:
+ *                     - $ref: '#/components/schemas/ItineraryDetail'
+ *                     - type: object
+ *                       properties:
+ *                         user_id: { type: string }
+ *                         user_name: { type: string }
+ *                         user_email: { type: string }
+ *       400:
+ *         description: ID inválido
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Itinerario no encontrado
+ *   put:
+ *     summary: Actualizar título, región o contenido de un itinerario (CMS)
+ *     tags: [Admin - Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title: { type: string, minLength: 3, maxLength: 160 }
+ *               region: { type: string, minLength: 2, maxLength: 80 }
+ *               raw_content: { type: string, minLength: 20 }
+ *     responses:
+ *       200:
+ *         description: Itinerario actualizado correctamente
+ *       400:
+ *         description: Datos inválidos o ID inválido
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Itinerario no encontrado
+ *   delete:
+ *     summary: Eliminar un itinerario (también lo quita de saved_itineraries del usuario)
+ *     tags: [Admin - Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Itinerario eliminado
+ *       400:
+ *         description: ID inválido
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Itinerario no encontrado
+ */
 export async function GET(_request: Request, context: RouteContext) {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;

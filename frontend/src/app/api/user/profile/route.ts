@@ -5,7 +5,37 @@ import { requireViajeroSession } from "@/lib/session-guards";
 import { onboardingSchema } from "@/lib/validators/onboarding.schema";
 import type { TravelProfile, UserDocument } from "@/types/user.types";
 
-/** Devuelve el perfil de viaje del viajero autenticado */
+/**
+ * @swagger
+ * /api/user/profile:
+ *   get:
+ *     summary: Perfil de viaje del viajero autenticado
+ *     tags: [Usuario]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Perfil obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     name: { type: string }
+ *                     email: { type: string }
+ *                     travel_profile:
+ *                       $ref: '#/components/schemas/TravelProfile'
+ *       401:
+ *         description: Sesión requerida
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: No pudimos cargar tu perfil
+ */
 export async function GET() {
   const authResult = await requireViajeroSession();
   if (authResult.error) {
@@ -42,7 +72,54 @@ export async function GET() {
   }
 }
 
-/** Actualiza preferencias de viaje — afectan el RAG inmediatamente */
+/**
+ * @swagger
+ * /api/user/profile:
+ *   put:
+ *     summary: Actualiza las preferencias de viaje (afectan el RAG del planner de inmediato)
+ *     tags: [Usuario]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [primary_interests, budget_range, group_type, travel_pace]
+ *             properties:
+ *               primary_interests:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/ColombiaRegion'
+ *               secondary_interests:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/ColombiaRegion'
+ *               budget_range: { type: string, enum: [bajo, medio, alto] }
+ *               group_type: { type: string, enum: [solo, pareja, familia, amigos] }
+ *               travel_pace: { type: string, enum: [intenso, relajado] }
+ *     responses:
+ *       200:
+ *         description: Preferencias actualizadas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 message: { type: string }
+ *                 data:
+ *                   $ref: '#/components/schemas/TravelProfile'
+ *       400:
+ *         description: Preferencias inválidas
+ *       401:
+ *         description: Sesión requerida
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: No pudimos actualizar tus preferencias
+ */
 export async function PUT(request: Request) {
   const authResult = await requireViajeroSession();
   if (authResult.error) {

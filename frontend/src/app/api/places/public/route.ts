@@ -2,7 +2,40 @@ import { NextResponse } from "next/server";
 import { loadPublicPlaces } from "@/lib/places/load-public-places";
 import type { ColombiaRegion, PlaceType } from "@/types/place.types";
 
-/** Catálogo público (sin auth) para destinos y visited_places UI */
+/**
+ * @swagger
+ * /api/places/public:
+ *   get:
+ *     summary: Catálogo público de lugares (sin autenticación) — página de destinos y UI de visitados
+ *     tags: [Places (Público)]
+ *     security: []
+ *     parameters:
+ *       - in: query
+ *         name: region
+ *         schema:
+ *           $ref: '#/components/schemas/ColombiaRegion'
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *           enum: [hotel, restaurante, actividad, atractivo, agencia]
+ *     responses:
+ *       200:
+ *         description: Listado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 count: { type: integer }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PlaceSummary'
+ *       500:
+ *         description: No pudimos cargar los destinos
+ */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);

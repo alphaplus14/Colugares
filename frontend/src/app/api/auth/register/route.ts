@@ -6,8 +6,44 @@ import { registerSchema } from "@/lib/validators/auth.schema";
 import type { UserDocument } from "@/types/user.types";
 
 /**
- * POST /api/auth/register
- * Crea una cuenta de viajero con email + password.
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Crear una cuenta de viajero con email + contraseña
+ *     tags: [Auth]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, email, password, confirmPassword]
+ *             properties:
+ *               name: { type: string, minLength: 2, maxLength: 80 }
+ *               email: { type: string, format: email }
+ *               password: { type: string, minLength: 8, maxLength: 72 }
+ *               confirmPassword: { type: string }
+ *     responses:
+ *       201:
+ *         description: Cuenta creada correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: { type: string }
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id: { type: string }
+ *                     email: { type: string }
+ *       400:
+ *         description: Datos inválidos (incluye contraseñas no coincidentes)
+ *       409:
+ *         description: Ya existe una cuenta con este correo
+ *       500:
+ *         description: No se pudo crear la cuenta
  */
 export async function POST(request: Request) {
   try {

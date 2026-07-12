@@ -23,6 +23,67 @@ function serializeUser(doc: UserDocument) {
   };
 }
 
+/**
+ * @swagger
+ * /api/admin/users/{id}:
+ *   put:
+ *     summary: Actualizar nombre o estado activo de un usuario (solo super-admin)
+ *     tags: [Admin - Usuarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name: { type: string, minLength: 2, maxLength: 80 }
+ *               active: { type: boolean }
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   $ref: '#/components/schemas/AdminUser'
+ *       400:
+ *         description: Datos inválidos, ID inválido, o intento de auto-desactivarse
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Usuario no encontrado
+ *   delete:
+ *     summary: Eliminar un usuario (no admins, no la propia cuenta)
+ *     tags: [Admin - Usuarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado
+ *       400:
+ *         description: ID inválido o intento de eliminar la propia cuenta
+ *       403:
+ *         description: No autorizado, o intento de eliminar una cuenta super-admin
+ *       404:
+ *         description: Usuario no encontrado
+ */
 export async function PUT(request: Request, context: RouteContext) {
   const admin = await requireAdminAuth();
   if (admin.error) return admin.error;

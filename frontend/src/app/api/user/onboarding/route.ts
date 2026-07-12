@@ -5,7 +5,55 @@ import { requireViajeroSession } from "@/lib/session-guards";
 import { onboardingSchema } from "@/lib/validators/onboarding.schema";
 import type { TravelProfile, UserDocument } from "@/types/user.types";
 
-/** Guarda el perfil de viaje del viajero tras completar el quiz de onboarding */
+/**
+ * @swagger
+ * /api/user/onboarding:
+ *   post:
+ *     summary: Guarda el perfil de viaje tras completar el quiz de onboarding
+ *     tags: [Usuario]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [primary_interests, budget_range, group_type, travel_pace]
+ *             properties:
+ *               primary_interests:
+ *                 type: array
+ *                 minItems: 1
+ *                 items:
+ *                   $ref: '#/components/schemas/ColombiaRegion'
+ *               secondary_interests:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/ColombiaRegion'
+ *               budget_range: { type: string, enum: [bajo, medio, alto] }
+ *               group_type: { type: string, enum: [solo, pareja, familia, amigos] }
+ *               travel_pace: { type: string, enum: [intenso, relajado] }
+ *     responses:
+ *       200:
+ *         description: Perfil de viaje guardado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 message: { type: string }
+ *                 data:
+ *                   $ref: '#/components/schemas/TravelProfile'
+ *       400:
+ *         description: Datos del onboarding inválidos
+ *       401:
+ *         description: Sesión requerida
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: No pudimos guardar tu perfil
+ */
 export async function POST(request: Request) {
   const authResult = await requireViajeroSession();
   if (authResult.error) {

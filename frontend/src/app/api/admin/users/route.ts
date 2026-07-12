@@ -24,7 +24,50 @@ function serializeUser(doc: UserDocument) {
   };
 }
 
-/** GET /api/admin/users — listado paginado */
+/**
+ * @swagger
+ * /api/admin/users:
+ *   get:
+ *     summary: Listado paginado de usuarios (empleados solo ven viajeros)
+ *     tags: [Admin - Usuarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: role
+ *         description: Ignorado si la sesión es de rol 'empleado' (siempre filtra viajero)
+ *         schema:
+ *           $ref: '#/components/schemas/UserRole'
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *     responses:
+ *       200:
+ *         description: Listado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/AdminUser'
+ *                 pagination:
+ *                   $ref: '#/components/schemas/PaginationMeta'
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error al cargar los usuarios
+ */
 export async function GET(request: Request) {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;
@@ -66,7 +109,46 @@ export async function GET(request: Request) {
   }
 }
 
-/** POST /api/admin/users — crear empleado (solo super-admin) */
+/**
+ * @swagger
+ * /api/admin/users:
+ *   post:
+ *     summary: Crear un empleado nuevo (solo super-admin)
+ *     tags: [Admin - Usuarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, email, password, confirmPassword]
+ *             properties:
+ *               name: { type: string, minLength: 2, maxLength: 80 }
+ *               email: { type: string, format: email }
+ *               password: { type: string, minLength: 8, maxLength: 72 }
+ *               confirmPassword: { type: string }
+ *     responses:
+ *       201:
+ *         description: Empleado creado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   $ref: '#/components/schemas/AdminUser'
+ *       400:
+ *         description: Datos inválidos (incluye contraseñas no coincidentes)
+ *       403:
+ *         description: Solo el super-admin puede crear empleados
+ *       409:
+ *         description: Ya existe un usuario con ese correo
+ *       500:
+ *         description: Error al crear el empleado
+ */
 export async function POST(request: Request) {
   const admin = await requireAdminAuth();
   if (admin.error) return admin.error;

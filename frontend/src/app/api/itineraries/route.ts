@@ -49,7 +49,34 @@ async function loadCatalog(): Promise<PlaceCatalogEntry[]> {
   }));
 }
 
-/** Lista itinerarios guardados del viajero */
+/**
+ * @swagger
+ * /api/itineraries:
+ *   get:
+ *     summary: Lista los itinerarios guardados del viajero autenticado
+ *     tags: [Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Listado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ItineraryListItem'
+ *       401:
+ *         description: Sesión requerida
+ *       403:
+ *         description: El planner es exclusivo para viajeros
+ *       500:
+ *         description: No pudimos cargar tus itinerarios
+ */
 export async function GET() {
   const authResult = await requireViajeroSession();
   if (authResult.error) {
@@ -81,7 +108,50 @@ export async function GET() {
   }
 }
 
-/** Guarda itinerario parseado desde la respuesta de Colu */
+/**
+ * @swagger
+ * /api/itineraries:
+ *   post:
+ *     summary: Parsea y guarda un itinerario a partir del texto markdown generado por Colu (AI planner)
+ *     tags: [Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [raw_content]
+ *             properties:
+ *               title: { type: string, minLength: 3, maxLength: 120 }
+ *               region: { type: string, minLength: 2, maxLength: 40 }
+ *               raw_content:
+ *                 type: string
+ *                 minLength: 20
+ *                 maxLength: 50000
+ *                 description: Respuesta en markdown del asistente, con días y actividades estructuradas
+ *     responses:
+ *       200:
+ *         description: Itinerario guardado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 message: { type: string }
+ *                 data:
+ *                   $ref: '#/components/schemas/ItineraryDetail'
+ *       400:
+ *         description: Datos inválidos, o no se detectaron días estructurados en raw_content
+ *       401:
+ *         description: Sesión requerida
+ *       403:
+ *         description: El planner es exclusivo para viajeros
+ *       500:
+ *         description: No pudimos guardar el itinerario
+ */
 export async function POST(request: Request) {
   const authResult = await requireViajeroSession();
   if (authResult.error) {

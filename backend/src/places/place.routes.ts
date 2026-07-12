@@ -37,6 +37,21 @@ router.use(internalAuth);
  *         schema:
  *           type: string
  *           enum: ["true", "false"]
+ *       - in: query
+ *         name: page
+ *         description: Número de página (1-indexed)
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         description: Resultados por página (máximo 48)
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 48
+ *           default: 12
  *     responses:
  *       200:
  *         description: Listado obtenido correctamente
@@ -50,10 +65,13 @@ router.use(internalAuth);
  *                   example: ok
  *                 count:
  *                   type: integer
+ *                   description: Cantidad de items en esta página
  *                 data:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Place'
+ *                 pagination:
+ *                   $ref: '#/components/schemas/PaginationMeta'
  *       401:
  *         description: Clave interna inválida
  *         content:

@@ -10,7 +10,66 @@ interface RouteParams {
   params: { id: string };
 }
 
-/** Detalle de un itinerario guardado */
+/**
+ * @swagger
+ * /api/itineraries/{id}:
+ *   get:
+ *     summary: Detalle de un itinerario guardado del viajero autenticado
+ *     tags: [Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Itinerario encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   $ref: '#/components/schemas/ItineraryDetail'
+ *       400:
+ *         description: ID de itinerario inválido
+ *       401:
+ *         description: Sesión requerida
+ *       403:
+ *         description: El planner es exclusivo para viajeros
+ *       404:
+ *         description: Itinerario no encontrado (o no pertenece al usuario)
+ *       500:
+ *         description: No pudimos cargar el itinerario
+ *   delete:
+ *     summary: Eliminar un itinerario del historial del viajero
+ *     tags: [Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Itinerario eliminado
+ *       400:
+ *         description: ID de itinerario inválido
+ *       401:
+ *         description: Sesión requerida
+ *       403:
+ *         description: El planner es exclusivo para viajeros
+ *       404:
+ *         description: Itinerario no encontrado
+ *       500:
+ *         description: No pudimos eliminar el itinerario
+ */
 export async function GET(
   _request: Request,
   { params }: RouteParams,

@@ -16,7 +16,54 @@ function getGoogleProvider() {
 
 const LLM_MODEL = getGeminiLlmModel();
 
-/** Endpoint RAG principal del AI Trip Planner — siempre responde con SSE */
+/**
+ * @swagger
+ * /api/planner/chat:
+ *   post:
+ *     summary: Endpoint RAG del AI Trip Planner (Colu) — streaming de texto vía SSE
+ *     description: >
+ *       Compatible con useChat de Vercel AI SDK. Ejecuta un pipeline RAG sobre el catálogo
+ *       de lugares y el perfil de viaje del usuario (requiere onboarding completado),
+ *       y transmite la respuesta del modelo Gemini como un stream de datos (no JSON).
+ *       Duración máxima de la función: 60s.
+ *     tags: [Planner (AI)]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [messages]
+ *             properties:
+ *               messages:
+ *                 type: array
+ *                 minItems: 1
+ *                 maxItems: 50
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     role: { type: string, enum: [user, assistant, system] }
+ *                     content: { type: string, minLength: 1, maxLength: 8000 }
+ *     responses:
+ *       200:
+ *         description: Stream de texto (formato de datos del Vercel AI SDK)
+ *         content:
+ *           text/event-stream:
+ *             schema:
+ *               type: string
+ *       400:
+ *         description: Formato de mensajes inválido, o no se encontró mensaje del usuario
+ *       401:
+ *         description: Sesión requerida
+ *       403:
+ *         description: El planner es exclusivo para viajeros, u onboarding incompleto
+ *       500:
+ *         description: Error inesperado al procesar el mensaje
+ *       503:
+ *         description: Error del proveedor del modelo (Gemini) — mensaje amigable mapeado
+ */
 export async function POST(request: Request) {
   const authResult = await requireViajeroSession();
   if (authResult.error) {

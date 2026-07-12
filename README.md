@@ -32,3 +32,6 @@ npm run dev       # http://localhost:4000
 - **Frontend:** Next.js 14, TypeScript, Tailwind CSS, Mapbox GL JS, Vercel AI SDK
 - **Backend:** Node.js, Express, TypeScript, MongoDB Atlas, LangChain.js, Gemini AI
 - **Base de datos:** MongoDB Atlas con Vector Search
+
+## Arquitectura
+   ![Diagrama de componentes](docs/architecture/component-diagram.svg)

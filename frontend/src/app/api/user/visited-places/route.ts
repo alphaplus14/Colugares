@@ -27,7 +27,32 @@ function toSummary(place: PlaceDocument): PublicPlaceSummary {
   };
 }
 
-/** Lista lugares marcados como visitados (excluidos del RAG) */
+/**
+ * @swagger
+ * /api/user/visited-places:
+ *   get:
+ *     summary: Lista los lugares que el viajero marcó como visitados (excluidos del RAG)
+ *     tags: [Usuario]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Listado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PlaceSummary'
+ *       401:
+ *         description: Sesión requerida
+ *       500:
+ *         description: No pudimos cargar tus lugares visitados
+ */
 export async function GET() {
   const authResult = await requireViajeroSession();
   if (authResult.error) {
@@ -75,7 +100,67 @@ export async function GET() {
   }
 }
 
-/** Marca un lugar como visitado — Colu dejará de recomendarlo */
+/**
+ * @swagger
+ * /api/user/visited-places:
+ *   post:
+ *     summary: Marca un lugar como visitado (Colu dejará de recomendarlo en el RAG)
+ *     tags: [Usuario]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [place_id]
+ *             properties:
+ *               place_id: { type: string }
+ *     responses:
+ *       200:
+ *         description: Lugar marcado como visitado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 message: { type: string }
+ *                 data:
+ *                   $ref: '#/components/schemas/PlaceSummary'
+ *       400:
+ *         description: ID de lugar inválido
+ *       401:
+ *         description: Sesión requerida
+ *       404:
+ *         description: Lugar no encontrado (o inactivo)
+ *       500:
+ *         description: No pudimos marcar el lugar
+ *   delete:
+ *     summary: Quita un lugar de visitados (vuelve a ser elegible en el RAG)
+ *     tags: [Usuario]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [place_id]
+ *             properties:
+ *               place_id: { type: string }
+ *     responses:
+ *       200:
+ *         description: Lugar quitado de visitados
+ *       400:
+ *         description: ID de lugar inválido
+ *       401:
+ *         description: Sesión requerida
+ *       500:
+ *         description: No pudimos actualizar visitados
+ */
 export async function POST(request: Request) {
   const authResult = await requireViajeroSession();
   if (authResult.error) {

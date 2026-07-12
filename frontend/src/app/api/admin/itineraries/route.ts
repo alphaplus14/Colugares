@@ -9,7 +9,68 @@ import { requireStaffAuth } from "@/lib/session-guards";
 import type { ItineraryDocument } from "@/types/itinerary.types";
 import type { UserDocument } from "@/types/user.types";
 
-/** GET /api/admin/itineraries — planes guardados con paginación */
+/**
+ * @swagger
+ * /api/admin/itineraries:
+ *   get:
+ *     summary: Listado CMS de itinerarios guardados por viajeros
+ *     tags: [Admin - Itinerarios]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: region
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: q
+ *         description: Búsqueda de texto libre en título y contenido
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *     responses:
+ *       200:
+ *         description: Listado obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id: { type: string }
+ *                       title: { type: string }
+ *                       region: { type: string }
+ *                       days_count: { type: integer }
+ *                       places_count: { type: integer }
+ *                       warnings_count: { type: integer }
+ *                       user_id: { type: string }
+ *                       user_name: { type: string }
+ *                       user_email: { type: string }
+ *                       created_at: { type: string, format: date-time }
+ *                       updated_at: { type: string, format: date-time }
+ *                 pagination:
+ *                   $ref: '#/components/schemas/PaginationMeta'
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error al cargar los itinerarios
+ */
 export async function GET(request: Request) {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;

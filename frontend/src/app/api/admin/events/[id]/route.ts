@@ -40,6 +40,97 @@ interface RouteContext {
   params: { id: string };
 }
 
+/**
+ * @swagger
+ * /api/admin/events/{id}:
+ *   get:
+ *     summary: Obtener el detalle de un evento (CMS)
+ *     tags: [Admin - Eventos]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Evento encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   $ref: '#/components/schemas/AdminEvent'
+ *       400:
+ *         description: ID inválido
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Evento no encontrado
+ *   put:
+ *     summary: Actualizar un evento (parcial)
+ *     tags: [Admin - Eventos]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             description: Igual a EventInput pero con todos los campos opcionales
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Evento actualizado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   $ref: '#/components/schemas/AdminEvent'
+ *       400:
+ *         description: Datos inválidos o ID inválido
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Evento no encontrado
+ *   delete:
+ *     summary: Eliminar un evento permanentemente (solo super-admin)
+ *     tags: [Admin - Eventos]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Evento eliminado
+ *       400:
+ *         description: ID inválido
+ *       403:
+ *         description: Solo super-admin puede eliminar
+ *       404:
+ *         description: Evento no encontrado
+ */
 export async function GET(_request: Request, context: RouteContext) {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;

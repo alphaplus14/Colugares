@@ -5,7 +5,52 @@ import type { EventDocument } from "@/types/event.types";
 import type { ItineraryDocument } from "@/types/itinerary.types";
 import type { UserDocument } from "@/types/user.types";
 
-/** GET /api/admin/stats — métricas del dashboard */
+/**
+ * @swagger
+ * /api/admin/stats:
+ *   get:
+ *     summary: Métricas agregadas para el dashboard del CMS
+ *     tags: [Admin - Estadísticas]
+ *     security:
+ *       - sessionCookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Métricas calculadas correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string, example: success }
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     places:
+ *                       type: object
+ *                       properties:
+ *                         total: { type: integer }
+ *                         active: { type: integer }
+ *                     events:
+ *                       type: object
+ *                       properties:
+ *                         total: { type: integer }
+ *                         active: { type: integer }
+ *                     itineraries:
+ *                       type: object
+ *                       properties:
+ *                         total: { type: integer }
+ *                     users:
+ *                       type: object
+ *                       properties:
+ *                         viajeros: { type: integer }
+ *                         empleados: { type: integer }
+ *                         admins: { type: integer }
+ *                         total: { type: integer }
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error al calcular las métricas
+ */
 export async function GET() {
   const staff = await requireStaffAuth();
   if (staff.error) return staff.error;

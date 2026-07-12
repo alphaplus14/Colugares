@@ -144,6 +144,17 @@ const definition = {
           message: { type: "string" },
         },
       },
+      PaginationMeta: {
+        type: "object",
+        properties: {
+          page: { type: "integer", example: 1 },
+          limit: { type: "integer", example: 12 },
+          total: { type: "integer", example: 57 },
+          totalPages: { type: "integer", example: 5 },
+          hasNext: { type: "boolean" },
+          hasPrev: { type: "boolean" },
+        },
+      },
     },
   },
   // se aplica por defecto a todas las rutas de /api/places (montan internalAuth)

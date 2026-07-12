@@ -1,4 +1,10 @@
 import { MongoClient, Db } from "mongodb";
+import dns from "dns";
+
+// En Windows algunos routers rompen querySrv de Node para mongodb+srv
+if (process.platform === "win32") {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+}
 
 const dbName = process.env.MONGODB_DB_NAME ?? "colugares";
 

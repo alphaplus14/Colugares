@@ -1,7 +1,14 @@
 import { MongoClient, Db } from "mongodb";
+import dns from "dns";
 import dotenv from "dotenv";
 
 dotenv.config();
+
+// En algunos routers Windows, querySrv de Node falla con ECONNREFUSED;
+// DNS públicos permiten resolver mongodb+srv correctamente.
+if (process.platform === "win32") {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+}
 
 const dbName = process.env.MONGODB_DB_NAME ?? "colugares";
 
